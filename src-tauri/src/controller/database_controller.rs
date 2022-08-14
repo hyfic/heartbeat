@@ -28,7 +28,7 @@ pub fn delete_database(id: i32, path: String, delete_file: bool) -> Result<(), S
 
     // deleting the .db file.
     if delete_file {
-        match std::fs::remove_file(path) {
+        match std::fs::remove_file(&path) {
             Ok(_) => {}
             Err(_) => return Err(String::from("Failed to delete database file")),
         }
