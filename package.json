@@ -1,8 +1,12 @@
 {
   "name": "heartbeat",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
+  "author": {
+    "name": "fadhilsaheer",
+    "url": "https://fadhilsaheer.tech"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
