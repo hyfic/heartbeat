@@ -1,24 +1,24 @@
+use crate::database::database_model;
 use crate::database::init_app_db;
-use crate::database::Database;
 
 #[tauri::command]
-pub fn read_databases() -> Result<Vec<Database::DatabaseType>, String> {
+pub fn read_databases() -> Result<Vec<database_model::DatabaseType>, String> {
     let db = init_app_db()?;
-    let databases = Database::read_all(&db)?;
+    let databases = database_model::read_all(&db)?;
     Ok(databases)
 }
 
 #[tauri::command]
 pub fn add_database(path: String, name: String) -> Result<(), String> {
     let db = init_app_db()?;
-    Database::create(&db, path, name)?;
+    database_model::create(&db, path, name)?;
     Ok(())
 }
 
 #[tauri::command]
 pub fn update_database(id: i32, path: String, name: String) -> Result<(), String> {
     let db = init_app_db()?;
-    Database::update(&db, id, path, name)?;
+    database_model::update(&db, id, path, name)?;
     Ok(())
 }
 
@@ -34,6 +34,6 @@ pub fn delete_database(id: i32, path: String, delete_file: bool) -> Result<(), S
         }
     }
 
-    Database::delete(&db, id, path)?;
+    database_model::delete(&db, id, path)?;
     Ok(())
 }

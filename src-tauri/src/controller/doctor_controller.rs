@@ -1,10 +1,10 @@
 use crate::database::init_data_db;
-use crate::database::Doctor;
+use crate::database::doctor_model;
 
 #[tauri::command]
-pub fn read_doctor(database_path: String) -> Result<Vec<Doctor::DoctorType>, String> {
+pub fn read_doctor(database_path: String) -> Result<Vec<doctor_model::DoctorType>, String> {
     let db = init_data_db(database_path)?;
-    let doctor = Doctor::read(&db)?;
+    let doctor = doctor_model::read(&db)?;
     Ok(doctor)
 }
 
@@ -15,7 +15,7 @@ pub fn add_doctor(
     qualification: String,
 ) -> Result<(), String> {
     let db = init_data_db(database_path)?;
-    Doctor::create(&db, name, qualification)?;
+    doctor_model::create(&db, name, qualification)?;
     Ok(())
 }
 
@@ -26,6 +26,6 @@ pub fn update_doctor(
     qualification: String,
 ) -> Result<(), String> {
     let db = init_data_db(database_path)?;
-    Doctor::update(&db, name, qualification)?;
+    doctor_model::update(&db, name, qualification)?;
     Ok(())
 }

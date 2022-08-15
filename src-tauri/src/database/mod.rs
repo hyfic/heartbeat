@@ -1,7 +1,7 @@
-pub mod Database;
-pub mod Doctor;
-pub mod Patient;
+pub mod database_model;
+pub mod doctor_model;
 mod init;
+pub mod patient_model;
 
 use rusqlite::Connection;
 
