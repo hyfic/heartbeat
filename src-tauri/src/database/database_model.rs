@@ -59,7 +59,7 @@ pub fn update(db: &Connection, id: i32, path: String, name: String) -> Result<()
     };
 }
 
-pub fn delete(db: &Connection, id: i32, path: String) -> Result<(), String> {
+pub fn delete(db: &Connection, id: i32) -> Result<(), String> {
     let id = format!("{}", id);
 
     match db.execute("DELETE FROM Database WHERE id=(?1)", &[&id]) {
