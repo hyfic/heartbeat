@@ -1,4 +1,4 @@
-import { ReactComponent } from '../utils/types';
+import { ReactComponent } from '../types/react';
 import {
   ChakraProvider,
   ColorModeScript,
