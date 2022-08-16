@@ -55,10 +55,10 @@
     },
     "windows": [
       {
-        "fullscreen": false,
-        "height": 600,
-        "resizable": true,
         "title": "Heartbeat",
+        "fullscreen": false,
+        "resizable": true,
+        "height": 600,
         "width": 800
       }
     ]
