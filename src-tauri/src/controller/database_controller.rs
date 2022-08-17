@@ -16,9 +16,9 @@ pub fn add_database(path: String, name: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn update_database(id: i32, path: String, name: String) -> Result<(), String> {
+pub fn update_database(id: i32, name: String) -> Result<(), String> {
     let db = init_app_db()?;
-    database_model::update(&db, id, path, name)?;
+    database_model::update(&db, id, name)?;
     Ok(())
 }
 
@@ -30,7 +30,10 @@ pub fn delete_database(id: i32, path: String, delete_file: bool) -> Result<(), S
     if delete_file {
         match std::fs::remove_file(path) {
             Ok(_) => {}
-            Err(_) => return Err(String::from("Failed to delete database file")),
+            Err(err) => match err.kind() {
+                std::io::ErrorKind::NotFound => {}
+                _ => return Err(String::from("Failed to delete database file")),
+            },
         }
     }
 
