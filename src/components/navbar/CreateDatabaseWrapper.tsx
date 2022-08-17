@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { FilePlus } from 'tabler-icons-react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Checkbox,
   Input,
-  MenuItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -18,12 +16,14 @@ import {
 import { documentDir } from '@tauri-apps/api/path';
 import { createNewDatabaseHelper } from '../../api/database';
 import { open } from '@tauri-apps/api/dialog';
+import { ReactComponent } from '../../types/react';
 
 interface Props {
   loadAndSetDatabases: any;
 }
 
-export const CreateDatabaseButton: React.FC<Props> = ({
+export const CreateDatabaseWrapper: ReactComponent<Props> = ({
+  children,
   loadAndSetDatabases,
 }) => {
   const toast = useToast();
@@ -102,9 +102,7 @@ export const CreateDatabaseButton: React.FC<Props> = ({
 
   return (
     <>
-      <MenuItem onClick={onOpen} icon={<FilePlus />}>
-        Create database
-      </MenuItem>
+      <div onClick={onOpen}>{children}</div>
 
       <Modal
         isCentered
