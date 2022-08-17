@@ -7,25 +7,25 @@ const READ_PATIENT_FUNCTION = 'read_patient';
 const UPDATE_PATIENT_FUNCTION = 'update_patient';
 const DELETE_PATIENT_FUNCTION = 'delete_patient';
 
-export const createPatient = (databasePath: string, data: string) => {
+export const createPatientHelper = (databasePath: string, data: string) => {
   return invoke(CREATE_PATIENT_FUNCTION, {
     databasePath,
     data,
   });
 };
 
-export const readPatients = (databasePath: string) => {
+export const readPatientsHelper = (databasePath: string) => {
   return invoke(READ_PATIENTS_FUNCTION, { databasePath });
 };
 
-export const readPatient = (databasePath: string, patientId: number) => {
+export const readPatientHelper = (databasePath: string, patientId: number) => {
   return invoke(READ_PATIENT_FUNCTION, {
     databasePath,
     patientId,
   });
 };
 
-export const updatePatient = (
+export const updatePatientHelper = (
   databasePath: string,
   patientId: number,
   data: string
@@ -37,7 +37,10 @@ export const updatePatient = (
   });
 };
 
-export const deletePatient = (databasePath: string, patientId: number) => {
+export const deletePatientHelper = (
+  databasePath: string,
+  patientId: number
+) => {
   return invoke(DELETE_PATIENT_FUNCTION, {
     databasePath,
     patientId,
