@@ -24,7 +24,7 @@ pub fn connect_data_db<P: AsRef<Path>>(database_path: P) -> Result<Connection> {
     conn.execute(
         "CREATE TABLE IF NOT EXISTS Doctor (
             name text, 
-            qualification text, 
+            qualification text 
         )",
         [],
     )?;
