@@ -7,8 +7,8 @@ import { ReactComponent, SetState } from '../types/react';
 export interface DatabaseContextType {
   databases: DatabaseType[];
   setDatabases: SetState<DatabaseType[]>;
-  selectedDatabasePath: string;
-  setSelectedDatabasePath: SetState<string>;
+  selectedDatabase: DatabaseType | null;
+  setSelectedDatabase: SetState<DatabaseType | null>;
   loading: boolean;
   setLoading: SetState<boolean>;
   loadDatabases: () => void;
@@ -19,17 +19,29 @@ export const DatabaseContext = createContext<DatabaseContextType | null>(null);
 export const DatabaseContextWrapper: ReactComponent = ({ children }) => {
   const toast = useToast();
 
-  const [databases, setDatabases] = useState<DatabaseType[]>([]);
-  const [selectedDatabasePath, setSelectedDatabasePath] = useState(
-    localStorage.getItem('selectedDatabasePath') || ''
-  );
   const [loading, setLoading] = useState(false);
+  const [databases, setDatabases] = useState<DatabaseType[]>([]);
+  const [selectedDatabase, setSelectedDatabase] = useState<DatabaseType | null>(
+    null
+  );
 
-  const loadDatabases = () => {
+  const loadDatabases = (databasePath?: string) => {
     setLoading(true);
 
     readDatabasesHelper()
-      .then((data: any) => setDatabases(data))
+      .then((data: any) => {
+        setDatabases(data);
+
+        // if database path is given (which means this loading is happening after database creation) so we need to make this database as selected
+        if (databasePath) {
+          let filteredDatabases = data.filter(
+            (db: DatabaseType) => db.path === databasePath
+          );
+          if (filteredDatabases.length !== 0) {
+            setSelectedDatabase(filteredDatabases[0]);
+          }
+        }
+      })
       .catch((err) => {
         toast({
           title: err,
@@ -49,13 +61,26 @@ export const DatabaseContextWrapper: ReactComponent = ({ children }) => {
     loadDatabases();
   }, []);
 
+  useEffect(() => {
+    const databaseId = localStorage.getItem('selectedDatabaseId');
+    if (!databaseId) return;
+
+    let filteredDatabases = databases.filter(
+      (db) => db.id === JSON.parse(databaseId)
+    );
+
+    if (filteredDatabases.length !== 0) {
+      setSelectedDatabase(filteredDatabases[0]);
+    }
+  }, [databases]);
+
   return (
     <DatabaseContext.Provider
       value={{
         databases,
         setDatabases,
-        selectedDatabasePath,
-        setSelectedDatabasePath,
+        selectedDatabase: selectedDatabase,
+        setSelectedDatabase: setSelectedDatabase,
         loading,
         setLoading,
         loadDatabases,

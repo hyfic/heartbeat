@@ -21,13 +21,9 @@ import {
 import { CreateDatabaseWrapper } from '../components/navbar/CreateDatabaseWrapper';
 
 export const DatabaseSettingsPage: React.FC = () => {
-  const {
-    databases,
-    setDatabases,
-    setSelectedDatabasePath,
-    loadDatabases,
-    loading,
-  } = useContext(DatabaseContext) as DatabaseContextType;
+  const { databases, setDatabases, loadDatabases, loading } = useContext(
+    DatabaseContext
+  ) as DatabaseContextType;
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -44,12 +40,7 @@ export const DatabaseSettingsPage: React.FC = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <CreateDatabaseWrapper
-          loadAndSetDatabases={(databasePath: string) => {
-            setSelectedDatabasePath(databasePath);
-            loadDatabases();
-          }}
-        >
+        <CreateDatabaseWrapper loadAndSetDatabases={loadDatabases}>
           <IconButton
             aria-label='New database'
             icon={<FilePlus />}

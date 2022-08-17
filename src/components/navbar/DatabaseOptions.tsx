@@ -23,12 +23,8 @@ import {
 } from '../../context/DatabaseContext';
 
 export const DatabaseOptions: React.FC = () => {
-  const {
-    databases,
-    selectedDatabasePath,
-    setSelectedDatabasePath,
-    loadDatabases,
-  } = useContext(DatabaseContext) as DatabaseContextType;
+  const { databases, selectedDatabase, setSelectedDatabase, loadDatabases } =
+    useContext(DatabaseContext) as DatabaseContextType;
 
   const [menuPlaceholder, setMenuPlaceholder] = useState(
     'No database selected'
@@ -37,22 +33,22 @@ export const DatabaseOptions: React.FC = () => {
   useEffect(loadDatabases, []);
 
   useEffect(() => {
-    let filteredDatabases = databases.filter(
-      (db) => db.path === selectedDatabasePath
-    );
-
-    if (filteredDatabases.length === 0) {
+    if (!selectedDatabase) {
       setMenuPlaceholder('Select a database');
       return;
     }
 
-    setMenuPlaceholder(filteredDatabases[0].name);
-  }, [databases]);
+    setMenuPlaceholder(selectedDatabase.name);
+  }, [selectedDatabase]);
 
   useEffect(() => {
-    // set selected database to localstorage
-    localStorage.setItem('selectedDatabasePath', selectedDatabasePath);
-  }, [selectedDatabasePath]);
+    // set selected database id to localstorage
+    if (!selectedDatabase) return;
+    localStorage.setItem(
+      'selectedDatabaseId',
+      JSON.stringify(selectedDatabase.id)
+    );
+  }, [selectedDatabase]);
 
   return (
     <div>
@@ -75,7 +71,7 @@ export const DatabaseOptions: React.FC = () => {
                   <MenuItem
                     key={db.id}
                     onClick={() => {
-                      setSelectedDatabasePath(db.path);
+                      setSelectedDatabase(db);
                       setMenuPlaceholder(db.name);
                     }}
                   >
@@ -87,12 +83,7 @@ export const DatabaseOptions: React.FC = () => {
           )}
           {databases.length !== 0 && <MenuDivider />}
           <MenuGroup title='Options'>
-            <CreateDatabaseWrapper
-              loadAndSetDatabases={(databasePath: string) => {
-                setSelectedDatabasePath(databasePath);
-                loadDatabases();
-              }}
-            >
+            <CreateDatabaseWrapper loadAndSetDatabases={loadDatabases}>
               <MenuItem icon={<FilePlus />}>Create database</MenuItem>
             </CreateDatabaseWrapper>
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
