@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DatabaseType } from '../../types/database';
-import {
-  ChevronDown,
-  FileDatabase,
-  FilePlus,
-  Settings,
-} from 'tabler-icons-react';
+import { ChevronDown, FileDatabase, Settings } from 'tabler-icons-react';
 import {
   Button,
   Menu,
@@ -14,34 +9,47 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
+  useToast,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { Paths } from '../../utils/paths';
+import { CreateDatabaseButton } from './CreateDatabaseButton';
+import { readDatabasesHelper } from '../../api/database';
 
 export const DatabaseOptions: React.FC = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const [databases, setDatabases] = useState<DatabaseType[]>([]);
   const [selectedDatabasePath, setSelectedDatabasePath] = useState(
     localStorage.getItem('selectedDatabasePath') || ''
   );
   const [menuPlaceholder, setMenuPlaceholder] = useState('Select a database');
 
+  const loadAndSetDatabases = (databasePath?: string) => {
+    if (databasePath) {
+      setSelectedDatabasePath(databasePath);
+    }
+
+    readDatabasesHelper()
+      .then((data: any) => {
+        setDatabases(data);
+      })
+      .catch((err) => {
+        toast({
+          title: err,
+          description: 'Try running this application as administrator',
+          position: 'top-right',
+          isClosable: true,
+          duration: 3000,
+          status: 'error',
+        });
+      });
+  };
+
   useEffect(() => {
     // load databases
-    setDatabases([
-      {
-        id: 1,
-        name: "Johns's db",
-        path: 'john.db',
-      },
-      {
-        id: 2,
-        name: "Janes's db",
-        path: 'janes.db',
-      },
-      {
-        id: 3,
-        name: 'Mike db',
-        path: 'mike.db',
-      },
-    ]);
+    loadAndSetDatabases();
   }, []);
 
   useEffect(() => {
@@ -86,7 +94,7 @@ export const DatabaseOptions: React.FC = () => {
           )}
           {databases.length !== 0 && <MenuDivider />}
           <MenuGroup title='Options'>
-            <MenuItem icon={<FilePlus />}>Create database</MenuItem>
+            <CreateDatabaseButton loadAndSetDatabases={loadAndSetDatabases} />
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
             <MenuItem icon={<Settings />}>Database settings</MenuItem>
           </MenuGroup>
