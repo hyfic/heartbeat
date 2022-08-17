@@ -11,7 +11,7 @@ import {
   MenuDivider,
   useToast,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Paths } from '../../utils/paths';
 import { CreateDatabaseButton } from './CreateDatabaseButton';
 import { readDatabasesHelper } from '../../api/database';
@@ -79,24 +79,30 @@ export const DatabaseOptions: React.FC = () => {
         <MenuList>
           {databases.length !== 0 && (
             <MenuGroup title='Database'>
-              {databases.map((db) => (
-                <MenuItem
-                  key={db.id}
-                  onClick={() => {
-                    setSelectedDatabasePath(db.path);
-                    setMenuPlaceholder(db.name);
-                  }}
-                >
-                  {db.name}
-                </MenuItem>
-              ))}
+              <div
+                className={databases.length > 5 ? 'h-52 overflow-y-scroll' : ''}
+              >
+                {databases.map((db) => (
+                  <MenuItem
+                    key={db.id}
+                    onClick={() => {
+                      setSelectedDatabasePath(db.path);
+                      setMenuPlaceholder(db.name);
+                    }}
+                  >
+                    {db.name}
+                  </MenuItem>
+                ))}
+              </div>
             </MenuGroup>
           )}
           {databases.length !== 0 && <MenuDivider />}
           <MenuGroup title='Options'>
             <CreateDatabaseButton loadAndSetDatabases={loadAndSetDatabases} />
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
-            <MenuItem icon={<Settings />}>Database settings</MenuItem>
+            <Link to={Paths.databaseSettings}>
+              <MenuItem icon={<Settings />}>Database settings</MenuItem>
+            </Link>
           </MenuGroup>
         </MenuList>
       </Menu>
