@@ -1,6 +1,6 @@
 export const Paths = {
   databaseSettings: '/database-settings',
-  home: '/',
+  overview: '/',
   patient: '/patient',
   appointments: '/appointments',
   settings: '/settings',

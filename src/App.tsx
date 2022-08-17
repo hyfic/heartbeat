@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppLayout } from './components/AppLayout';
 import { DatabaseContextWrapper } from './context/DatabaseContext';
 import { DatabaseSettingsPage } from './pages/DatabaseSettingsPage';
+import { OverviewPage } from './pages/OverviewPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { Paths } from './utils/paths';
 
@@ -13,7 +14,7 @@ export const App: React.FC = () => {
         <DatabaseContextWrapper>
           <AppLayout>
             <Routes>
-              <Route path={Paths.home} element={<div></div>} />
+              <Route path={Paths.overview} element={<OverviewPage />} />
               <Route path={`${Paths.patient}/:id`} element={<div></div>} />
               <Route path={Paths.settings} element={<SettingsPage />} />
               <Route
