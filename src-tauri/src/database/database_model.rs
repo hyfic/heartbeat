@@ -47,13 +47,10 @@ pub fn read_all(db: &Connection) -> Result<Vec<DatabaseType>, String> {
     Ok(database_vec)
 }
 
-pub fn update(db: &Connection, id: i32, path: String, name: String) -> Result<(), String> {
+pub fn update(db: &Connection, id: i32, name: String) -> Result<(), String> {
     let id = format!("{}", id);
 
-    match db.execute(
-        "UPDATE Database SET path=(?1) name=(?2) WHERE id=(?3)",
-        &[&path, &name, &id],
-    ) {
+    match db.execute("UPDATE Database SET name=(?1) WHERE id=(?2)", &[&name, &id]) {
         Ok(_) => return Ok(()),
         Err(_) => return Err(String::from("Failed to update database")),
     };
