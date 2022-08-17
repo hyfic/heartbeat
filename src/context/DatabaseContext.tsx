@@ -11,7 +11,7 @@ export interface DatabaseContextType {
   setSelectedDatabase: SetState<DatabaseType | null>;
   loading: boolean;
   setLoading: SetState<boolean>;
-  loadDatabases: () => void;
+  loadDatabases: (databasePath?: string) => void;
 }
 
 export const DatabaseContext = createContext<DatabaseContextType | null>(null);

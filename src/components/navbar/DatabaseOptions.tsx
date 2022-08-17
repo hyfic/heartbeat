@@ -83,7 +83,7 @@ export const DatabaseOptions: React.FC = () => {
           )}
           {databases.length !== 0 && <MenuDivider />}
           <MenuGroup title='Options'>
-            <CreateDatabaseWrapper loadAndSetDatabases={loadDatabases}>
+            <CreateDatabaseWrapper>
               <MenuItem icon={<FilePlus />}>Create database</MenuItem>
             </CreateDatabaseWrapper>
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>

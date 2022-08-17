@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Button,
   Input,
@@ -16,15 +16,12 @@ import { documentDir } from '@tauri-apps/api/path';
 import { createNewDatabaseHelper } from '../../api/database';
 import { open } from '@tauri-apps/api/dialog';
 import { ReactComponent } from '../../types/react';
+import {
+  DatabaseContext,
+  DatabaseContextType,
+} from '../../context/DatabaseContext';
 
-interface Props {
-  loadAndSetDatabases: any;
-}
-
-export const CreateDatabaseWrapper: ReactComponent<Props> = ({
-  children,
-  loadAndSetDatabases,
-}) => {
+export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
@@ -32,6 +29,8 @@ export const CreateDatabaseWrapper: ReactComponent<Props> = ({
   const [loading, setLoading] = useState(false);
   const [databaseName, setDatabaseName] = useState('');
   const [databasePath, setDatabasePath] = useState('');
+
+  const { loadDatabases } = useContext(DatabaseContext) as DatabaseContextType;
 
   const onClose = () => {
     setLoading(false);
@@ -79,7 +78,7 @@ export const CreateDatabaseWrapper: ReactComponent<Props> = ({
           duration: 3000,
           status: 'success',
         });
-        loadAndSetDatabases(databaseFilePath);
+        loadDatabases(databaseFilePath);
       })
       .catch((err) => {
         toast({
