@@ -17,7 +17,7 @@ export const AppLayout: ReactComponent = ({ children }) => {
           toggle theme
         </button>
       </Flex>
-      <div className='p-3'>{children}</div>
+      <div className='px-5 py-3'>{children}</div>
     </Flex>
   );
 };
