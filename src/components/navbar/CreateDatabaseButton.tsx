@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { documentDir } from '@tauri-apps/api/path';
 import { createNewDatabaseHelper } from '../../api/database';
+import { open } from '@tauri-apps/api/dialog';
 
 interface Props {
   loadAndSetDatabases: any;
@@ -53,11 +54,17 @@ export const CreateDatabaseButton: React.FC<Props> = ({
 
   useEffect(getDefaultPath, []);
 
-  // const getDir = async () => {
-  //   await window.showDirectoryPicker().then((handle: any) => {
-  //     console.log(handle.getDirectoryHandle());
-  //   });
-  // };
+  const openDirectoryPicker = async () => {
+    const selected = await open({
+      directory: true,
+      multiple: false,
+      defaultPath: databasePath,
+    });
+
+    if (selected !== null && !Array.isArray(selected)) {
+      setDatabasePath(selected);
+    }
+  };
 
   const createDatabase = () => {
     setLoading(true);
@@ -137,6 +144,7 @@ export const CreateDatabaseButton: React.FC<Props> = ({
                 size='lg'
                 fontWeight='normal'
                 className='flex justify-start'
+                onClick={openDirectoryPicker}
               >
                 {databasePath}
               </Button>
