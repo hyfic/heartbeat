@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
     <Flex direction='column' h='full' justifyContent='space-between'>
       <Flex direction='column'>
         <DatabaseOptions />
-        <Navigation page={Paths.home} className='mt-3'>
+        <Navigation page={Paths.overview} className='mt-3'>
           <Planet size={21} className='mr-1' /> Overview
         </Navigation>
         <Navigation page={Paths.patient}>
