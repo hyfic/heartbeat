@@ -1,0 +1,171 @@
+import React, { useEffect, useState } from 'react';
+import { FilePlus } from 'tabler-icons-react';
+import {
+  Button,
+  Checkbox,
+  Input,
+  MenuItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
+import { documentDir } from '@tauri-apps/api/path';
+import { createNewDatabaseHelper } from '../../api/database';
+
+interface Props {
+  loadAndSetDatabases: any;
+}
+
+export const CreateDatabaseButton: React.FC<Props> = ({
+  loadAndSetDatabases,
+}) => {
+  const toast = useToast();
+
+  const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
+
+  const [loading, setLoading] = useState(false);
+  const [databaseName, setDatabaseName] = useState('');
+  const [databasePath, setDatabasePath] = useState('');
+  const [useDefaultFilePath, setUserDefaultFilePath] = useState(true);
+
+  const onClose = () => {
+    setLoading(false);
+    setDatabaseName('');
+    setDatabasePath('');
+    closeModal();
+  };
+
+  const getDefaultPath = () => {
+    documentDir()
+      .then((documentDirectory) =>
+        setDatabasePath(documentDirectory + 'heartbeat')
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(getDefaultPath, []);
+
+  // const getDir = async () => {
+  //   await window.showDirectoryPicker().then((handle: any) => {
+  //     console.log(handle.getDirectoryHandle());
+  //   });
+  // };
+
+  const createDatabase = () => {
+    setLoading(true);
+
+    let databaseFilePath = `${databasePath}\\${databaseName
+      .split(' ')
+      .join('_')}.db`;
+
+    createNewDatabaseHelper(databaseName, databaseFilePath)
+      .then(() => {
+        onClose();
+        toast({
+          title: 'Created database successfully',
+          position: 'top-right',
+          isClosable: true,
+          duration: 3000,
+          status: 'success',
+        });
+        loadAndSetDatabases(databaseFilePath);
+      })
+      .catch((err) => {
+        toast({
+          title: err,
+          description: 'Try running this application as administrator',
+          position: 'top-right',
+          isClosable: true,
+          duration: 3000,
+          status: 'error',
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  return (
+    <>
+      <MenuItem onClick={onOpen} icon={<FilePlus />}>
+        Create database
+      </MenuItem>
+
+      <Modal
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+        closeOnOverlayClick={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create database</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input
+              size='lg'
+              variant='filled'
+              placeholder='Database name'
+              value={databaseName}
+              onChange={(e) => setDatabaseName(e.target.value)}
+            />
+            <Checkbox
+              size='lg'
+              mt={3}
+              isChecked={useDefaultFilePath}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  getDefaultPath();
+                }
+                setUserDefaultFilePath(e.target.checked);
+              }}
+            >
+              Use default folder
+            </Checkbox>
+            {!useDefaultFilePath && (
+              <Button
+                mt={3}
+                w='full'
+                size='lg'
+                fontWeight='normal'
+                className='flex justify-start'
+              >
+                {databasePath}
+              </Button>
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              disabled={loading}
+              variant='outline'
+              mr={3}
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              colorScheme='teal'
+              disabled={
+                databaseName.trim().length === 0 ||
+                databasePath.trim().length === 0
+              }
+              isLoading={loading}
+              onClick={createDatabase}
+            >
+              Create database
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
