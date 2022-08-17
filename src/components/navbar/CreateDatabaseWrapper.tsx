@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   Button,
-  Checkbox,
   Input,
   Modal,
   ModalBody,
@@ -33,7 +32,6 @@ export const CreateDatabaseWrapper: ReactComponent<Props> = ({
   const [loading, setLoading] = useState(false);
   const [databaseName, setDatabaseName] = useState('');
   const [databasePath, setDatabasePath] = useState('');
-  const [useDefaultFilePath, setUserDefaultFilePath] = useState(true);
 
   const onClose = () => {
     setLoading(false);
@@ -120,31 +118,16 @@ export const CreateDatabaseWrapper: ReactComponent<Props> = ({
               value={databaseName}
               onChange={(e) => setDatabaseName(e.target.value)}
             />
-            <Checkbox
-              size='lg'
+            <Button
               mt={3}
-              isChecked={useDefaultFilePath}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  getDefaultPath();
-                }
-                setUserDefaultFilePath(e.target.checked);
-              }}
+              w='full'
+              size='lg'
+              fontWeight='normal'
+              className='flex justify-start'
+              onClick={openDirectoryPicker}
             >
-              Use default folder
-            </Checkbox>
-            {!useDefaultFilePath && (
-              <Button
-                mt={3}
-                w='full'
-                size='lg'
-                fontWeight='normal'
-                className='flex justify-start'
-                onClick={openDirectoryPicker}
-              >
-                {databasePath}
-              </Button>
-            )}
+              {databasePath}
+            </Button>
           </ModalBody>
 
           <ModalFooter>
