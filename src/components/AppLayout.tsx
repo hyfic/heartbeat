@@ -11,11 +11,12 @@ export const AppLayout: ReactComponent = ({ children }) => {
         direction='column'
         className='p-3 w-72 h-screen'
         background={colorMode == 'dark' ? 'gray.700' : 'gray.50'}
-        position='fixed'
       >
         <Navbar />
       </Flex>
-      <div className='px-5 py-3 w-full'>{children}</div>
+      <div className='px-5 py-3 w-full h-screen overflow-y-scroll'>
+        {children}
+      </div>
     </Flex>
   );
 };
