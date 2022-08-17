@@ -57,7 +57,12 @@ export const DatabaseOptions: React.FC = () => {
   return (
     <div>
       <Menu>
-        <MenuButton w='full' as={Button} rightIcon={<ChevronDown />}>
+        <MenuButton
+          w='full'
+          textAlign='left'
+          as={Button}
+          rightIcon={<ChevronDown />}
+        >
           {menuPlaceholder}
         </MenuButton>
         <MenuList>
