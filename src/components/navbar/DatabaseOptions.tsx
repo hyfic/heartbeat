@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { DatabaseType } from '../../types/database';
-import { ChevronDown, FileDatabase, Settings } from 'tabler-icons-react';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  ChevronDown,
+  FileDatabase,
+  FilePlus,
+  Settings,
+} from 'tabler-icons-react';
 import {
   Button,
   Menu,
@@ -9,48 +13,28 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
-  useToast,
 } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Paths } from '../../utils/paths';
-import { CreateDatabaseButton } from './CreateDatabaseButton';
-import { readDatabasesHelper } from '../../api/database';
+import { CreateDatabaseWrapper } from './CreateDatabaseWrapper';
+import {
+  DatabaseContext,
+  DatabaseContextType,
+} from '../../context/DatabaseContext';
 
 export const DatabaseOptions: React.FC = () => {
-  const navigate = useNavigate();
-  const toast = useToast();
+  const {
+    databases,
+    selectedDatabasePath,
+    setSelectedDatabasePath,
+    loadDatabases,
+  } = useContext(DatabaseContext) as DatabaseContextType;
 
-  const [databases, setDatabases] = useState<DatabaseType[]>([]);
-  const [selectedDatabasePath, setSelectedDatabasePath] = useState(
-    localStorage.getItem('selectedDatabasePath') || ''
+  const [menuPlaceholder, setMenuPlaceholder] = useState(
+    'No database selected'
   );
-  const [menuPlaceholder, setMenuPlaceholder] = useState('Select a database');
 
-  const loadAndSetDatabases = (databasePath?: string) => {
-    if (databasePath) {
-      setSelectedDatabasePath(databasePath);
-    }
-
-    readDatabasesHelper()
-      .then((data: any) => {
-        setDatabases(data);
-      })
-      .catch((err) => {
-        toast({
-          title: err,
-          description: 'Try running this application as administrator',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
-          status: 'error',
-        });
-      });
-  };
-
-  useEffect(() => {
-    // load databases
-    loadAndSetDatabases();
-  }, []);
+  useEffect(loadDatabases, []);
 
   useEffect(() => {
     let filteredDatabases = databases.filter(
@@ -98,7 +82,14 @@ export const DatabaseOptions: React.FC = () => {
           )}
           {databases.length !== 0 && <MenuDivider />}
           <MenuGroup title='Options'>
-            <CreateDatabaseButton loadAndSetDatabases={loadAndSetDatabases} />
+            <CreateDatabaseWrapper
+              loadAndSetDatabases={(databasePath: string) => {
+                setSelectedDatabasePath(databasePath);
+                loadDatabases();
+              }}
+            >
+              <MenuItem icon={<FilePlus />}>Create database</MenuItem>
+            </CreateDatabaseWrapper>
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
             <Link to={Paths.databaseSettings}>
               <MenuItem icon={<Settings />}>Database settings</MenuItem>

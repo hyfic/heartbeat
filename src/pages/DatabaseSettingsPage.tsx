@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { readDatabasesHelper } from '../api/database';
-import { DatabaseType } from '../types/database';
+import React, { useContext, useState } from 'react';
 import { FilePlus } from 'tabler-icons-react';
+import { EditButton } from '../components/databaseSettings/EditButton';
+import { DeleteButton } from '../components/databaseSettings/DeleteButton';
+import {
+  DatabaseContext,
+  DatabaseContextType,
+} from '../context/DatabaseContext';
 import {
   Flex,
   IconButton,
@@ -13,39 +17,19 @@ import {
   Th,
   Thead,
   Tr,
-  useToast,
 } from '@chakra-ui/react';
-import { EditButton } from '../components/databaseSettings/EditButton';
-import { DeleteButton } from '../components/databaseSettings/DeleteButton';
+import { CreateDatabaseWrapper } from '../components/navbar/CreateDatabaseWrapper';
 
 export const DatabaseSettingsPage: React.FC = () => {
-  const toast = useToast();
+  const {
+    databases,
+    setDatabases,
+    setSelectedDatabasePath,
+    loadDatabases,
+    loading,
+  } = useContext(DatabaseContext) as DatabaseContextType;
 
-  const [databases, setDatabases] = useState<DatabaseType[]>([]);
-  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    setLoading(true);
-
-    readDatabasesHelper()
-      .then((data: any) => {
-        setDatabases(data);
-      })
-      .catch((err) => {
-        toast({
-          title: err,
-          description: 'Try running this application as administrator',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
-          status: 'error',
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <div>
@@ -60,13 +44,20 @@ export const DatabaseSettingsPage: React.FC = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <IconButton
-          aria-label='New database'
-          icon={<FilePlus />}
-          size='lg'
-          ml={2}
-          colorScheme='teal'
-        />
+        <CreateDatabaseWrapper
+          loadAndSetDatabases={(databasePath: string) => {
+            setSelectedDatabasePath(databasePath);
+            loadDatabases();
+          }}
+        >
+          <IconButton
+            aria-label='New database'
+            icon={<FilePlus />}
+            size='lg'
+            ml={2}
+            colorScheme='teal'
+          />
+        </CreateDatabaseWrapper>
       </Flex>
       {!loading && databases.length === 0 && (
         <p className='mt-3'>No databases</p>
