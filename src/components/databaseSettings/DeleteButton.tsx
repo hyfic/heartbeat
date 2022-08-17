@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { DatabaseType } from '../../types/database';
 import { SetState } from '../../types/react';
 import { Trash } from 'tabler-icons-react';
@@ -18,6 +18,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { deleteDatabaseHelper } from '../../api/database';
+import {
+  DatabaseContext,
+  DatabaseContextType,
+} from '../../context/DatabaseContext';
 
 interface Props {
   db: DatabaseType;
@@ -31,14 +35,22 @@ export const DeleteButton: React.FC<Props> = ({ db, setDatabases }) => {
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(true);
 
+  const { selectedDatabase, setSelectedDatabase } = useContext(
+    DatabaseContext
+  ) as DatabaseContextType;
+
   const deleteDatabase = () => {
     setLoading(true);
 
     deleteDatabaseHelper(db.id, db.path, checked)
       .then(() => {
+        if (selectedDatabase && db.id === selectedDatabase.id) {
+          setSelectedDatabase(null);
+        }
         setDatabases((prev: DatabaseType[]) => {
           return prev.filter((database) => database.id !== db.id);
         });
+
         toast({
           title: 'Deleted database successfully',
           position: 'top-right',
