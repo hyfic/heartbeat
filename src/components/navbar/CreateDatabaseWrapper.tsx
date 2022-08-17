@@ -44,9 +44,7 @@ export const CreateDatabaseWrapper: ReactComponent<Props> = ({
 
   const getDefaultPath = () => {
     documentDir()
-      .then((documentDirectory) =>
-        setDatabasePath(documentDirectory + 'heartbeat')
-      )
+      .then((documentDirectory) => setDatabasePath(documentDirectory))
       .catch((err) => {
         console.log(err);
       });
@@ -69,7 +67,7 @@ export const CreateDatabaseWrapper: ReactComponent<Props> = ({
   const createDatabase = () => {
     setLoading(true);
 
-    let databaseFilePath = `${databasePath}\\${databaseName
+    let databaseFilePath = `${databasePath}${databaseName
       .split(' ')
       .join('_')}.db`;
 
