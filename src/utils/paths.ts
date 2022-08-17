@@ -3,4 +3,5 @@ export const Paths = {
   home: '/',
   patient: '/patient',
   appointments: '/appointments',
+  settings: '/settings',
 };

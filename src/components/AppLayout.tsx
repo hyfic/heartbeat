@@ -3,7 +3,7 @@ import { Flex, useColorMode } from '@chakra-ui/react';
 import { Navbar } from './navbar';
 
 export const AppLayout: ReactComponent = ({ children }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   return (
     <Flex>
@@ -11,11 +11,9 @@ export const AppLayout: ReactComponent = ({ children }) => {
         direction='column'
         className='p-3 w-72 h-screen'
         background={colorMode == 'dark' ? 'gray.700' : 'gray.50'}
+        position='fixed'
       >
         <Navbar />
-        <button className='bg-teal-400 mt-5' onClick={toggleColorMode}>
-          toggle theme
-        </button>
       </Flex>
       <div className='px-5 py-3 w-full'>{children}</div>
     </Flex>

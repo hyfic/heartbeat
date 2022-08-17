@@ -3,7 +3,7 @@ import {
   ChevronDown,
   FileDatabase,
   FilePlus,
-  Settings,
+  FileSettings,
 } from 'tabler-icons-react';
 import {
   Button,
@@ -97,7 +97,7 @@ export const DatabaseOptions: React.FC = () => {
             </CreateDatabaseWrapper>
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
             <Link to={Paths.databaseSettings}>
-              <MenuItem icon={<Settings />}>Database settings</MenuItem>
+              <MenuItem icon={<FileSettings />}>Database settings</MenuItem>
             </Link>
           </MenuGroup>
         </MenuList>
