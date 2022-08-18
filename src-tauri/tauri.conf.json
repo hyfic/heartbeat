@@ -57,9 +57,10 @@
       {
         "title": "Heartbeat",
         "fullscreen": false,
+        "center": true,
         "resizable": true,
         "height": 600,
-        "width": 800
+        "width": 1057
       }
     ]
   }
