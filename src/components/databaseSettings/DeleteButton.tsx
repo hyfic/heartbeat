@@ -81,7 +81,7 @@ export const DeleteButton: React.FC<Props> = ({ db, setDatabases }) => {
         aria-label='Delete database'
         colorScheme='red'
         variant='ghost'
-        icon={<Trash strokeWidth={2} />}
+        icon={<Trash strokeWidth={2} size={20} />}
         onClick={onOpen}
       />
 

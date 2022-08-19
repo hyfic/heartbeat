@@ -31,13 +31,11 @@ export const TextInput: React.FC<Props> = ({
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={disabled}
-          size='lg'
         />
       ) : (
         <Input
           placeholder={title}
           variant='filled'
-          size='lg'
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={disabled}

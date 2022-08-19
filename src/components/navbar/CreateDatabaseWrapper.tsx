@@ -111,7 +111,6 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
           <ModalCloseButton />
           <ModalBody>
             <Input
-              size='lg'
               variant='filled'
               placeholder='Database name'
               value={databaseName}
@@ -120,7 +119,6 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
             <Button
               mt={3}
               w='full'
-              size='lg'
               fontWeight='normal'
               className='flex justify-start'
               onClick={openDirectoryPicker}

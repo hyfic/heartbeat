@@ -33,7 +33,6 @@ export const DatabaseSettingsPage: React.FC = () => {
       {loading && <p className='mt-5'>Loading...</p>}
       <Flex mt={5} alignItems='center'>
         <Input
-          size='lg'
           variant='filled'
           placeholder='Search..'
           w='full'
@@ -44,7 +43,6 @@ export const DatabaseSettingsPage: React.FC = () => {
           <IconButton
             aria-label='New database'
             icon={<FilePlus />}
-            size='lg'
             ml={2}
             colorScheme='teal'
           />

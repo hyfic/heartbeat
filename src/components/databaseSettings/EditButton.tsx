@@ -72,7 +72,7 @@ export const EditButton: React.FC<Props> = ({ db, setDatabases }) => {
     <>
       <IconButton
         aria-label='Edit database'
-        icon={<Edit strokeWidth={2} />}
+        icon={<Edit strokeWidth={2} size={20} />}
         variant='ghost'
         colorScheme='blue'
         onClick={onOpen}
@@ -85,7 +85,6 @@ export const EditButton: React.FC<Props> = ({ db, setDatabases }) => {
           <ModalCloseButton />
           <ModalBody>
             <Input
-              size='lg'
               variant='filled'
               placeholder='Database name'
               value={databaseName}

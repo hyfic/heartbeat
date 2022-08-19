@@ -19,9 +19,9 @@ export const DatabaseCheckerWrapper: ReactComponent = ({ children }) => {
     <div>
       {!selectedDatabase && (
         <div className='h-screen -mx-5 -my-3 w-full flex flex-col items-center justify-center'>
-          <h2 className='text-xl font-medium'>No database selected</h2>
+          <h2 className='text-lg font-medium'>No database selected</h2>
           <CreateDatabaseWrapper>
-            <Button size='lg' colorScheme='teal' mt={3} variant='outline'>
+            <Button colorScheme='teal' mt={3} variant='outline'>
               <Database className='mr-2' /> Create new database
             </Button>
           </CreateDatabaseWrapper>

@@ -11,7 +11,6 @@ export const SettingsPage: React.FC = () => {
         <h2 className='font-medium text-lg'>Appearance</h2>
         <Select
           mt={3}
-          size='lg'
           variant='filled'
           value={colorMode}
           onChange={(e) => setColorMode(e.target.value)}

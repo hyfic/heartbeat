@@ -14,7 +14,7 @@ export const NewPatientPage: React.FC = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { selectedDatabasePath } = useContext(
+  const { selectedDatabase } = useContext(
     DatabaseContext
   ) as DatabaseContextType;
 
@@ -38,7 +38,10 @@ export const NewPatientPage: React.FC = () => {
       updatedAt: Date.now(),
     };
 
-    createPatientHelper(selectedDatabasePath, JSON.stringify(patientData))
+    createPatientHelper(
+      selectedDatabase?.path || '',
+      JSON.stringify(patientData)
+    )
       .then(() => {
         toast({
           title: 'Saved patient data successfully',
@@ -80,7 +83,6 @@ export const NewPatientPage: React.FC = () => {
             defaultValue={sex}
             onChange={(e) => setSex(e.target.value)}
             disabled={loading}
-            size='lg'
           >
             <option value='Male'>Male</option>
             <option value='Female'>Female</option>
@@ -96,7 +98,6 @@ export const NewPatientPage: React.FC = () => {
         textArea
       />
       <Button
-        size='lg'
         mt={5}
         w='full'
         colorScheme='teal'

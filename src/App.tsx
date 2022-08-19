@@ -5,6 +5,8 @@ import { DatabaseContextWrapper } from './context/DatabaseContext';
 import { DatabaseSettingsPage } from './pages/DatabaseSettingsPage';
 import { NewPatientPage } from './pages/NewPatientPage';
 import { OverviewPage } from './pages/OverviewPage';
+import { PatientListPage } from './pages/PatientListPage';
+import { PatientPage } from './pages/PatientPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { Paths } from './utils/paths';
 
@@ -16,7 +18,8 @@ export const App: React.FC = () => {
           <AppLayout>
             <Routes>
               <Route path={Paths.overview} element={<OverviewPage />} />
-              <Route path={`${Paths.patient}/:id`} element={<div></div>} />
+              <Route path={Paths.patient} element={<PatientListPage />} />
+              <Route path={`${Paths.patient}/:id`} element={<PatientPage />} />
               <Route path={Paths.newPatient} element={<NewPatientPage />} />
               <Route path={Paths.settings} element={<SettingsPage />} />
               <Route
