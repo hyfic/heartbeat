@@ -9,6 +9,7 @@ import {
   DatabaseContext,
   DatabaseContextType,
 } from '../context/DatabaseContext';
+import { PatientContext, PatientContextType } from '../context/PatientContext';
 
 export const NewPatientPage: React.FC = () => {
   const toast = useToast();
@@ -17,6 +18,7 @@ export const NewPatientPage: React.FC = () => {
   const { selectedDatabase } = useContext(
     DatabaseContext
   ) as DatabaseContextType;
+  const { loadPatients } = useContext(PatientContext) as PatientContextType;
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -53,6 +55,8 @@ export const NewPatientPage: React.FC = () => {
         });
 
         navigate(Paths.patient);
+
+        loadPatients();
       })
       .catch((err) => {
         toast({
