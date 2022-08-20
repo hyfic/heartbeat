@@ -7,9 +7,9 @@ import { DatabaseCheckerWrapper } from '../components/DatabaseCheckerWrapper';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
 import { TextInput } from '../components/common/TextInput';
 import { PatientDataType } from '../types/patient';
+import { getId } from '../utils/getId';
 import {
   Avatar,
-  Button,
   Flex,
   IconButton,
   Table,
@@ -20,7 +20,6 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { getId } from '../utils/getId';
 
 export const PatientListPage: React.FC = () => {
   const { loading, patients } = useContext(
@@ -41,10 +40,12 @@ export const PatientListPage: React.FC = () => {
           setValue={setSearchQuery}
           className='w-full'
         />
-        <Link to={Paths.newPatient}>
-          <Button ml={2}>
-            <UserPlus size={18} className='mr-2' /> New patient
-          </Button>
+        <Link to={Paths.newPatient} replace>
+          <IconButton
+            aria-label='New patient'
+            icon={<UserPlus size={18} />}
+            ml={2}
+          />
         </Link>
       </Flex>
       <TableContainer mt={5}>
@@ -81,7 +82,7 @@ export const PatientListPage: React.FC = () => {
                     <Td>{patient.bioData?.name}</Td>
                     <Td>{moment(patient.updatedAt || 0).fromNow()}</Td>
                     <Td>
-                      <Link to={`${Paths.patient}/${patientJSON.id}`}>
+                      <Link to={`${Paths.patient}/${patientJSON.id}`} replace>
                         <IconButton
                           aria-label='View patient'
                           icon={<Folder size={20} />}
