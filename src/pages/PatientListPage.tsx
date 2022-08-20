@@ -64,10 +64,15 @@ export const PatientListPage: React.FC = () => {
             {patients
               .filter((patientJSON) => {
                 let patient: PatientDataType = JSON.parse(patientJSON.data);
-                return patient.bioData?.name
-                  ?.trim()
-                  .toLowerCase()
-                  ?.includes(searchQuery.trim().toLowerCase());
+                return (
+                  patient.bioData?.name
+                    ?.trim()
+                    .toLowerCase()
+                    ?.includes(searchQuery.trim().toLowerCase()) ||
+                  getId(patient.createdAt || 0).includes(
+                    searchQuery.trim().toLowerCase()
+                  )
+                );
               })
               .map((patientJSON, idx) => {
                 let patient: PatientDataType = JSON.parse(patientJSON.data);
