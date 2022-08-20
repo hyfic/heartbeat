@@ -1,4 +1,4 @@
-import { useToast } from '@chakra-ui/react';
+import { filter, useToast } from '@chakra-ui/react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { readPatientsHelper } from '../api/patient';
 import { PatientDataType, PatientType } from '../types/patient';
@@ -13,6 +13,9 @@ export interface PatientContextType {
   loading: boolean;
   setLoading: SetState<boolean>;
   loadPatients: () => void;
+  loadPatient: (patientId: number) => Promise<PatientType>;
+  editPatient: (patientId: number, patientData: PatientDataType) => void;
+  deletePatient: (patientId: number) => void;
 }
 
 export const PatientContext = createContext<PatientContextType | null>(null);
@@ -71,6 +74,47 @@ export const PatientContextWrapper: ReactComponent = ({ children }) => {
       });
   };
 
+  const loadPatient = (patientId: number) => {
+    return new Promise<PatientType>((resolve, reject) => {
+      let filteredPatients = patients.filter(
+        (patient) => patient.id === patientId
+      );
+
+      if (filteredPatients.length !== 0) {
+        resolve(filteredPatients[0]);
+      } else {
+        reject();
+        toast({
+          title: 'Failed to find patient',
+          position: 'top-right',
+          isClosable: true,
+          duration: 3000,
+          status: 'error',
+        });
+      }
+    });
+  };
+
+  const editPatient = (patientId: number, patientData: PatientDataType) => {
+    let newPatient: PatientType = {
+      id: patientId,
+      data: JSON.stringify(patientData),
+    };
+
+    let editedPatients = patients.map((patient) =>
+      patient.id == patientId ? newPatient : patient
+    );
+
+    setPatients(editedPatients);
+  };
+
+  const deletePatient = (patientId: number) => {
+    let filteredPatients = patients.filter(
+      (patient) => patient.id !== patientId
+    );
+    setPatients(filteredPatients);
+  };
+
   useEffect(loadPatients, [selectedDatabase]);
 
   useEffect(() => {
@@ -80,13 +124,16 @@ export const PatientContextWrapper: ReactComponent = ({ children }) => {
   return (
     <PatientContext.Provider
       value={{
-        loadPatients,
         patients,
         setPatients,
         appointedPatients,
         setAppointedPatients,
         loading,
         setLoading,
+        loadPatients,
+        loadPatient,
+        editPatient,
+        deletePatient,
       }}
     >
       {children}
