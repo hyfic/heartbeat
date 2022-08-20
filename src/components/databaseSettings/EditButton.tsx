@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { DatabaseType } from '../../types/database';
 import {
   Button,
-  IconButton,
   Input,
+  MenuItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -70,13 +70,9 @@ export const EditButton: React.FC<Props> = ({ db, setDatabases }) => {
 
   return (
     <>
-      <IconButton
-        aria-label='Edit database'
-        icon={<Edit strokeWidth={2} size={20} />}
-        variant='ghost'
-        colorScheme='blue'
-        onClick={onOpen}
-      />
+      <MenuItem icon={<Edit strokeWidth={2} size={18} />} onClick={onOpen}>
+        Edit database
+      </MenuItem>
 
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

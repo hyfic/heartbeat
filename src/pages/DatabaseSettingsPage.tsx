@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { FilePlus } from 'tabler-icons-react';
+import { DotsVertical, File, FilePlus } from 'tabler-icons-react';
 import { EditButton } from '../components/databaseSettings/EditButton';
 import { DeleteButton } from '../components/databaseSettings/DeleteButton';
+import { CreateDatabaseWrapper } from '../components/navbar/CreateDatabaseWrapper';
 import {
   DatabaseContext,
   DatabaseContextType,
@@ -10,6 +11,10 @@ import {
   Flex,
   IconButton,
   Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Table,
   TableContainer,
   Tbody,
@@ -18,7 +23,6 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { CreateDatabaseWrapper } from '../components/navbar/CreateDatabaseWrapper';
 
 export const DatabaseSettingsPage: React.FC = () => {
   const { databases, setDatabases, loading } = useContext(
@@ -58,8 +62,8 @@ export const DatabaseSettingsPage: React.FC = () => {
                 <Th>Index</Th>
                 <Th>Database name</Th>
                 <Th>Path</Th>
-                <Th>Edit</Th>
-                <Th>Delete</Th>
+                <Th>Options</Th>
+                {/* <Th>Delete</Th> */}
               </Tr>
             </Thead>
             <Tbody>
@@ -76,10 +80,22 @@ export const DatabaseSettingsPage: React.FC = () => {
                     <Td>{db.name}</Td>
                     <Td>{db.path}</Td>
                     <Td>
-                      <EditButton db={db} setDatabases={setDatabases} />
-                    </Td>
-                    <Td>
-                      <DeleteButton db={db} setDatabases={setDatabases} />
+                      <Menu>
+                        <MenuButton>
+                          <IconButton
+                            aria-label='Options'
+                            icon={<DotsVertical size={18} />}
+                            variant='ghost'
+                          />
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem icon={<File size={18} />}>
+                            Open in file explorer
+                          </MenuItem>
+                          <EditButton db={db} setDatabases={setDatabases} />
+                          <DeleteButton db={db} setDatabases={setDatabases} />
+                        </MenuList>
+                      </Menu>
                     </Td>
                   </Tr>
                 ))}

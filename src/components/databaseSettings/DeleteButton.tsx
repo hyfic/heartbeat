@@ -5,7 +5,6 @@ import { Trash } from 'tabler-icons-react';
 import {
   Button,
   Checkbox,
-  IconButton,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,6 +15,7 @@ import {
   useDisclosure,
   useToast,
   Text,
+  MenuItem,
 } from '@chakra-ui/react';
 import { deleteDatabaseHelper } from '../../api/database';
 import {
@@ -77,13 +77,13 @@ export const DeleteButton: React.FC<Props> = ({ db, setDatabases }) => {
 
   return (
     <>
-      <IconButton
-        aria-label='Delete database'
-        colorScheme='red'
-        variant='ghost'
-        icon={<Trash strokeWidth={2} size={20} />}
+      <MenuItem
+        icon={<Trash strokeWidth={2} size={18} />}
+        textColor='red.400'
         onClick={onOpen}
-      />
+      >
+        Delete database
+      </MenuItem>
 
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
