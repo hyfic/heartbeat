@@ -57,7 +57,7 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
     });
 
     if (selected !== null && !Array.isArray(selected)) {
-      setDatabasePath(selected);
+      setDatabasePath(selected + '\\'); // TODO: change this when this app is shipped for macos/linux
     }
   };
 
@@ -123,7 +123,9 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
               className='flex justify-start'
               onClick={openDirectoryPicker}
             >
-              {databasePath}
+              {databasePath.trim().length !== 0
+                ? databasePath
+                : 'Select folder'}
             </Button>
           </ModalBody>
 
