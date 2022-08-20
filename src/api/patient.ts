@@ -32,7 +32,7 @@ export const updatePatientHelper = (
 ) => {
   return invoke(UPDATE_PATIENT_FUNCTION, {
     databasePath,
-    patientId,
+    id: patientId,
     data,
   });
 };
@@ -43,6 +43,6 @@ export const deletePatientHelper = (
 ) => {
   return invoke(DELETE_PATIENT_FUNCTION, {
     databasePath,
-    patientId,
+    id: patientId,
   });
 };
