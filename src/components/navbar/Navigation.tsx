@@ -18,7 +18,7 @@ export const Navigation: ReactComponent<Props> = ({
   const selected = location.pathname === page;
 
   return (
-    <Link to={page}>
+    <Link to={page} replace>
       <Flex
         py={2}
         px={4}

@@ -22,7 +22,7 @@ export const Navbar: React.FC = () => {
         </Navigation>
       </Flex>
       <div>
-        <Link to={Paths.settings}>
+        <Link to={Paths.settings} replace>
           <IconButton
             aria-label='settings'
             icon={<Settings size={21} />}

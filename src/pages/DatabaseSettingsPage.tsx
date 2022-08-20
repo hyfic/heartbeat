@@ -42,9 +42,8 @@ export const DatabaseSettingsPage: React.FC = () => {
         <CreateDatabaseWrapper>
           <IconButton
             aria-label='New database'
-            icon={<FilePlus />}
+            icon={<FilePlus size={20} />}
             ml={2}
-            colorScheme='teal'
           />
         </CreateDatabaseWrapper>
       </Flex>

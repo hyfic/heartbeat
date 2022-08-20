@@ -87,7 +87,7 @@ export const DatabaseOptions: React.FC = () => {
               <MenuItem icon={<FilePlus />}>Create database</MenuItem>
             </CreateDatabaseWrapper>
             <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
-            <Link to={Paths.databaseSettings}>
+            <Link to={Paths.databaseSettings} replace>
               <MenuItem icon={<FileSettings />}>Database settings</MenuItem>
             </Link>
           </MenuGroup>
