@@ -25,6 +25,7 @@ import {
   DatabaseContextType,
 } from '../../../context/DatabaseContext';
 import { updatePatientHelper } from '../../../api/patient';
+import { PreviewButton } from './PreviewButton';
 
 interface Props {
   patientId: number;
@@ -141,12 +142,12 @@ export const EditRecordButton: React.FC<Props> = ({
             <Button variant='outline' mr={3} onClick={onClose}>
               Cancel
             </Button>
-            {/* <PreviewButton
+            <PreviewButton
               patientCreatedAt={patientData.createdAt || 0}
               patientBioData={patientData.bioData || {}}
               patientRecord={record}
               useButton
-            /> */}
+            />
             <Button ml={3} colorScheme='blue' onClick={editRecord}>
               Save
             </Button>

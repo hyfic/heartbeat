@@ -25,6 +25,7 @@ import {
   PatientContextType,
 } from '../../../context/PatientContext';
 import { Plus } from 'tabler-icons-react';
+import { PreviewButton } from './PreviewButton';
 
 interface Props {
   patientData: PatientDataType;
@@ -162,12 +163,12 @@ export const NewRecordButton: React.FC<Props> = ({
             <Button variant='outline' mr={3} onClick={closeDrawer}>
               Cancel
             </Button>
-            {/* <PreviewButton
+            <PreviewButton
               patientCreatedAt={patientData.createdAt || 0}
               patientBioData={patientData.bioData || {}}
               patientRecord={record}
               useButton
-            /> */}
+            />
             <Button ml={3} colorScheme='blue' onClick={saveRecord}>
               Save
             </Button>

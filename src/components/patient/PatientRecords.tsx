@@ -15,6 +15,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { EditRecordButton } from './record/EditRecordButton';
+import { PreviewButton } from './record/PreviewButton';
 
 interface Props {
   patientData: PatientDataType;
@@ -76,6 +77,14 @@ export const PatientRecords: React.FC<Props> = ({
                         patientData={patientData}
                         setPatientData={setPatientData}
                         recordCreatedAt={record.createdAt || 0}
+                      />
+                    </Td>
+                    <Td></Td>
+                    <Td>
+                      <PreviewButton
+                        patientCreatedAt={patientData.createdAt || 0}
+                        patientBioData={patientData.bioData || {}}
+                        patientRecord={record}
                       />
                     </Td>
                   </Tr>

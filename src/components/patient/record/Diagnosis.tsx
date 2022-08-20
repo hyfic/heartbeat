@@ -47,7 +47,7 @@ export const Diagnosis: React.FC<Props> = ({
                     colorScheme='red'
                     variant='ghost'
                     aria-label='Delete medicine'
-                    icon={<Trash />}
+                    icon={<Trash size={18} strokeWidth={2} />}
                     disabled={loading}
                     onClick={() => {
                       let tempDiagnosis = [...diagnosis];
