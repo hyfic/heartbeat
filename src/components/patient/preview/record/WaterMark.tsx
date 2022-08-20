@@ -26,7 +26,10 @@ export const WaterMark: React.FC = () => {
           </Flex>
         </Flex>
       )}
-      <Text fontSize='lg'>{moment(Date.now()).format('DD/MM/YYYY')}</Text>
+      <Flex direction='column' alignItems='end'>
+        <Text>{moment(Date.now()).format('DD/MM/YYYY')}</Text>
+        <Text>{moment(Date.now()).format('h:mm A')}</Text>
+      </Flex>
     </Flex>
   );
 };
