@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { EditRecordButton } from './record/EditRecordButton';
 import { PreviewButton } from './record/PreviewButton';
+import { DeleteButton } from './record/DeleteButton';
 
 interface Props {
   patientData: PatientDataType;
@@ -79,7 +80,14 @@ export const PatientRecords: React.FC<Props> = ({
                         recordCreatedAt={record.createdAt || 0}
                       />
                     </Td>
-                    <Td></Td>
+                    <Td>
+                      <DeleteButton
+                        patientId={patientId}
+                        patientData={patientData}
+                        setPatientData={setPatientData}
+                        currentRecordCreatedAt={record.createdAt || 0}
+                      />
+                    </Td>
                     <Td>
                       <PreviewButton
                         patientCreatedAt={patientData.createdAt || 0}
