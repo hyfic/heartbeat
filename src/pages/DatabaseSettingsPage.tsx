@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { DotsVertical, File, FilePlus } from 'tabler-icons-react';
+import { DotsVertical, FilePlus } from 'tabler-icons-react';
 import { EditButton } from '../components/databaseSettings/EditButton';
 import { DeleteButton } from '../components/databaseSettings/DeleteButton';
 import { CreateDatabaseWrapper } from '../components/navbar/CreateDatabaseWrapper';
@@ -13,7 +13,6 @@ import {
   Input,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   Table,
   TableContainer,
@@ -23,6 +22,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { OpenFileFolder } from '../components/databaseSettings/OpenFileFolder';
 
 export const DatabaseSettingsPage: React.FC = () => {
   const { databases, setDatabases, loading } = useContext(
@@ -89,9 +89,7 @@ export const DatabaseSettingsPage: React.FC = () => {
                           />
                         </MenuButton>
                         <MenuList>
-                          <MenuItem icon={<File size={18} />}>
-                            Open in file explorer
-                          </MenuItem>
+                          <OpenFileFolder databasePath={db.path} />
                           <EditButton db={db} setDatabases={setDatabases} />
                           <DeleteButton db={db} setDatabases={setDatabases} />
                         </MenuList>
