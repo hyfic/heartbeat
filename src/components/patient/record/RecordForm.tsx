@@ -4,6 +4,7 @@ import { SetState } from '../../../types/react';
 import { Advice } from './Advice';
 import { Examination } from './Examination';
 import { MedicalBioData } from './MedicalBioData';
+import { NextAppointment } from './NextAppointment';
 
 interface Props {
   patientRecord: PatientRecordType;
@@ -29,6 +30,11 @@ export const RecordForm: React.FC<Props> = ({
         loading={loading}
       />
       <Advice
+        patientRecord={patientRecord}
+        setPatientRecord={setPatientRecord}
+        loading={loading}
+      />
+      <NextAppointment
         patientRecord={patientRecord}
         setPatientRecord={setPatientRecord}
         loading={loading}
