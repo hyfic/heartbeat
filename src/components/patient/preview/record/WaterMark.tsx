@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Logo from '../../../../logo.svg';
 import moment from 'moment';
 import { Avatar, Flex, Heading, Text } from '@chakra-ui/react';
+import {
+  DoctorContext,
+  DoctorContextType,
+} from '../../../../context/DoctorContext';
 
 export const WaterMark: React.FC = () => {
-  // TODO: load doctor details from database
-  const doctorDetails = localStorage.getItem('doctorDetails') || '';
+  const { doctor } = useContext(DoctorContext) as DoctorContextType;
 
   return (
     <Flex alignItems='center' justifyContent='space-between'>
-      {doctorDetails.trim().length !== 0 ? (
-        <Text fontSize='lg' fontWeight='medium'>
-          {doctorDetails.split('\n').map((val, idx) => (
-            <p key={idx}>{val}</p>
-          ))}
-        </Text>
+      {doctor?.name || doctor?.qualification ? (
+        <Flex direction='column'>
+          <Text fontSize='lg' fontWeight='medium'>
+            {doctor.name}
+          </Text>
+          <Text>{doctor.qualification}</Text>
+        </Flex>
       ) : (
         <Flex alignItems='center'>
           <Avatar src={Logo} />
