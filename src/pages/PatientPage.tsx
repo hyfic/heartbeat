@@ -4,10 +4,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
 import { PatientDataType } from '../types/patient';
 import { Paths } from '../utils/paths';
-import { ArrowNarrowLeft, FileExport } from 'tabler-icons-react';
+import { ArrowNarrowLeft, CalendarEvent, FileExport } from 'tabler-icons-react';
 import { PatientRecords } from '../components/patient/PatientRecords';
 import { EditBioData } from '../components/patient/EditBioData';
 import { DeletePatient } from '../components/patient/DeletePatient';
+import moment from 'moment';
 
 export const PatientPage: React.FC = () => {
   const navigate = useNavigate();
@@ -83,6 +84,23 @@ export const PatientPage: React.FC = () => {
           {patient.bioData.address && (
             <p className='mt-3'>{patient.bioData.address}</p>
           )}
+          {patient.records &&
+            patient.records.length !== 0 &&
+            patient.records[0].nextAppointment &&
+            (moment(patient.records[0].nextAppointment).isAfter() ||
+              moment(patient.records[0].nextAppointment).isSame(
+                moment(),
+                'day'
+              )) && (
+              <Flex className='mt-3' alignItems='center'>
+                <CalendarEvent size={20} />
+                <Text ml={1}>
+                  {moment(patient.records[0].nextAppointment).format(
+                    'dddd, MMM D YYYY'
+                  )}
+                </Text>
+              </Flex>
+            )}
           <PatientRecords
             patientId={Number(id)}
             patientData={patient}
