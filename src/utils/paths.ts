@@ -5,4 +5,5 @@ export const Paths = {
   appointments: '/appointments',
   settings: '/settings',
   newPatient: '/new-patient',
+  doctor: '/doctor',
 };
