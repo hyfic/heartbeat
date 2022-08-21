@@ -47,7 +47,7 @@ pub fn read(db: &Connection) -> Result<Vec<DoctorType>, String> {
 
 pub fn update(db: &Connection, name: String, qualification: String) -> Result<(), String> {
     match db.execute(
-        "UPDATE Doctor SET name=(?1) qualification=(?2)",
+        "UPDATE Doctor SET name=(?1), qualification=(?2)",
         &[&name, &qualification],
     ) {
         Ok(_) => return Ok(()),
