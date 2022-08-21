@@ -1,6 +1,12 @@
 import React from 'react';
 import { DatabaseOptions } from './DatabaseOptions';
-import { CalendarEvent, Planet, Settings, Snowman } from 'tabler-icons-react';
+import {
+  CalendarEvent,
+  Planet,
+  Settings,
+  Snowman,
+  Stethoscope,
+} from 'tabler-icons-react';
 import { Navigation } from './Navigation';
 import { Paths } from '../../utils/paths';
 import { Flex, IconButton } from '@chakra-ui/react';
@@ -19,6 +25,9 @@ export const Navbar: React.FC = () => {
         </Navigation>
         <Navigation page={Paths.appointments}>
           <CalendarEvent size={21} className='mr-1' /> Appointments
+        </Navigation>
+        <Navigation page={Paths.doctor}>
+          <Stethoscope size={21} className='mr-1' /> Doctor
         </Navigation>
       </Flex>
       <div>
