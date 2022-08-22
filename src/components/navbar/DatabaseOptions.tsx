@@ -21,6 +21,7 @@ import {
   DatabaseContext,
   DatabaseContextType,
 } from '../../context/DatabaseContext';
+import { OpenDatabase } from './OpenDatabase';
 
 export const DatabaseOptions: React.FC = () => {
   const { databases, selectedDatabase, setSelectedDatabase, loadDatabases } =
@@ -86,7 +87,7 @@ export const DatabaseOptions: React.FC = () => {
             <CreateDatabaseWrapper>
               <MenuItem icon={<FilePlus />}>Create database</MenuItem>
             </CreateDatabaseWrapper>
-            <MenuItem icon={<FileDatabase />}>Open database</MenuItem>
+            <OpenDatabase />
             <Link to={Paths.databaseSettings} replace>
               <MenuItem icon={<FileSettings />}>Database settings</MenuItem>
             </Link>

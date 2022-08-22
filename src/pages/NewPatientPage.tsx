@@ -54,7 +54,7 @@ export const NewPatientPage: React.FC = () => {
           status: 'success',
         });
 
-        navigate(Paths.patient);
+        navigate(Paths.patientList);
 
         loadPatients();
       })
