@@ -22,7 +22,7 @@ export const PatientPage: React.FC = () => {
 
   useEffect(() => {
     if (!id) {
-      navigate(Paths.patient, { replace: true });
+      navigate(Paths.patientList, { replace: true });
       return;
     }
 
@@ -32,7 +32,7 @@ export const PatientPage: React.FC = () => {
         setPatient(JSON.parse(patientJSON.data));
       })
       .catch(() => {
-        navigate(Paths.patient, { replace: true });
+        navigate(Paths.patientList, { replace: true });
       });
   }, [id, patients]);
 
@@ -40,7 +40,7 @@ export const PatientPage: React.FC = () => {
     <div>
       {patient.bioData && (
         <div>
-          <Link to={Paths.patient} replace>
+          <Link to={Paths.patientList} replace>
             <IconButton
               aria-label='Go back'
               icon={<ArrowNarrowLeft />}

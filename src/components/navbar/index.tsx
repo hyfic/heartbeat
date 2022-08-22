@@ -2,7 +2,6 @@ import React from 'react';
 import { DatabaseOptions } from './DatabaseOptions';
 import {
   CalendarEvent,
-  Planet,
   Settings,
   Snowman,
   Stethoscope,
@@ -17,10 +16,7 @@ export const Navbar: React.FC = () => {
     <Flex direction='column' h='full' justifyContent='space-between'>
       <Flex direction='column'>
         <DatabaseOptions />
-        <Navigation page={Paths.overview} className='mt-3'>
-          <Planet size={21} className='mr-1' /> Overview
-        </Navigation>
-        <Navigation page={Paths.patient}>
+        <Navigation page={Paths.patientList} className='mt-3'>
           <Snowman size={21} className='mr-1' /> Patients
         </Navigation>
         <Navigation page={Paths.appointments}>

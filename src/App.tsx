@@ -7,7 +7,6 @@ import { PatientContextWrapper } from './context/PatientContext';
 import { DatabaseSettingsPage } from './pages/DatabaseSettingsPage';
 import { DoctorPage } from './pages/DoctorPage';
 import { NewPatientPage } from './pages/NewPatientPage';
-import { OverviewPage } from './pages/OverviewPage';
 import { PatientListPage } from './pages/PatientListPage';
 import { PatientPage } from './pages/PatientPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -22,8 +21,10 @@ export const App: React.FC = () => {
             <DoctorContextWrapper>
               <AppLayout>
                 <Routes>
-                  <Route path={Paths.overview} element={<OverviewPage />} />
-                  <Route path={Paths.patient} element={<PatientListPage />} />
+                  <Route
+                    path={Paths.patientList}
+                    element={<PatientListPage />}
+                  />
                   <Route
                     path={`${Paths.patient}/:id`}
                     element={<PatientPage />}

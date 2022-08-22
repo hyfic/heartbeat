@@ -60,7 +60,7 @@ export const DeletePatient: React.FC<Props> = ({ patientId, patientName }) => {
         });
         onClose();
         deletePatient(patientId);
-        navigate(Paths.patient, { replace: true });
+        navigate(Paths.patientList, { replace: true });
       })
       .catch((err) => {
         toast({
