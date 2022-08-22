@@ -1,4 +1,5 @@
-import { filter, useToast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
+import moment from 'moment';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { readPatientsHelper } from '../api/patient';
 import { PatientDataType, PatientType } from '../types/patient';
@@ -118,7 +119,25 @@ export const PatientContextWrapper: ReactComponent = ({ children }) => {
   useEffect(loadPatients, [selectedDatabase]);
 
   useEffect(() => {
-    // TODO: set appointed patients
+    setAppointedPatients(
+      patients.filter((patient) => {
+        let patientData: PatientDataType = JSON.parse(patient.data);
+        let nextAppointment =
+          patientData.records &&
+          patientData.records?.length > 0 &&
+          patientData.records[0].nextAppointment
+            ? patientData.records[0].nextAppointment
+            : null;
+
+        if (
+          nextAppointment &&
+          (moment(nextAppointment).isSame(moment(), 'day') ||
+            moment(nextAppointment).isSame(moment().add(1, 'day'), 'day'))
+        ) {
+          return patient;
+        }
+      })
+    );
   }, [patients]);
 
   return (

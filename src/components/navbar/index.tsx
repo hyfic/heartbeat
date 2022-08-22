@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DatabaseOptions } from './DatabaseOptions';
 import {
   CalendarEvent,
@@ -8,10 +8,18 @@ import {
 } from 'tabler-icons-react';
 import { Navigation } from './Navigation';
 import { Paths } from '../../utils/paths';
-import { Flex, IconButton } from '@chakra-ui/react';
+import { Badge, Flex, IconButton } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import {
+  PatientContext,
+  PatientContextType,
+} from '../../context/PatientContext';
 
 export const Navbar: React.FC = () => {
+  const { appointedPatients } = useContext(
+    PatientContext
+  ) as PatientContextType;
+
   return (
     <Flex direction='column' h='full' justifyContent='space-between'>
       <Flex direction='column'>
@@ -21,6 +29,7 @@ export const Navbar: React.FC = () => {
         </Navigation>
         <Navigation page={Paths.appointments}>
           <CalendarEvent size={21} className='mr-1' /> Appointments
+          <Badge ml={1}>{appointedPatients.length}</Badge>
         </Navigation>
         <Navigation page={Paths.doctor}>
           <Stethoscope size={21} className='mr-1' /> Doctor

@@ -23,6 +23,7 @@ export const Navigation: ReactComponent<Props> = ({
         py={2}
         px={4}
         mt={1}
+        alignItems='center'
         background={
           selected ? (colorMode == 'light' ? 'gray.100' : 'whiteAlpha.200') : ''
         }

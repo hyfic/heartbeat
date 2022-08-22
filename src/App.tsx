@@ -4,6 +4,7 @@ import { AppLayout } from './components/AppLayout';
 import { DatabaseContextWrapper } from './context/DatabaseContext';
 import { DoctorContextWrapper } from './context/DoctorContext';
 import { PatientContextWrapper } from './context/PatientContext';
+import { AppointedPatients } from './pages/AppointedPatients';
 import { DatabaseSettingsPage } from './pages/DatabaseSettingsPage';
 import { DoctorPage } from './pages/DoctorPage';
 import { NewPatientPage } from './pages/NewPatientPage';
@@ -28,6 +29,10 @@ export const App: React.FC = () => {
                   <Route
                     path={`${Paths.patient}/:id`}
                     element={<PatientPage />}
+                  />
+                  <Route
+                    path={Paths.appointments}
+                    element={<AppointedPatients />}
                   />
                   <Route path={Paths.newPatient} element={<NewPatientPage />} />
                   <Route path={Paths.settings} element={<SettingsPage />} />
