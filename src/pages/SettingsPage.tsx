@@ -1,5 +1,13 @@
-import { Select, useColorMode } from '@chakra-ui/react';
 import React from 'react';
+import HyficLogo from '../hyfic_logo.svg';
+import {
+  Divider,
+  Flex,
+  Link,
+  Select,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
 
 export const SettingsPage: React.FC = () => {
   const { colorMode, setColorMode } = useColorMode();
@@ -19,6 +27,27 @@ export const SettingsPage: React.FC = () => {
           <option value='dark'>Dark</option>
         </Select>
       </div>
+      <Divider mt={10} mb={5} />
+      <Flex alignItems='center' justifyContent='space-between'>
+        <Text className='ml-1'>
+          <Link
+            opacity={0.4}
+            href='https://hyfic.github.io/heartbeat'
+            target='_blank'
+            className='hover:opacity-100'
+          >
+            HeartBeat
+          </Link>{' '}
+          <span className='opacity-40'>v1.0.0</span>
+        </Text>
+        <Link href='https://hyfic.github.io' target='_blank'>
+          <img
+            src={HyficLogo}
+            alt='Hyfic'
+            className='w-12 opacity-40 hover:opacity-100'
+          />
+        </Link>
+      </Flex>
     </div>
   );
 };
