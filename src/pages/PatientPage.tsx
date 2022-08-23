@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import moment from 'moment';
 import { Avatar, Flex, IconButton, Text } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
@@ -8,7 +9,7 @@ import { ArrowNarrowLeft, CalendarEvent, FileExport } from 'tabler-icons-react';
 import { PatientRecords } from '../components/patient/PatientRecords';
 import { EditBioData } from '../components/patient/EditBioData';
 import { DeletePatient } from '../components/patient/DeletePatient';
-import moment from 'moment';
+import { getId } from '../utils/getId';
 
 export const PatientPage: React.FC = () => {
   const navigate = useNavigate();
@@ -35,6 +36,26 @@ export const PatientPage: React.FC = () => {
         navigate(Paths.patientList, { replace: true });
       });
   }, [id, patients]);
+
+  const exportData = () => {
+    if (!patient) return;
+    let file = new Blob(
+      [
+        JSON.stringify({
+          id,
+          data: patient,
+        }),
+      ],
+      { type: 'text/json' }
+    );
+
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(file);
+    a.download = `${patient.bioData?.name && patient.bioData.name + '_'}${getId(
+      patient.createdAt || 0
+    )}.json`;
+    a.click();
+  };
 
   return (
     <div>
@@ -78,6 +99,7 @@ export const PatientPage: React.FC = () => {
                 aria-label='Export data'
                 icon={<FileExport size={20} strokeWidth={2} />}
                 variant='ghost'
+                onClick={exportData}
               />
             </Flex>
           </Flex>
