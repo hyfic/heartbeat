@@ -1,5 +1,5 @@
-import { useToast } from '@chakra-ui/react';
 import moment from 'moment';
+import { useToast } from '@chakra-ui/react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { readPatientsHelper } from '../api/patient';
 import { PatientDataType, PatientType } from '../types/patient';
@@ -40,25 +40,7 @@ export const PatientContextWrapper: ReactComponent = ({ children }) => {
     readPatientsHelper(selectedDatabase.path)
       .then((rawData: any) => {
         var data: PatientType[] = rawData;
-
-        setPatients(
-          data.sort(function (a, b) {
-            let aParsed: PatientDataType = JSON.parse(a.data);
-            let bParsed: PatientDataType = JSON.parse(b.data);
-
-            let aDate =
-              (aParsed.records != undefined
-                ? aParsed.records[0].createdAt
-                : aParsed.createdAt) || 1;
-
-            let bDate =
-              (bParsed.records != undefined
-                ? bParsed.records[0].createdAt
-                : bParsed.createdAt) || 2;
-
-            return bDate - aDate;
-          })
-        );
+        sortAndSetPatients(data);
       })
       .catch((err) => {
         toast({
@@ -73,6 +55,22 @@ export const PatientContextWrapper: ReactComponent = ({ children }) => {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const sortAndSetPatients = (unSortedPatients?: PatientType[]) => {
+    let data = unSortedPatients || patients;
+
+    setPatients(
+      data.sort(function (a, b) {
+        let aParsed: PatientDataType = JSON.parse(a.data);
+        let bParsed: PatientDataType = JSON.parse(b.data);
+
+        let aDate = aParsed.updatedAt || 1;
+        let bDate = bParsed.updatedAt || 2;
+
+        return bDate - aDate;
+      })
+    );
   };
 
   const loadPatient = (patientId: number) => {
@@ -106,14 +104,15 @@ export const PatientContextWrapper: ReactComponent = ({ children }) => {
       patient.id == patientId ? newPatient : patient
     );
 
-    setPatients(editedPatients);
+    sortAndSetPatients(editedPatients);
   };
 
   const deletePatient = (patientId: number) => {
     let filteredPatients = patients.filter(
       (patient) => patient.id !== patientId
     );
-    setPatients(filteredPatients);
+
+    sortAndSetPatients(filteredPatients);
   };
 
   useEffect(loadPatients, [selectedDatabase]);
