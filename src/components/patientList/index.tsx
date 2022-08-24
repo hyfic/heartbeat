@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { PatientDataType, PatientType } from '../../types/patient';
 import { TextInput } from '../common/TextInput';
 import { Link } from 'react-router-dom';
-import { Folder, UserPlus } from 'tabler-icons-react';
+import { ChevronDown, Folder, UserPlus } from 'tabler-icons-react';
 import { Paths } from '../../utils/paths';
 import { getId } from '../../utils/getId';
-import moment from 'moment';
 import {
   Flex,
   IconButton,
@@ -17,6 +17,11 @@ import {
   Tbody,
   Td,
   Avatar,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import { OpenPatient } from './OpenPatient';
 
@@ -37,13 +42,24 @@ export const PatientList: React.FC<Props> = ({ patients }) => {
           className='w-full'
         />
         <Link to={Paths.newPatient} replace>
-          <IconButton
-            aria-label='New patient'
-            icon={<UserPlus size={18} />}
-            ml={2}
-          />
+          <Button ml={1}>
+            <UserPlus size={18} className='mr-1' /> New patient
+          </Button>
         </Link>
-        <OpenPatient />
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<ChevronDown size={18} />}
+            ml={1}
+          />
+          <MenuList>
+            <Link to={Paths.newPatient} replace>
+              <MenuItem icon={<UserPlus size={18} />}>New patient</MenuItem>
+            </Link>
+            <OpenPatient />
+          </MenuList>
+        </Menu>
       </Flex>
       <TableContainer mt={5}>
         <Table variant='striped'>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IconButton, useToast } from '@chakra-ui/react';
+import { MenuItem, useToast } from '@chakra-ui/react';
 import { FileImport } from 'tabler-icons-react';
 import { open } from '@tauri-apps/api/dialog';
 import { readTextFile } from '@tauri-apps/api/fs';
@@ -103,11 +103,8 @@ export const OpenPatient: React.FC = () => {
   };
 
   return (
-    <IconButton
-      aria-label='Open patient'
-      icon={<FileImport size={18} />}
-      ml={2}
-      onClick={loadPatient}
-    />
+    <MenuItem icon={<FileImport size={18} />} onClick={loadPatient}>
+      Open patient
+    </MenuItem>
   );
 };
