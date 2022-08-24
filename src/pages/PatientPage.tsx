@@ -39,15 +39,7 @@ export const PatientPage: React.FC = () => {
 
   const exportData = () => {
     if (!patient) return;
-    let file = new Blob(
-      [
-        JSON.stringify({
-          id,
-          data: patient,
-        }),
-      ],
-      { type: 'text/json' }
-    );
+    let file = new Blob([JSON.stringify(patient)], { type: 'text/json' });
 
     var a = document.createElement('a');
     a.href = URL.createObjectURL(file);
