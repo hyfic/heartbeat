@@ -5,11 +5,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
 import { PatientDataType } from '../types/patient';
 import { Paths } from '../utils/paths';
-import { ArrowNarrowLeft, CalendarEvent, FileExport } from 'tabler-icons-react';
+import { ArrowNarrowLeft, CalendarEvent } from 'tabler-icons-react';
 import { PatientRecords } from '../components/patient/PatientRecords';
 import { EditBioData } from '../components/patient/EditBioData';
 import { DeletePatient } from '../components/patient/DeletePatient';
-import { getId } from '../utils/getId';
+import { ExportPatient } from '../components/patient/ExportPatient';
 
 export const PatientPage: React.FC = () => {
   const navigate = useNavigate();
@@ -36,18 +36,6 @@ export const PatientPage: React.FC = () => {
         navigate(Paths.patientList, { replace: true });
       });
   }, [id, patients]);
-
-  const exportData = () => {
-    if (!patient) return;
-    let file = new Blob([JSON.stringify(patient)], { type: 'text/json' });
-
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(file);
-    a.download = `${patient.bioData?.name && patient.bioData.name + '_'}${getId(
-      patient.createdAt || 0
-    )}.json`;
-    a.click();
-  };
 
   return (
     <div>
@@ -87,12 +75,7 @@ export const PatientPage: React.FC = () => {
                 patientId={Number(id)}
                 patientName={patient.bioData.name || ''}
               />
-              <IconButton
-                aria-label='Export data'
-                icon={<FileExport size={20} strokeWidth={2} />}
-                variant='ghost'
-                onClick={exportData}
-              />
+              <ExportPatient patientData={patient} />
             </Flex>
           </Flex>
           {patient.bioData.address && (
