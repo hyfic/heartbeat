@@ -18,6 +18,7 @@ import {
   Td,
   Avatar,
 } from '@chakra-ui/react';
+import { OpenPatient } from './OpenPatient';
 
 interface Props {
   patients: PatientType[];
@@ -42,6 +43,7 @@ export const PatientList: React.FC<Props> = ({ patients }) => {
             ml={2}
           />
         </Link>
+        <OpenPatient />
       </Flex>
       <TableContainer mt={5}>
         <Table variant='striped'>
