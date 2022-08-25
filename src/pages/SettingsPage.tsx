@@ -1,5 +1,6 @@
 import React from 'react';
-import HyficLogo from '../hyfic_logo.svg';
+import HyficLogoWhite from '../hyfic_logo_white.svg';
+import HyficLogoBlack from '../hyfic_logo_black.svg';
 import {
   Divider,
   Flex,
@@ -42,9 +43,9 @@ export const SettingsPage: React.FC = () => {
         </Text>
         <Link href='https://hyfic.github.io' target='_blank'>
           <img
-            src={HyficLogo}
+            src={colorMode === 'dark' ? HyficLogoWhite : HyficLogoBlack}
             alt='Hyfic'
-            className='w-12 opacity-40 hover:opacity-100'
+            className='w-12 text-red-500 opacity-40 hover:opacity-100'
           />
         </Link>
       </Flex>
