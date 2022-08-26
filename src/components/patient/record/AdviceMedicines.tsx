@@ -123,7 +123,7 @@ export const AdviceMedicines: React.FC<Props> = ({
                   onChange={(e) => setTime(e.target.value)}
                 >
                   <option value='Before food'>Before food</option>
-                  <option value='Between food'>Between food</option>
+                  <option value='Between food'>With food</option>
                   <option value='After food'>After food</option>
                 </Select>
               </Td>

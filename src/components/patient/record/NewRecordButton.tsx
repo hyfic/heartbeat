@@ -11,7 +11,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useToast,
-  IconButton,
 } from '@chakra-ui/react';
 import { PatientDataType, PatientRecordType } from '../../../types/patient';
 import { SetState } from '../../../types/react';
@@ -24,7 +23,6 @@ import {
   PatientContext,
   PatientContextType,
 } from '../../../context/PatientContext';
-import { Plus } from 'tabler-icons-react';
 import { PreviewButton } from './PreviewButton';
 
 interface Props {
@@ -132,13 +130,9 @@ export const NewRecordButton: React.FC<Props> = ({
 
   return (
     <>
-      <IconButton
-        aria-label='New patient'
-        icon={<Plus size={18} />}
-        ml={2}
-        ref={btnRef}
-        onClick={onOpen}
-      />
+      <Button ref={btnRef} onClick={onOpen} ml={1}>
+        Add record
+      </Button>
       <Drawer
         isOpen={isOpen}
         placement='right'

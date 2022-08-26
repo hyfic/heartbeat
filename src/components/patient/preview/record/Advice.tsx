@@ -27,11 +27,6 @@ export const Advice: React.FC<Props> = ({ advice, tableVariant }) => {
   return (
     <div className='mt-5'>
       <h2 className='text-xl font-semibold mb-3'>ADVICE</h2>
-      {advice.advice && (
-        <Text mt={1} fontSize='lg'>
-          {advice.advice}
-        </Text>
-      )}
       {advice.medicines && advice.medicines.length !== 0 && (
         <LightMode>
           <Table mt={2} variant={tableVariant}>
@@ -55,6 +50,11 @@ export const Advice: React.FC<Props> = ({ advice, tableVariant }) => {
             </Tbody>
           </Table>
         </LightMode>
+      )}
+      {advice.advice && (
+        <Text mt={2} fontSize='lg'>
+          {advice.advice}
+        </Text>
       )}
       {advice.investigationToDo && (
         <div className='mt-3'>
