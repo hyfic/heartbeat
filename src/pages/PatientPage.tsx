@@ -5,7 +5,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
 import { PatientDataType } from '../types/patient';
 import { Paths } from '../utils/paths';
-import { ArrowNarrowLeft, CalendarEvent } from 'tabler-icons-react';
+import {
+  AddressBook,
+  ArrowNarrowLeft,
+  CalendarEvent,
+  Phone,
+} from 'tabler-icons-react';
 import { PatientRecords } from '../components/patient/PatientRecords';
 import { EditBioData } from '../components/patient/EditBioData';
 import { DeletePatient } from '../components/patient/DeletePatient';
@@ -78,8 +83,21 @@ export const PatientPage: React.FC = () => {
               <ExportPatient patientData={patient} />
             </Flex>
           </Flex>
+          {patient.bioData.phone && (
+            <div className='mt-3 flex items-center'>
+              <Phone size={18} className='mr-1' />
+              <p>{patient.bioData.phone}</p>
+            </div>
+          )}
           {patient.bioData.address && (
-            <p className='mt-3'>{patient.bioData.address}</p>
+            <div
+              className={`${
+                patient.bioData.phone ? 'mt-2' : 'mt-3'
+              } flex items-center`}
+            >
+              <AddressBook size={20} className='mr-1' />
+              <p>{patient.bioData.address}</p>
+            </div>
           )}
           {patient.records &&
             patient.records.length !== 0 &&
