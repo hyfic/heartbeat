@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AppCloseConfirm } from './components/AppCloseConfirm';
 import { AppLayout } from './components/AppLayout';
 import { DatabaseContextWrapper } from './context/DatabaseContext';
 import { DoctorContextWrapper } from './context/DoctorContext';
@@ -15,7 +16,7 @@ import { Paths } from './utils/paths';
 
 export const App: React.FC = () => {
   return (
-    <div>
+    <AppCloseConfirm>
       <BrowserRouter>
         <DatabaseContextWrapper>
           <PatientContextWrapper>
@@ -47,6 +48,6 @@ export const App: React.FC = () => {
           </PatientContextWrapper>
         </DatabaseContextWrapper>
       </BrowserRouter>
-    </div>
+    </AppCloseConfirm>
   );
 };
