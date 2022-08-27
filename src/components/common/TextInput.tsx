@@ -10,6 +10,7 @@ interface Props {
   disabled?: boolean;
   textArea?: boolean;
   disableTitle?: boolean;
+  type?: React.HTMLInputTypeAttribute;
 }
 
 export const TextInput: React.FC<Props> = ({
@@ -20,6 +21,7 @@ export const TextInput: React.FC<Props> = ({
   disabled,
   textArea,
   disableTitle,
+  type,
 }) => {
   return (
     <div className={className}>
@@ -35,6 +37,7 @@ export const TextInput: React.FC<Props> = ({
       ) : (
         <Input
           placeholder={title}
+          type={type}
           variant='filled'
           value={value}
           onChange={(e) => setValue(e.target.value)}
