@@ -33,8 +33,48 @@ export const PreviewContent: React.FC<Props> = ({
     onBeforeGetContent() {
       setPrintLoading(true);
     },
-    pageStyle:
-      '@page { size: auto;  margin: 0mm; margin-top: 10px; margin-bottom: 50px; } @media print { body { -webkit-print-color-adjust: exact; } }',
+    pageStyle: `
+      @page { 
+        size: auto;  
+        margin: 0;
+      }
+      
+      @media print { 
+        body { 
+          -webkit-print-color-adjust: exact; 
+        } 
+      }
+      
+      @print {
+        @page :footer {
+            display: none
+        }
+    
+        @page :header {
+            display: none
+        }
+      }
+
+      @media print {
+          @page {
+              margin-top: 0;
+              margin-bottom: 0;
+          }
+          body {
+              padding-top: 72px;
+              padding-bottom: 72px;
+          }
+
+          @page { 
+            margin-top: 30px;
+            margin-bottom: 20px;
+          }
+
+          @page :first {
+            margin-top: 0;
+          }
+      }
+      `,
     onAfterPrint() {
       setPrintLoading(false);
     },
