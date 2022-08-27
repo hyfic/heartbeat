@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import { Avatar, Flex, IconButton, Text } from '@chakra-ui/react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
 import { PatientDataType } from '../types/patient';
 import { Paths } from '../utils/paths';
@@ -16,8 +16,15 @@ import { EditBioData } from '../components/patient/EditBioData';
 import { DeletePatient } from '../components/patient/DeletePatient';
 import { ExportPatient } from '../components/patient/ExportPatient';
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 export const PatientPage: React.FC = () => {
   const navigate = useNavigate();
+  const query = useQuery();
   const { id } = useParams();
 
   const { loadPatient, patients } = useContext(
@@ -46,12 +53,13 @@ export const PatientPage: React.FC = () => {
     <div>
       {patient.bioData && (
         <div>
-          <Link to={Paths.patientList} replace>
+          <Link to={query.get('path') || Paths.patientList}>
             <IconButton
               aria-label='Go back'
               icon={<ArrowNarrowLeft />}
               mb={5}
               variant='ghost'
+              onClick={() => {}}
             />
           </Link>
           <Flex alignItems='center' justifyContent='space-between'>
@@ -83,12 +91,31 @@ export const PatientPage: React.FC = () => {
               <ExportPatient patientData={patient} />
             </Flex>
           </Flex>
-          {patient.bioData.phone && (
-            <div className='mt-3 flex items-center'>
-              <Phone size={18} className='mr-1' />
-              <p>{patient.bioData.phone}</p>
-            </div>
-          )}
+          <div className='mt-3 flex items-center'>
+            {patient.bioData.phone && (
+              <div className='flex items-center mr-3'>
+                <Phone size={18} className='mr-1' />
+                <p>{patient.bioData.phone}</p>
+              </div>
+            )}
+            {patient.records &&
+              patient.records.length !== 0 &&
+              patient.records[0].nextAppointment &&
+              (moment(patient.records[0].nextAppointment).isAfter() ||
+                moment(patient.records[0].nextAppointment).isSame(
+                  moment(),
+                  'day'
+                )) && (
+                <Flex alignItems='center'>
+                  <CalendarEvent size={20} />
+                  <Text ml={1}>
+                    {moment(patient.records[0].nextAppointment).format(
+                      'dddd, MMM D YYYY'
+                    )}
+                  </Text>
+                </Flex>
+              )}
+          </div>
           {patient.bioData.address && (
             <div
               className={`${
@@ -99,23 +126,7 @@ export const PatientPage: React.FC = () => {
               <p>{patient.bioData.address}</p>
             </div>
           )}
-          {patient.records &&
-            patient.records.length !== 0 &&
-            patient.records[0].nextAppointment &&
-            (moment(patient.records[0].nextAppointment).isAfter() ||
-              moment(patient.records[0].nextAppointment).isSame(
-                moment(),
-                'day'
-              )) && (
-              <Flex className='mt-3' alignItems='center'>
-                <CalendarEvent size={20} />
-                <Text ml={1}>
-                  {moment(patient.records[0].nextAppointment).format(
-                    'dddd, MMM D YYYY'
-                  )}
-                </Text>
-              </Flex>
-            )}
+
           <PatientRecords
             patientId={Number(id)}
             patientData={patient}
