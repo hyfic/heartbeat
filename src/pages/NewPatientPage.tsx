@@ -23,7 +23,8 @@ export const NewPatientPage: React.FC = () => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [sex, setSex] = useState('Male');
-  const [address, setAddres] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
 
   const createPatient = () => {
@@ -35,6 +36,7 @@ export const NewPatientPage: React.FC = () => {
         age,
         sex,
         address,
+        phone,
       },
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -95,10 +97,17 @@ export const NewPatientPage: React.FC = () => {
         </div>
       </SimpleGrid>
       <TextInput
+        title='Phone no'
+        type='number'
+        value={phone}
+        setValue={setPhone}
+        className='mt-3'
+      />
+      <TextInput
         title='Address'
         value={address}
-        setValue={setAddres}
-        className='mt-5'
+        setValue={setAddress}
+        className='mt-3'
         textArea
       />
       <Button

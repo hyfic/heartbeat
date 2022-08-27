@@ -53,7 +53,8 @@ export const EditBioData: React.FC<Props> = ({
   const [name, setName] = useState(patientBioData?.name || '');
   const [age, setAge] = useState(patientBioData?.age || '');
   const [sex, setSex] = useState(patientBioData?.sex || 'Male');
-  const [address, setAddres] = useState(patientBioData?.address || '');
+  const [address, setAddress] = useState(patientBioData?.address || '');
+  const [phone, setPhone] = useState(patientBioData?.phone || '');
   const [loading, setLoading] = useState(false);
 
   const savePatient = () => {
@@ -67,6 +68,7 @@ export const EditBioData: React.FC<Props> = ({
         name,
         age,
         sex,
+        phone,
         address,
       },
       updatedAt: Date.now(),
@@ -141,10 +143,16 @@ export const EditBioData: React.FC<Props> = ({
               </div>
             </SimpleGrid>
             <TextInput
+              title='Phone no'
+              value={phone}
+              setValue={setPhone}
+              className='mt-3'
+            />
+            <TextInput
               title='Address'
               value={address}
-              setValue={setAddres}
-              className='mt-5'
+              setValue={setAddress}
+              className='mt-3'
               textArea
             />
           </ModalBody>

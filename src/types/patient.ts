@@ -3,6 +3,7 @@ export interface PatientBioDataType {
   age?: string;
   sex?: string;
   address?: string;
+  phone?: string;
 }
 
 export interface PatientMedicalBioDataType {
