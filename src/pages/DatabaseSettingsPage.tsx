@@ -1,18 +1,22 @@
 import React, { useContext, useState } from 'react';
-import { DotsVertical, FilePlus } from 'tabler-icons-react';
+import { ChevronDown, DotsVertical, FilePlus } from 'tabler-icons-react';
 import { EditButton } from '../components/databaseSettings/EditButton';
 import { DeleteButton } from '../components/databaseSettings/DeleteButton';
 import { CreateDatabaseWrapper } from '../components/navbar/CreateDatabaseWrapper';
+import { OpenFileFolder } from '../components/databaseSettings/OpenFileFolder';
+import { OpenDatabase } from '../components/navbar/OpenDatabase';
 import {
   DatabaseContext,
   DatabaseContextType,
 } from '../context/DatabaseContext';
 import {
+  Button,
   Flex,
   IconButton,
   Input,
   Menu,
   MenuButton,
+  MenuItem,
   MenuList,
   Table,
   TableContainer,
@@ -22,7 +26,6 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { OpenFileFolder } from '../components/databaseSettings/OpenFileFolder';
 
 export const DatabaseSettingsPage: React.FC = () => {
   const { databases, setDatabases, loading } = useContext(
@@ -44,12 +47,24 @@ export const DatabaseSettingsPage: React.FC = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <CreateDatabaseWrapper>
-          <IconButton
-            aria-label='New database'
-            icon={<FilePlus size={20} />}
-            ml={2}
-          />
+          <Button ml={1}>
+            <FilePlus size={20} className='mr-1' /> New database
+          </Button>
         </CreateDatabaseWrapper>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<ChevronDown size={18} />}
+            ml={1}
+          />
+          <MenuList>
+            <CreateDatabaseWrapper>
+              <MenuItem icon={<FilePlus />}>Create database</MenuItem>
+            </CreateDatabaseWrapper>
+            <OpenDatabase />
+          </MenuList>
+        </Menu>
       </Flex>
       {!loading && databases.length === 0 && (
         <p className='mt-3'>No databases</p>
@@ -63,7 +78,6 @@ export const DatabaseSettingsPage: React.FC = () => {
                 <Th>Database name</Th>
                 <Th>Path</Th>
                 <Th>Options</Th>
-                {/* <Th>Delete</Th> */}
               </Tr>
             </Thead>
             <Tbody>
