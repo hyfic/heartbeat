@@ -4,6 +4,7 @@ import { Tab, TabList, Tabs } from '@chakra-ui/react';
 import { PatientList } from '../components/patientList';
 import { PatientContext, PatientContextType } from '../context/PatientContext';
 import { PatientDataType } from '../types/patient';
+import { DatabaseCheckerWrapper } from '../components/DatabaseCheckerWrapper';
 
 enum TabPage {
   Today,
@@ -41,7 +42,7 @@ export const AppointedPatients: React.FC = () => {
   const tomorrowsAppointment = filterPatients(true);
 
   return (
-    <div>
+    <DatabaseCheckerWrapper>
       <h1 className='text-2xl font-medium'>Appointments</h1>
       <Tabs mt={5}>
         <TabList>
@@ -58,6 +59,6 @@ export const AppointedPatients: React.FC = () => {
           currentTab == TabPage.Today ? todaysAppointment : tomorrowsAppointment
         }
       />
-    </div>
+    </DatabaseCheckerWrapper>
   );
 };
