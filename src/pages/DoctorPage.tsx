@@ -86,7 +86,7 @@ export const DoctorPage: React.FC = () => {
         w='full'
         isLoading={loading}
       >
-        Edit details
+        Save details
       </Button>
     </DatabaseCheckerWrapper>
   );
