@@ -110,7 +110,7 @@ export const PatientList: React.FC<Props> = ({ patients }) => {
                       <Avatar name={patient.bioData?.name} size='sm' />
                     </Td>
                     <Td>{patient.bioData?.name}</Td>
-                    <Td>{patient.bioData?.phone || 'No phone'}</Td>
+                    <Td>{patient.bioData?.phone || 'Not added'}</Td>
                     <Td>{moment(patient.updatedAt || 0).fromNow()}</Td>
                   </Tr>
                 );
