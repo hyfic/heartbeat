@@ -1,5 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { RecordForm } from './RecordForm';
+import { PatientDataType, PatientRecordType } from '../../../types/patient';
+import { SetState } from '../../../types/react';
+import { updatePatientHelper } from '../../../api/patient';
+import { PreviewButton } from './PreviewButton';
+import { ChevronDown } from 'tabler-icons-react';
+import {
+  DatabaseContext,
+  DatabaseContextType,
+} from '../../../context/DatabaseContext';
+import {
+  PatientContext,
+  PatientContextType,
+} from '../../../context/PatientContext';
 import {
   useDisclosure,
   Button,
@@ -11,19 +24,13 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useToast,
+  Flex,
+  Menu,
+  MenuButton,
+  IconButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
-import { PatientDataType, PatientRecordType } from '../../../types/patient';
-import { SetState } from '../../../types/react';
-import { updatePatientHelper } from '../../../api/patient';
-import {
-  DatabaseContext,
-  DatabaseContextType,
-} from '../../../context/DatabaseContext';
-import {
-  PatientContext,
-  PatientContextType,
-} from '../../../context/PatientContext';
-import { PreviewButton } from './PreviewButton';
 
 interface Props {
   patientData: PatientDataType;
@@ -53,27 +60,21 @@ export const NewRecordButton: React.FC<Props> = ({
       : undefined
     : undefined;
 
-  const [record, setRecord] = useState<PatientRecordType>(
-    lastMedicalRecord
-      ? {
-          medicalBioData: {
-            height: lastMedicalRecord?.medicalBioData?.height || undefined,
-            weight: lastMedicalRecord?.medicalBioData?.weight || undefined,
-            bmi: lastMedicalRecord?.medicalBioData?.bmi || undefined,
-          },
-          examination: {
-            systemicExamination: {
-              diagnosis:
-                lastMedicalRecord?.examination?.systemicExamination?.diagnosis,
-            },
-          },
-        }
-      : {}
-  );
+  let defaultRecordData = lastMedicalRecord
+    ? {
+        medicalBioData: {
+          height: lastMedicalRecord?.medicalBioData?.height || undefined,
+          weight: lastMedicalRecord?.medicalBioData?.weight || undefined,
+          bmi: lastMedicalRecord?.medicalBioData?.bmi || undefined,
+        },
+      }
+    : {};
+
+  const [record, setRecord] = useState<PatientRecordType>(defaultRecordData);
   const [loading, setLoading] = useState(false);
 
   const closeDrawer = () => {
-    setRecord({});
+    setRecord(defaultRecordData);
     onClose();
   };
 
@@ -130,9 +131,61 @@ export const NewRecordButton: React.FC<Props> = ({
 
   return (
     <>
-      <Button ref={btnRef} onClick={onOpen} ml={1}>
-        Add record
-      </Button>
+      <Flex alignItems='center' ml={1}>
+        <Button ref={btnRef} onClick={onOpen}>
+          Add record
+        </Button>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<ChevronDown size={18} />}
+            ml={1}
+          />
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                setRecord({});
+                onOpen();
+              }}
+            >
+              New blank record
+            </MenuItem>
+            {lastMedicalRecord && (
+              <MenuItem
+                onClick={() => {
+                  setRecord(lastMedicalRecord || {});
+                  onOpen();
+                }}
+              >
+                New record with previous data
+              </MenuItem>
+            )}
+            {lastMedicalRecord &&
+              lastMedicalRecord.examination?.systemicExamination?.diagnosis &&
+              lastMedicalRecord.examination?.systemicExamination?.diagnosis
+                .length !== 0 && (
+                <MenuItem
+                  onClick={() => {
+                    setRecord({
+                      ...defaultRecordData,
+                      examination: {
+                        systemicExamination: {
+                          diagnosis:
+                            lastMedicalRecord?.examination?.systemicExamination
+                              ?.diagnosis,
+                        },
+                      },
+                    });
+                    onOpen();
+                  }}
+                >
+                  New record with last diagnosis
+                </MenuItem>
+              )}
+          </MenuList>
+        </Menu>
+      </Flex>
       <Drawer
         isOpen={isOpen}
         placement='right'
