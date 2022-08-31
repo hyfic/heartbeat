@@ -28,7 +28,7 @@ export const Diagnosis: React.FC<Props> = ({
 
   return (
     <TableContainer mt={5}>
-      <Table variant='striped'>
+      <Table>
         <Thead>
           <Tr>
             <Th>Index</Th>
