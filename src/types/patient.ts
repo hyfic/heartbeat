@@ -8,7 +8,7 @@ export interface PatientBioDataType {
 
 export interface PatientMedicalBioDataType {
   height?: string;
-  heightUnit?: string;
+  heightUnit?: 'Centimeter' | 'Metre' | 'Inch';
   weight?: string;
   bmi?: string;
   allergyToMedicine?: {

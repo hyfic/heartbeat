@@ -15,8 +15,8 @@ interface Props {
 }
 
 enum HeightUnit {
-  Metre,
   Centimeter,
+  Metre,
   Inch,
 }
 
@@ -27,7 +27,9 @@ export const MedicalBioData: React.FC<Props> = ({
 }) => {
   let medicalBioData = patientRecord.medicalBioData;
 
-  const [heightUnit, setHeightUnit] = useState(HeightUnit.Metre);
+  const [heightUnit, setHeightUnit] = useState(
+    HeightUnit[medicalBioData?.heightUnit || 'Centimeter']
+  );
   const [height, setHeight] = useState(medicalBioData?.height || '');
   const [weight, setWeight] = useState(medicalBioData?.weight || '');
   const [bmi, setBmi] = useState(medicalBioData?.bmi || '0');
@@ -72,8 +74,7 @@ export const MedicalBioData: React.FC<Props> = ({
 
   useEffect(() => {
     const patientMedicalBioData: PatientMedicalBioDataType = {
-      heightUnit:
-        HeightUnit[heightUnit][0] == 'C' ? 'Cm' : HeightUnit[heightUnit][0],
+      heightUnit: HeightUnit[heightUnit].toString() as any,
       height: height,
       weight: weight,
       bmi,
@@ -138,8 +139,8 @@ export const MedicalBioData: React.FC<Props> = ({
               value={heightUnit}
               onChange={(e) => setHeightUnit(parseInt(e.target.value))}
             >
-              <option value={HeightUnit.Metre}>M</option>
               <option value={HeightUnit.Centimeter}>CM</option>
+              <option value={HeightUnit.Metre}>M</option>
               <option value={HeightUnit.Inch}>I</option>
             </Select>
           </Flex>
