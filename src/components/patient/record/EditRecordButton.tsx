@@ -91,6 +91,7 @@ export const EditRecordButton: React.FC<Props> = ({
         });
 
         setPatientData(patientNewData);
+        editPatient(patientId, patientNewData);
         onClose();
       })
       .catch((err) => {
