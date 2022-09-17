@@ -20,6 +20,7 @@ pub fn connect_app_database() -> Result<Connection> {
 // connect to data db, which contains data.
 pub fn connect_data_db<P: AsRef<Path>>(database_path: P) -> Result<Connection> {
     let conn = Connection::open(database_path)?;
+    conn.db_config(rusqlite::config::DbConfig::SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER)?;
 
     conn.execute(
         "CREATE TABLE IF NOT EXISTS Doctor (
@@ -32,7 +33,11 @@ pub fn connect_data_db<P: AsRef<Path>>(database_path: P) -> Result<Connection> {
     conn.execute(
         "CREATE TABLE IF NOT EXISTS Patient (
             id integer primary key,
-            data text
+            pid text,
+            created_at text,
+            updated_at text,
+            bio_data text.
+            records text
         )",
         [],
     )?;
