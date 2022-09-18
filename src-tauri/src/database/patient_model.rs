@@ -35,8 +35,8 @@ pub fn read_all(db: &Connection, page: i32) -> Result<Vec<PatientType>, String> 
     let mut patient_vec: Vec<PatientType> = Vec::new();
 
     let sql = format!(
-        "SELECT * FROM Patient LIMIT 10 OFFSET {} ORDER BY updated_at DESC",
-        page * 10
+        "SELECT * FROM Patient ORDER BY updated_at DESC LIMIT 10 OFFSET {}",
+        (page - 1) * 10
     );
 
     let mut sql_query = match db.prepare(&sql) {
@@ -68,13 +68,48 @@ pub fn read_all(db: &Connection, page: i32) -> Result<Vec<PatientType>, String> 
     Ok(patient_vec)
 }
 
-pub fn search_patient(db: &Connection, search_query: String) -> Result<Vec<PatientType>, String> {
+pub fn search_patient(
+    db: &Connection,
+    search_query: String,
+    page: i32,
+) -> Result<Vec<PatientType>, String> {
     let mut patient_vec: Vec<PatientType> = Vec::new();
 
     let sql = format!(
-        "SELECT * FROM Patient LIMIT 10 WHERE data LIKE %'\"name\":\"{}'%",
-        search_query
+        "SELECT * FROM Patient WHERE pid='{}' OR bio_data LIKE '%{}%' LIMIT 10 OFFSET {}",
+        search_query,
+        search_query,
+        (page - 1) * 10
     );
+
+    let mut sql_query = match db.prepare(&sql) {
+        Ok(query) => query,
+        Err(err) => {
+            println!("{}", err);
+            return Err(String::from("Failed to load patient"));
+        }
+    };
+
+    let patient_iter = match sql_query.query_map([], |row| {
+        Ok(PatientType {
+            id: row.get(0)?,
+            pid: row.get(1)?,
+            created_at: row.get(2)?,
+            updated_at: row.get(3)?,
+            bio_data: row.get(4)?,
+            records: row.get(5)?,
+        })
+    }) {
+        Ok(patient_iter) => patient_iter,
+        Err(_) => return Err(String::from("Failed to load patient")),
+    };
+
+    for patient in patient_iter {
+        match patient {
+            Ok(patient_data) => patient_vec.push(patient_data),
+            Err(_) => continue,
+        }
+    }
 
     Ok(patient_vec)
 }
@@ -122,8 +157,8 @@ pub fn update(
     let id = format!("{}", id);
 
     match db.execute(
-        "UPDATE Patient SET updated_at=(?1) bio_data=(?2) records=(?3) WHERE id=(?4)",
-        &[&updated_at, &bio_data, &records],
+        "UPDATE Patient SET updated_at=(?1), bio_data=(?2), records=(?3) WHERE id=(?4)",
+        &[&updated_at, &bio_data, &records, &id],
     ) {
         Ok(_) => return Ok(()),
         Err(_) => return Err(String::from("Failed to update patient")),
