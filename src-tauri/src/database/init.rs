@@ -36,7 +36,7 @@ pub fn connect_data_db<P: AsRef<Path>>(database_path: P) -> Result<Connection> {
             pid text,
             created_at text,
             updated_at text,
-            bio_data text.
+            bio_data text,
             records text
         )",
         [],
