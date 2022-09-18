@@ -19,6 +19,7 @@ fn main() {
             controller::patient_controller::create_patient,
             controller::patient_controller::read_patients,
             controller::patient_controller::read_patient,
+            controller::patient_controller::search_patient,
             controller::patient_controller::update_patient,
             controller::patient_controller::delete_patient,
         ])

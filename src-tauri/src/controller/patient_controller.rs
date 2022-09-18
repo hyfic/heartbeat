@@ -16,9 +16,9 @@ pub fn create_patient(
 }
 
 #[tauri::command]
-pub fn read_patients(database_path: String) -> Result<Vec<patient_model::PatientType>, String> {
+pub fn read_patients(database_path: String, page: i32) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
-    let patients = patient_model::read_all(&db, 1)?;
+    let patients = patient_model::read_all(&db, page)?;
     Ok(patients)
 }
 
@@ -29,6 +29,13 @@ pub fn read_patient(
 ) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
     let patients = patient_model::read_one(&db, id)?;
+    Ok(patients)
+}
+
+#[tauri::command]
+pub fn search_patient(database_path: String, search_query: String, page: i32) -> Result<Vec<patient_model::PatientType>, String> {
+    let db = init_data_db(database_path)?;
+    let patients = patient_model::search_patient(&db, search_query, page)?;
     Ok(patients)
 }
 
