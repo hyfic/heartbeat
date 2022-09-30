@@ -1,7 +1,9 @@
-# Tauri + Next.js + Typescript
+# Heartbeat ❤️
+An open-source desktop application for doctors to manage patient data.
 
-This template should help get you started developing with Tauri, Next.js and Typescript.
+## About
+A patient management system designed for doctors. In this app doctors can add patient data using simple forms, which later they can save as PDF or print as document.
 
-## Recommended IDE Setup
+> This project is WORK IN PROGRESS! , if you want to checkout older version check [v1.0.0-beta](https://github.com/octoi/hyfic-heartbeat), [v0.1.0](https://github.com/octoi/heartbeat)
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+https://octoi.github.io/heartbeat
