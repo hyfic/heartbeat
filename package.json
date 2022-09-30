@@ -8,7 +8,11 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.3.4",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@tauri-apps/api": "^1.1.0",
+    "framer-motion": "^7.5.1",
     "next": "^12.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
