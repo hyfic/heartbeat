@@ -29,3 +29,6 @@ dist-ssr
 
 # PNPM lock
 pnpm-lock.yaml
+
+# Database
+*.db
