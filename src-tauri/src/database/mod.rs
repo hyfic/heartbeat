@@ -2,6 +2,7 @@ use rusqlite::Connection;
 
 pub mod database_model;
 pub mod doctor_model;
+pub mod patient_model;
 
 mod init;
 
