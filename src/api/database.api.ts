@@ -8,7 +8,11 @@ const UPDATE_DATABASE = 'update_database';
 const DELETE_DATABASE = 'delete_database';
 
 export const createNewDatabase = (path: string, name: string) => {
-  return invoke(ADD_DATABASE, { path, name });
+  return new Promise<number>((resolve, reject) => {
+    invoke(ADD_DATABASE, { path, name })
+      .then((data: any) => resolve(data))
+      .catch(reject);
+  });
 };
 
 export const readDatabases = () => {

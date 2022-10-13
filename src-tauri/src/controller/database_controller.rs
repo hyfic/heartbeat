@@ -11,10 +11,10 @@ pub fn read_databases() -> Result<Vec<database_model::DatabaseType>, String> {
 }
 
 #[tauri::command]
-pub fn add_database(path: String, name: String) -> Result<(), String> {
+pub fn add_database(path: String, name: String) -> Result<i64, String> {
     let db = init_app_db()?;
-    database_model::create(&db, path, name)?;
-    Ok(())
+    let id = database_model::create(&db, path, name)?;
+    Ok(id)
 }
 
 #[tauri::command]
