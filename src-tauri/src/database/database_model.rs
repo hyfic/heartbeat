@@ -8,12 +8,15 @@ pub struct DatabaseType {
     pub name: String,
 }
 
-pub fn create(db: &Connection, path: String, name: String) -> Result<(), String> {
+pub fn create(db: &Connection, path: String, name: String) -> Result<i64, String> {
     match db.execute(
         "INSERT INTO Database (path, name) VALUES (?1, ?2)",
         &[&path, &name],
     ) {
-        Ok(_) => return Ok(()),
+        Ok(_) => {
+            let id = db.last_insert_rowid();
+            return Ok(id);
+        }
         Err(_) => return Err(String::from("Failed to save data")),
     }
 }
