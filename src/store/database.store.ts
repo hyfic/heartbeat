@@ -23,7 +23,7 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
         let filteredDatabase = databases.filter(
           (database) => database.id === selectDatabaseWithId
         );
-        console.log(filteredDatabase);
+
         if (filteredDatabase.length == 1) {
           set({ selectedDatabase: filteredDatabase[0] });
         }

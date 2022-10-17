@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ChevronDown,
-  FileDatabase,
-  FilePlus,
-  FileSettings,
-} from 'tabler-icons-react';
+import { useDatabaseStore } from '@/store/database.store';
+import { CreateDatabaseWrapper } from './createDatabaseWrapper';
+import { Link } from 'react-router-dom';
+import { OpenDatabase } from './openDatabase';
+import { Paths } from '@/utils/paths';
+import { ChevronDown, FilePlus, FileSettings } from 'tabler-icons-react';
 import {
   Button,
   Menu,
@@ -14,8 +14,6 @@ import {
   MenuGroup,
   MenuDivider,
 } from '@chakra-ui/react';
-import { useDatabaseStore } from '@/store/database.store';
-import { CreateDatabaseWrapper } from './createDatabaseWrapper';
 
 export const DatabaseOptions: React.FC = () => {
   const { selectedDatabase, databases, loadDatabases, setSelectedDatabase } =
@@ -29,12 +27,18 @@ export const DatabaseOptions: React.FC = () => {
 
   useEffect(() => {
     if (!selectedDatabase) {
-      setMenuPlaceholder('No database selected');
+      // select first element of databases if there is no selected database
+      if (databases.length === 0) {
+        setMenuPlaceholder('No database selected');
+        return;
+      }
+
+      setSelectedDatabase(databases[0]);
       return;
     }
 
     setMenuPlaceholder(selectedDatabase.name);
-  }, [selectedDatabase]);
+  }, [selectedDatabase, databases]);
 
   useEffect(() => {
     // set selected database id to localstorage
@@ -81,10 +85,10 @@ export const DatabaseOptions: React.FC = () => {
             <CreateDatabaseWrapper>
               <MenuItem icon={<FilePlus />}>Create database</MenuItem>
             </CreateDatabaseWrapper>
-            {/* <OpenDatabase />
+            <OpenDatabase />
             <Link to={Paths.databaseSettings} replace>
               <MenuItem icon={<FileSettings />}>Database settings</MenuItem>
-            </Link> */}
+            </Link>
           </MenuGroup>
         </MenuList>
       </Menu>
