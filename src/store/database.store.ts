@@ -8,6 +8,7 @@ interface DatabaseStore {
   loadDatabases: (selectDatabaseWithId?: number) => void;
   setSelectedDatabase: (selectedDatabase: DatabaseType | null) => void;
   deleteDatabase: (databaseId: number) => void;
+  editDatabase: (databaseId: number, databaseName: string) => void;
 }
 
 export const useDatabaseStore = create<DatabaseStore>((set) => ({
@@ -33,5 +34,16 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
   },
   deleteDatabase(databaseId: number) {
     set({ databases: this.databases.filter((db) => db.id !== databaseId) });
+  },
+  editDatabase(databaseId: number, databaseName: string) {
+    set({
+      databases: this.databases.map((db) => {
+        if (databaseId === db.id) {
+          db.name = databaseName;
+        }
+
+        return db;
+      }),
+    });
   },
 }));
