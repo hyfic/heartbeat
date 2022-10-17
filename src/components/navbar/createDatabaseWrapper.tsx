@@ -78,7 +78,6 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
           status: 'success',
         });
         // load databases with new data after creating database
-        console.log(databaseId);
         loadDatabases(databaseId);
       })
       .catch((err) => {
