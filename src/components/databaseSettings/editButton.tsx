@@ -3,9 +3,9 @@ import { Edit } from 'tabler-icons-react';
 import { DatabaseType } from '@/types/database.type';
 import { updateDatabase } from '@/api/database.api';
 import { useDatabaseStore } from '@/store/database.store';
+import { TextInput } from '@/components/common/textInput';
 import {
   Button,
-  Input,
   MenuItem,
   Modal,
   ModalBody,
@@ -81,11 +81,11 @@ export const EditButton: React.FC<Props> = ({ db }) => {
           <ModalHeader>Edit database</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input
-              variant='filled'
-              placeholder='Database name'
+            <TextInput
+              title='Database name'
+              disableTitle
               value={databaseName}
-              onChange={(e) => setDatabaseName(e.target.value)}
+              setValue={setDatabaseName}
             />
           </ModalBody>
 

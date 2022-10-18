@@ -27,9 +27,9 @@ export const createNewPatient = (
     invoke(CREATE_PATIENT, {
       databasePath,
       pid: generatePID(now),
-      createdAt: now,
-      updatedAt: now,
-      bio_data: JSON.stringify(bioData),
+      createdAt: now.toString(),
+      updatedAt: now.toString(),
+      bioData: JSON.stringify(bioData),
       records: '[]',
       appointment: '',
     })
@@ -73,8 +73,8 @@ export const getAppointments = (databasePath: string, page: number) => {
   return new Promise<PatientRawType[]>((resolve, reject) => {
     invoke(GET_APPOINTMENTS, {
       databasePath,
-      today: new Date(getToday()).getTime(),
-      tomorrow: new Date(getTomorrow()).getTime(),
+      today: new Date(getToday()).getTime().toString(),
+      tomorrow: new Date(getTomorrow()).getTime().toString(),
       page,
     })
       .then((data: any) => resolve(data))
@@ -86,8 +86,8 @@ export const getAppointmentsCount = (databasePath: string) => {
   return new Promise<number>((resolve, reject) => {
     invoke(GET_APPOINTMENTS_COUNT, {
       databasePath,
-      today: new Date(getToday()).getTime(),
-      tomorrow: new Date(getTomorrow()).getTime(),
+      today: new Date(getToday()).getTime().toString(),
+      tomorrow: new Date(getTomorrow()).getTime().toString(),
     })
       .then((data: any) => resolve(data))
       .catch(reject);
@@ -101,8 +101,8 @@ export const updatePatient = (
   return invoke(UPDATE_PATIENT, {
     databasePath,
     id: patientData.id,
-    updated_at: Date.now(),
-    bio_data: JSON.stringify(patientData.bioData),
+    updated_at: Date.now().toString(),
+    bioData: JSON.stringify(patientData.bioData),
     records: JSON.stringify(patientData.records),
     appointment: patientData.appointment,
   });

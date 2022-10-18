@@ -6,11 +6,11 @@ import { CreateDatabaseWrapper } from '@/components/navbar/createDatabaseWrapper
 import { OpenFileFolder } from '@/components/databaseSettings/openFileFolder';
 import { OpenDatabase } from '@/components/navbar/openDatabase';
 import { useDatabaseStore } from '@/store/database.store';
+import { TextInput } from '@/components/common/textInput';
 import {
   Button,
   Flex,
   IconButton,
-  Input,
   Menu,
   MenuButton,
   MenuItem,
@@ -33,12 +33,11 @@ export const DatabaseSettingsPage: React.FC = () => {
     <div>
       <h1 className='text-2xl font-medium'>Database settings</h1>
       <Flex mt={5} alignItems='center'>
-        <Input
-          variant='filled'
-          placeholder='Search..'
-          w='full'
+        <TextInput
+          title='Search...'
+          disableTitle
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          setValue={setSearchQuery}
         />
         <CreateDatabaseWrapper>
           <Button ml={1}>
