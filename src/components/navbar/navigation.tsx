@@ -18,7 +18,7 @@ export const Navigation: ReactComponent<Props> = ({
   const onPage = location.pathname === page; // check if user is on provided page
 
   return (
-    <Link to={page}>
+    <Link to={page} replace>
       <Flex
         py={2}
         px={4}

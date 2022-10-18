@@ -38,6 +38,7 @@ export const DatabaseSettingsPage: React.FC = () => {
           disableTitle
           value={searchQuery}
           setValue={setSearchQuery}
+          className='w-full'
         />
         <CreateDatabaseWrapper>
           <Button ml={1}>

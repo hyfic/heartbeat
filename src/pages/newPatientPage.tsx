@@ -5,6 +5,7 @@ import { useDatabaseStore } from '@/store/database.store';
 import { TextInput } from '@/components/common/textInput';
 import { createNewPatient } from '@/api/patient.api';
 import { Paths } from '@/utils/paths';
+import { DatabaseChecker } from '@/components/databaseChecker';
 
 export const NewPatientPage: React.FC = () => {
   const toast = useToast();
@@ -41,7 +42,7 @@ export const NewPatientPage: React.FC = () => {
           status: 'success',
         });
 
-        navigate(`${Paths.patient}/${patientId}`);
+        navigate(`${Paths.patient}/${patientId}`, { replace: true });
       })
       .catch((err) => {
         toast({
@@ -59,7 +60,7 @@ export const NewPatientPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <DatabaseChecker>
       <h1 className='text-2xl font-medium'>New patient</h1>
       <SimpleGrid mt={5} columns={{ sm: 1, md: 2, lg: 3 }} gap={2}>
         <TextInput title='Name' value={name} setValue={setName} />
@@ -103,6 +104,6 @@ export const NewPatientPage: React.FC = () => {
       >
         Create Patient
       </Button>
-    </div>
+    </DatabaseChecker>
   );
 };

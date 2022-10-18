@@ -1,5 +1,6 @@
 import React from 'react';
+import { DatabaseChecker } from '@/components/databaseChecker';
 
 export const PatientPage: React.FC = () => {
-  return <div>patient page</div>;
+  return <DatabaseChecker>patient page</DatabaseChecker>;
 };
