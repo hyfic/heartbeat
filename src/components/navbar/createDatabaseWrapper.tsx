@@ -6,9 +6,10 @@ import { open } from '@tauri-apps/api/dialog';
 import { ReactComponent } from '@/types/react.type';
 import { useDatabaseStore } from '@/store/database.store';
 import { createNewDatabase } from '@/api/database.api';
+import { TextInput } from '@/components/common/textInput';
+
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -110,11 +111,11 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
           <ModalHeader>Create database</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input
-              variant='filled'
-              placeholder='Database name'
+            <TextInput
+              title='Database name'
+              disableTitle
               value={databaseName}
-              onChange={(e) => setDatabaseName(e.target.value)}
+              setValue={setDatabaseName}
             />
             <Button
               mt={3}
