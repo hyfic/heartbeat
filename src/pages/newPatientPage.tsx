@@ -42,7 +42,7 @@ export const NewPatientPage: React.FC = () => {
           status: 'success',
         });
 
-        navigate(`${Paths.patient}/${patientId}`);
+        navigate(`${Paths.patient}/${patientId}`, { replace: true });
       })
       .catch((err) => {
         toast({
