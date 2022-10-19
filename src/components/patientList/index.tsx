@@ -12,6 +12,7 @@ import {
   AlertTitle,
   Avatar,
   Button,
+  Spinner,
   Stack,
   Table,
   TableContainer,
@@ -25,7 +26,8 @@ import {
 interface Props {
   title: string;
   patients: PatientRawType[];
-  error?: string | null;
+  error: string | null;
+  loading: boolean;
   page: number;
   onSearch: (searchQuery: string) => void;
   loadListPage: (page: number) => void;
@@ -35,6 +37,7 @@ export const PatientList: React.FC<Props> = ({
   title,
   patients,
   error,
+  loading,
   page,
   onSearch,
   loadListPage,
@@ -43,14 +46,16 @@ export const PatientList: React.FC<Props> = ({
 
   return (
     <div>
-      {error && (
+      {!loading && error && (
         <Alert mb={5} status='error'>
           <AlertIcon />
           <AlertTitle>Failed to load patients!</AlertTitle>
           <AlertDescription>Try running app as administrator.</AlertDescription>
         </Alert>
       )}
-      <h1 className='text-2xl font-medium'>{title}</h1>
+      <h1 className='text-2xl font-medium'>
+        {title} {loading && <Spinner size='sm' />}
+      </h1>
       <ListHeader onSearch={onSearch} />
       <TableContainer mt={5}>
         <Table variant='striped'>
