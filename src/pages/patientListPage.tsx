@@ -37,7 +37,7 @@ export const PatientListPage: React.FC = () => {
 
   useEffect(() => {
     loadListPage(1);
-  }, []);
+  }, [selectedDatabase]);
 
   return (
     <DatabaseChecker>
