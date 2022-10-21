@@ -5,6 +5,7 @@ import {
   ColorModeScript,
   extendTheme,
   ThemeConfig,
+  createStandaloneToast,
 } from '@chakra-ui/react';
 
 type ReactComponent<Props = {}> = React.FC<PropsWithChildren<Props>>;
@@ -15,11 +16,14 @@ const config: ThemeConfig = {
 
 const theme = extendTheme({ config });
 
+const { ToastContainer } = createStandaloneToast();
+
 export const ChakraWrap: ReactComponent = ({ children }) => {
   return (
     <ChakraProvider>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       {children}
+      <ToastContainer />
     </ChakraProvider>
   );
 };
