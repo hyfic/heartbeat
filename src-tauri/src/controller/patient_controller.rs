@@ -32,8 +32,7 @@ pub fn read_patients(
     page: i32, // for pagination
 ) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
-    let patients = patient_model::read_all(&db, page)?;
-    Ok(patients)
+    patient_model::read_all(&db, page)
 }
 
 // read patient with id
@@ -43,8 +42,7 @@ pub fn read_one_patient(
     id: i32,
 ) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
-    let patients = patient_model::read_one(&db, id)?;
-    Ok(patients)
+    patient_model::read_one(&db, id)
 }
 
 #[tauri::command]
@@ -54,8 +52,7 @@ pub fn search_patients(
     page: i32,
 ) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
-    let patients = patient_model::search_patients(&db, search_query, page)?;
-    Ok(patients)
+    patient_model::search_patients(&db, search_query, page)
 }
 
 // return patients who have appointment scheduled today and tomorrow
@@ -67,8 +64,7 @@ pub fn get_appointments(
     page: i32,
 ) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
-    let patients = patient_model::get_appointments(&db, today, tomorrow, page)?;
-    Ok(patients)
+    patient_model::get_appointments(&db, today, tomorrow, page)
 }
 
 // return how many appointments are there
@@ -79,8 +75,7 @@ pub fn get_appointments_count(
     tomorrow: String,
 ) -> Result<i32, String> {
     let db = init_data_db(database_path)?;
-    let patients = patient_model::get_appointments_count(&db, today, tomorrow)?;
-    Ok(patients)
+    patient_model::get_appointments_count(&db, today, tomorrow)
 }
 
 // update patient data
@@ -94,13 +89,11 @@ pub fn update_patient(
     appointment: String,
 ) -> Result<(), String> {
     let db = init_data_db(database_path)?;
-    patient_model::update(&db, id, updated_at, bio_data, records, appointment)?;
-    Ok(())
+    patient_model::update(&db, id, updated_at, bio_data, records, appointment)
 }
 
 #[tauri::command]
 pub fn delete_patient(database_path: String, id: i32) -> Result<(), String> {
     let db = init_data_db(database_path)?;
-    patient_model::delete(&db, id)?;
-    Ok(())
+    patient_model::delete(&db, id)
 }

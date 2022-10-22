@@ -7,8 +7,7 @@ use crate::database::init_data_db;
 #[tauri::command]
 pub fn read_doctor(database_path: String) -> Result<Vec<doctor_model::DoctorType>, String> {
     let db = init_data_db(database_path)?;
-    let doctor = doctor_model::read(&db)?;
-    Ok(doctor)
+    doctor_model::read(&db)
 }
 
 #[tauri::command]
@@ -18,8 +17,7 @@ pub fn add_doctor(
     qualification: String,
 ) -> Result<(), String> {
     let db = init_data_db(database_path)?;
-    doctor_model::create(&db, name, qualification)?;
-    Ok(())
+    doctor_model::create(&db, name, qualification)
 }
 
 #[tauri::command]
@@ -29,6 +27,5 @@ pub fn update_doctor(
     qualification: String,
 ) -> Result<(), String> {
     let db = init_data_db(database_path)?;
-    doctor_model::update(&db, name, qualification)?;
-    Ok(())
+    doctor_model::update(&db, name, qualification)
 }
