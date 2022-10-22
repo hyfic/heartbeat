@@ -12,7 +12,7 @@ pub fn create_patient(
     bio_data: String,
     records: String,
     appointment: String,
-) -> Result<(), String> {
+) -> Result<i64, String> {
     let db = init_data_db(database_path)?;
     patient_model::create(
         &db,
@@ -22,8 +22,7 @@ pub fn create_patient(
         bio_data,
         records,
         appointment,
-    )?;
-    Ok(())
+    )
 }
 
 // read all patients with pagination
