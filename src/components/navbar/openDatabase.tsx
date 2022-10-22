@@ -1,13 +1,13 @@
 import React from 'react';
 import { FileDatabase } from 'tabler-icons-react';
-import { MenuItem, useToast } from '@chakra-ui/react';
+import { MenuItem } from '@chakra-ui/react';
 import { open } from '@tauri-apps/api/dialog';
 import { createNewDatabase } from '@/api/database.api';
 import { platform } from '@tauri-apps/api/os';
 import { useDatabaseStore } from '@/store/database.store';
+import { showToast } from '@/utils/showToast';
 
 export const OpenDatabase: React.FC = () => {
-  const toast = useToast();
   const { loadDatabases } = useDatabaseStore();
 
   const openDatabaseHandler = async () => {
@@ -33,11 +33,8 @@ export const OpenDatabase: React.FC = () => {
       // index database in app.db
       createNewDatabase(databasePath, databaseFileName)
         .then((databaseId) => {
-          toast({
+          showToast({
             title: `Opened ${databaseFileName} successfully`,
-            position: 'top-right',
-            isClosable: true,
-            duration: 3000,
             status: 'success',
           });
 
@@ -45,12 +42,9 @@ export const OpenDatabase: React.FC = () => {
           loadDatabases(databaseId);
         })
         .catch((err) => {
-          toast({
+          showToast({
             title: err,
             description: 'Try running this application as administrator',
-            position: 'top-right',
-            isClosable: true,
-            duration: 3000,
             status: 'error',
           });
         });

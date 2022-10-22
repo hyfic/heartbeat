@@ -4,6 +4,7 @@ import { DatabaseType } from '@/types/database.type';
 import { updateDatabase } from '@/api/database.api';
 import { useDatabaseStore } from '@/store/database.store';
 import { TextInput } from '@/components/common/textInput';
+import { showToast } from '@/utils/showToast';
 import {
   Button,
   MenuItem,
@@ -15,7 +16,6 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react';
 
 interface Props {
@@ -23,7 +23,6 @@ interface Props {
 }
 
 export const EditButton: React.FC<Props> = ({ db }) => {
-  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [databaseName, setDatabaseName] = useState(db.name);
@@ -45,22 +44,16 @@ export const EditButton: React.FC<Props> = ({ db }) => {
           name: databaseName,
         });
 
-        toast({
+        showToast({
           title: 'Edited database name successfully',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'success',
         });
         onClose();
       })
       .catch((err) => {
-        toast({
+        showToast({
           title: err,
           description: 'Try running this application as administrator',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'error',
         });
       })

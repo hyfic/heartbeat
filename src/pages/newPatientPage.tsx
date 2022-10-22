@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Select, SimpleGrid, useToast } from '@chakra-ui/react';
+import { Button, Select, SimpleGrid } from '@chakra-ui/react';
 import { useDatabaseStore } from '@/store/database.store';
 import { TextInput } from '@/components/common/textInput';
 import { createNewPatient } from '@/api/patient.api';
 import { Paths } from '@/utils/paths';
 import { DatabaseChecker } from '@/components/databaseChecker';
+import { showToast } from '@/utils/showToast';
 
 export const NewPatientPage: React.FC = () => {
-  const toast = useToast();
   const navigate = useNavigate();
 
   const { selectedDatabase } = useDatabaseStore();
@@ -33,24 +33,18 @@ export const NewPatientPage: React.FC = () => {
       phone,
     })
       .then((patientId) => {
-        toast({
+        showToast({
           title: 'Saved patient data successfully',
           description: `${name} is in your list now :)`,
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
           status: 'success',
         });
 
         navigate(`${Paths.patient}/${patientId}`, { replace: true });
       })
       .catch((err) => {
-        toast({
+        showToast({
           title: err,
           description: 'Try running this application as administrator',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'error',
         });
       })

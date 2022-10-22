@@ -3,6 +3,7 @@ import { Trash } from 'tabler-icons-react';
 import { DatabaseType } from '@/types/database.type';
 import { useDatabaseStore } from '@/store/database.store';
 import { deleteDatabase } from '@/api/database.api';
+import { showToast } from '@/utils/showToast';
 import {
   Button,
   Checkbox,
@@ -14,7 +15,6 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
   Text,
   MenuItem,
 } from '@chakra-ui/react';
@@ -24,7 +24,6 @@ interface Props {
 }
 
 export const DeleteButton: React.FC<Props> = ({ db }) => {
-  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [loading, setLoading] = useState(false);
@@ -49,22 +48,16 @@ export const DeleteButton: React.FC<Props> = ({ db }) => {
         // update database store by removing deleted element
         deleteDatabaseFromStore(db.id);
 
-        toast({
+        showToast({
           title: 'Deleted database successfully',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'success',
         });
         onClose();
       })
       .catch((err) => {
-        toast({
+        showToast({
           title: err,
           description: 'Try running this application as administrator',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'error',
         });
       })
