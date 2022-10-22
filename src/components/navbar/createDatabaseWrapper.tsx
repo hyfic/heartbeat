@@ -7,7 +7,7 @@ import { ReactComponent } from '@/types/react.type';
 import { useDatabaseStore } from '@/store/database.store';
 import { createNewDatabase } from '@/api/database.api';
 import { TextInput } from '@/components/common/textInput';
-
+import { showToast } from '@/utils/showToast';
 import {
   Button,
   Modal,
@@ -18,12 +18,9 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react';
 
 export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
-  const toast = useToast();
-
   const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
 
   const [loading, setLoading] = useState(false);
@@ -71,23 +68,17 @@ export const CreateDatabaseWrapper: ReactComponent = ({ children }) => {
     createNewDatabase(databaseFilePath, databaseName)
       .then((databaseId: number) => {
         onClose();
-        toast({
+        showToast({
           title: 'Created database successfully',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'success',
         });
         // load databases with new data after creating database
         loadDatabases(databaseId);
       })
       .catch((err) => {
-        toast({
+        showToast({
           title: err,
           description: 'Try running this application as administrator',
-          position: 'top-right',
-          isClosable: true,
-          duration: 3000,
           status: 'error',
         });
       })

@@ -6,22 +6,19 @@ use crate::database::init_app_db;
 #[tauri::command]
 pub fn read_databases() -> Result<Vec<database_model::DatabaseType>, String> {
     let db = init_app_db()?;
-    let databases = database_model::read_all(&db)?;
-    Ok(databases)
+    database_model::read_all(&db)
 }
 
 #[tauri::command]
 pub fn add_database(path: String, name: String) -> Result<i64, String> {
     let db = init_app_db()?;
-    let id = database_model::create(&db, path, name)?;
-    Ok(id)
+    database_model::create(&db, path, name)
 }
 
 #[tauri::command]
 pub fn update_database(id: i32, name: String) -> Result<(), String> {
     let db = init_app_db()?;
-    database_model::update(&db, id, name)?;
-    Ok(())
+    database_model::update(&db, id, name)
 }
 
 #[tauri::command]
@@ -40,6 +37,5 @@ pub fn delete_database(id: i32, path: String, delete_file: bool) -> Result<(), S
     }
 
     // deleting row from app database
-    database_model::delete(&db, id)?;
-    Ok(())
+    database_model::delete(&db, id)
 }
