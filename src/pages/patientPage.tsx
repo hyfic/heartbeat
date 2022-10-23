@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import { DatabaseChecker } from '@/components/databaseChecker';
 import { useQuery } from '@/utils/useQuery';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { PatientType } from '@/types/patient.type';
 import { useDatabaseStore } from '@/store/database.store';
-import { readOnePatient } from '@/api/patient.api';
-import { showToast } from '@/utils/showToast';
+import { useIndividualPatientStore } from '@/store/patient.store';
 import { Paths } from '@/utils/paths';
 import { Avatar, Flex, IconButton, Text } from '@chakra-ui/react';
 import {
@@ -25,8 +23,9 @@ export const PatientPage: React.FC = () => {
 
   const { id } = useParams();
 
-  const [patient, setPatient] = useState<PatientType | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [patient, setPatient] = useState<PatientType | null>(null);
+  // const [loading, setIsLoading] = useState(false);
+  const { patient, loading, loadPatient } = useIndividualPatientStore();
 
   useEffect(() => {
     if (!id || !selectedDatabase) {
@@ -34,36 +33,15 @@ export const PatientPage: React.FC = () => {
       return;
     }
 
-    setIsLoading(true);
-
-    readOnePatient(selectedDatabase.path, Number(id))
-      .then((data) => {
-        setPatient({
-          id: data.id,
-          pid: data.pid,
-          createdAt: data.created_at,
-          updatedAt: data.updated_at,
-          bioData: JSON.parse(data.bio_data),
-          records: JSON.parse(data.records),
-          appointment: data.appointment,
-        });
-      })
-      .catch((err) => {
-        showToast({
-          title: 'Failed to find patient',
-          description: err,
-          status: 'error',
-        });
-        navigate(prevPath, { replace: true });
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    loadPatient(selectedDatabase.path, Number(id), () => {
+      // redirect back to previous path, if there is no patient with id
+      navigate(prevPath, { replace: true });
+    });
   }, [id, selectedDatabase]);
 
   return (
     <DatabaseChecker>
-      {isLoading && <p>Loading ...</p>}
+      {loading && <p>Loading ...</p>}
       {patient && (
         <div>
           <Link to={prevPath}>
