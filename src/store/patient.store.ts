@@ -1,6 +1,11 @@
 import create from 'zustand';
-import { PatientRawType } from '@/types/patient.type';
-import { readPatients, searchPatients } from '@/api/patient.api';
+import { showToast } from '@/utils/showToast';
+import { PatientRawType, PatientType } from '@/types/patient.type';
+import {
+  readOnePatient,
+  readPatients,
+  searchPatients,
+} from '@/api/patient.api';
 
 interface PatientStore {
   patients: PatientRawType[];
@@ -72,3 +77,58 @@ export const usePatientSearchStore = create<PatientSearchStore>((set) => ({
       });
   },
 }));
+
+// store to save loaded individual patient
+
+interface IndividualPatientStore {
+  patient: PatientType | null;
+  loading: boolean;
+  loadPatient: (
+    databasePath: string,
+    patientId: number,
+    onError?: () => void
+  ) => void;
+  setPatient: (patientData: PatientType) => void;
+}
+
+export const useIndividualPatientStore = create<IndividualPatientStore>(
+  (set) => ({
+    patient: null,
+    loading: false,
+    loadPatient(databasePath, patientId, onError) {
+      set({ loading: true });
+      readOnePatient(databasePath, patientId)
+        .then((data) => {
+          set({
+            patient: {
+              id: data.id,
+              pid: data.pid,
+              createdAt: data.created_at,
+              updatedAt: data.updated_at,
+              bioData: JSON.parse(data.bio_data),
+              records: JSON.parse(data.records),
+              appointment: data.appointment,
+            },
+          });
+        })
+        .catch((err) => {
+          showToast({
+            title: 'Failed to find patient',
+            description: err,
+            status: 'error',
+          });
+
+          // calling the function which can only be done in react components
+          if (onError) {
+            onError();
+          }
+        })
+        .finally(() => {
+          set({ loading: false });
+        });
+    },
+    setPatient(patientData) {
+      set({ patient: patientData });
+    },
+  })
+);
