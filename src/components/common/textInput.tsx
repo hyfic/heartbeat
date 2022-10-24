@@ -1,6 +1,5 @@
 import React from 'react';
 import { Input, Textarea } from '@chakra-ui/react';
-import { SetState } from '@/types/react.type';
 
 interface Props {
   title: string;
