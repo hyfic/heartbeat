@@ -47,7 +47,7 @@ export interface PatientRecordType {
   medicines?: PatientMedicineType[];
   advice?: string;
   investigationToDo?: string;
-
+  appointment?: string;
   createdAt: string;
 }
 
