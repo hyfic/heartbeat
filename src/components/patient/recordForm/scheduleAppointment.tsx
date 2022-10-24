@@ -17,18 +17,21 @@ import {
 } from '@chakra-ui/react';
 
 export const ScheduleAppointment: React.FC = () => {
-  const { nextAppointment, setNextAppointment, loading } = useRecordStore();
+  const { record, setRecord, loading } = useRecordStore();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { colorMode } = useColorMode();
 
   const [appointmentDate, setAppointmentDate] = useState<Date | null>(
-    nextAppointment ? new Date(nextAppointment) : null
+    record.appointment ? new Date(record.appointment) : null
   );
 
   const scheduleAppointment = () => {
-    setNextAppointment(appointmentDate?.getTime().toString() || '');
+    setRecord({
+      ...record,
+      appointment: appointmentDate?.getTime().toString(),
+    });
     onClose();
   };
 
