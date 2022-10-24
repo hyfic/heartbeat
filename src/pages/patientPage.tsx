@@ -6,6 +6,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDatabaseStore } from '@/store/database.store';
 import { useIndividualPatientStore } from '@/store/patient.store';
 import { Paths } from '@/utils/paths';
+import { EditBioData } from '@/components/patient/editBioData';
+import { DeletePatient } from '@/components/patient/deletePatient';
+import { PatientRecords } from '@/components/patient/patientRecord';
 import { Avatar, Flex, IconButton, Text } from '@chakra-ui/react';
 import {
   AddressBook,
@@ -13,8 +16,6 @@ import {
   CalendarEvent,
   Phone,
 } from 'tabler-icons-react';
-import { EditBioData } from '@/components/patient/editBioData';
-import { DeletePatient } from '@/components/patient/deletePatient';
 
 export const PatientPage: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
@@ -87,7 +88,9 @@ export const PatientPage: React.FC = () => {
               <Flex alignItems='center'>
                 <CalendarEvent size={20} />
                 <Text ml={1}>
-                  {moment(patient.appointment).format('dddd, MMM D YYYY')}
+                  {moment(Number(patient.appointment)).format(
+                    'dddd, MMM D YYYY'
+                  )}
                 </Text>
               </Flex>
             )}
@@ -102,6 +105,7 @@ export const PatientPage: React.FC = () => {
               <p>{patient.bioData.address}</p>
             </div>
           )}
+          <PatientRecords />
         </div>
       )}
     </DatabaseChecker>

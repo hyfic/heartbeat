@@ -1,11 +1,10 @@
 import React from 'react';
 import { Input, Textarea } from '@chakra-ui/react';
-import { SetState } from '@/types/react.type';
 
 interface Props {
   title: string;
   value: string;
-  setValue: SetState<string>;
+  setValue: (val: string) => void;
   className?: string;
   disabled?: boolean;
   textArea?: boolean;
