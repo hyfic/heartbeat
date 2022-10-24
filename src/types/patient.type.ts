@@ -69,6 +69,7 @@ export interface PatientRecordType {
   medicalBioData: PatientMedicalBioDataType;
   examination: PatientExaminationType;
   advice: PatientAdviceType;
+  createdAt: string;
 }
 
 export interface PatientType {
