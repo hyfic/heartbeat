@@ -88,7 +88,7 @@ interface IndividualPatientStore {
     patientId: number,
     onError?: () => void
   ) => void;
-  setPatient: (patientData: PatientType) => void;
+  setPatient: (patientData: PatientType | null) => void;
 }
 
 export const useIndividualPatientStore = create<IndividualPatientStore>(
