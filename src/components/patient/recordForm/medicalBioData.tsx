@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   IconButton,
+  Input,
   Select,
   SimpleGrid,
   Table,
@@ -34,6 +35,17 @@ export const MedicalBioData: React.FC = () => {
 
     const bmi = weightNumber / (heightNumber * heightNumber);
     return bmi.toFixed(2);
+  };
+
+  const addAllergicMedicine = () => {
+    setRecord({
+      ...record,
+      allergicMedicines: [
+        ...(record.allergicMedicines || []),
+        allergicMedicine,
+      ],
+    });
+    setAllergicMedicine('');
   };
 
   return (
@@ -104,13 +116,15 @@ export const MedicalBioData: React.FC = () => {
             <Table variant='simple'>
               <Thead>
                 <Tr>
-                  <Th w='full'>Medicine</Th>
-                  <Th></Th>
+                  <Th>Index</Th>
+                  <Th>Medicine</Th>
+                  <Th>Option</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {record.allergicMedicines.map((medicine, idx) => (
                   <Tr key={idx}>
+                    <Td>{idx + 1}</Td>
                     <Td>{medicine}</Td>
                     <Td>
                       <IconButton
@@ -129,44 +143,39 @@ export const MedicalBioData: React.FC = () => {
                     </Td>
                   </Tr>
                 ))}
+                <Tr>
+                  <Td>{record?.allergicMedicines.length + 1}</Td>
+                  <Td>
+                    <Input
+                      placeholder='Allergic medicine'
+                      variant='filled'
+                      value={allergicMedicine}
+                      onChange={(e) => setAllergicMedicine(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === 'Enter' &&
+                          allergicMedicine.trim().length !== 0
+                        ) {
+                          addAllergicMedicine();
+                        }
+                      }}
+                    />
+                  </Td>
+                  <Td>
+                    <IconButton
+                      type='submit'
+                      variant='ghost'
+                      aria-label='Add medicine'
+                      colorScheme='blue'
+                      icon={<Plus />}
+                      ml={1}
+                      disabled={loading || allergicMedicine.trim().length === 0}
+                    />
+                  </Td>
+                </Tr>
               </Tbody>
             </Table>
           </TableContainer>
-        )}
-        {record.allergicMedicines && (
-          <form
-            className='flex items-center mt-3'
-            onSubmit={(e) => {
-              e.preventDefault();
-              setRecord({
-                ...record,
-                allergicMedicines: [
-                  ...(record.allergicMedicines || []),
-                  allergicMedicine,
-                ],
-              });
-              setAllergicMedicine('');
-            }}
-          >
-            <TextInput
-              title='Allergic medicine'
-              disableTitle
-              value={allergicMedicine}
-              setValue={setAllergicMedicine}
-              className='w-full'
-            />
-            <IconButton
-              type='submit'
-              variant='ghost'
-              aria-label='Add medicine'
-              colorScheme='blue'
-              icon={<Plus />}
-              ml={1}
-              disabled={loading || allergicMedicine.trim().length === 0}
-            >
-              Add Medicine
-            </IconButton>
-          </form>
         )}
       </div>
       <SimpleGrid mt={3} columns={{ sm: 1, lg: 2 }} gap={2}>
