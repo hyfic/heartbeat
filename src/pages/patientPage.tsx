@@ -13,6 +13,7 @@ import {
   CalendarEvent,
   Phone,
 } from 'tabler-icons-react';
+import { EditBioData } from '@/components/patient/editBioData';
 
 export const PatientPage: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
@@ -68,6 +69,9 @@ export const PatientPage: React.FC = () => {
                   {patient.bioData.sex && <span>{patient.bioData.sex}</span>}
                 </Text>
               </Flex>
+            </Flex>
+            <Flex alignItems='center'>
+              <EditBioData />
             </Flex>
           </Flex>
           <div className='mt-3 flex items-center'>
