@@ -5,6 +5,7 @@ import { defaultRecordData } from '@/utils/record';
 import { useDatabaseStore } from '@/store/database.store';
 import { useIndividualPatientStore } from '@/store/patient.store';
 import { PatientType } from '@/types/patient.type';
+import { ChevronDown } from 'tabler-icons-react';
 import {
   Button,
   Drawer,
@@ -15,6 +16,11 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -59,6 +65,49 @@ export const NewRecord: React.FC = () => {
         <Button ref={btnRef} onClick={onOpen}>
           Add record
         </Button>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<ChevronDown size={18} />}
+            ml={1}
+          />
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                setRecord(defaultRecordData);
+                onOpen();
+              }}
+            >
+              New blank record
+            </MenuItem>
+            {patient && patient.records.length > 0 && (
+              <>
+                <MenuItem
+                  onClick={() => {
+                    setRecord(patient.records[0]);
+                    onOpen();
+                  }}
+                >
+                  New record with previous data
+                </MenuItem>
+                {patient.records[0].diagnosis && (
+                  <MenuItem
+                    onClick={() => {
+                      setRecord({
+                        ...defaultRecordData,
+                        diagnosis: patient.records[0].diagnosis,
+                      });
+                      onOpen();
+                    }}
+                  >
+                    New record with last diagnosis
+                  </MenuItem>
+                )}
+              </>
+            )}
+          </MenuList>
+        </Menu>
       </Flex>
 
       <Drawer
