@@ -21,7 +21,7 @@ interface Props {
   recordCreatedAt: string;
 }
 
-export const DeleteRecordButton: React.FC<Props> = ({ recordCreatedAt }) => {
+export const DeleteRecord: React.FC<Props> = ({ recordCreatedAt }) => {
   const { selectedDatabase } = useDatabaseStore();
   const { patient, setPatient } = useIndividualPatientStore();
 

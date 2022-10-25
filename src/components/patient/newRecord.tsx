@@ -18,7 +18,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-export const NewRecordButton: React.FC = () => {
+export const NewRecord: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
   const { record, setRecord, saveRecord, loading } = useRecordStore();
   const { patient, setPatient } = useIndividualPatientStore();
