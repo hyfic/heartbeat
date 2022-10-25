@@ -24,13 +24,18 @@ export const ScheduleAppointment: React.FC = () => {
   const { colorMode } = useColorMode();
 
   const [appointmentDate, setAppointmentDate] = useState<Date | null>(
-    record.appointment ? new Date(record.appointment) : null
+    record.appointment ? new Date(Number(record.appointment)) : null
   );
 
   const scheduleAppointment = () => {
+    if (!appointmentDate) return;
     setRecord({
       ...record,
-      appointment: appointmentDate?.getTime().toString(),
+      appointment: new Date(
+        moment(appointmentDate.getTime()).format('YYYY-MM-DD')
+      )
+        .getTime()
+        .toString(),
     });
     onClose();
   };
