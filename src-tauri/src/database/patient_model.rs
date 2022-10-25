@@ -66,18 +66,15 @@ pub fn search_patients(
 
 pub fn get_appointments(
     db: &Connection,
-    today: String,
-    tomorrow: String,
+    date: String,
     page: i32,
 ) -> Result<Vec<PatientType>, String> {
-    // fetch all data where appointment is between {today} and {tomorrow}, which will return all appointments which is today and tomorrow
+    // get appointments with given date
     let sql = format!(
-        "SELECT * FROM Patient WHERE appointment BETWEEN {} AND {} LIMIT 10 OFFSET {}",
-        today,
-        tomorrow,
+        "SELECT * FROM Patient WHERE appointment='{}' LIMIT 10 OFFSET {}",
+        date,
         (page - 1) * 10
     );
-
     run_patient_select_query(db, sql)
 }
 
@@ -87,7 +84,7 @@ pub fn get_appointments_count(
     today: String,
     tomorrow: String,
 ) -> Result<i32, String> {
-    // get count of all appointments query
+    // fetch the count of data where appointment is between {today} and {tomorrow}, which will return all appointments which is today and tomorrow
     let sql = format!(
         "SELECT COUNT(*) FROM Patient WHERE appointment BETWEEN {} AND {}",
         today, tomorrow
