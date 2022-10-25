@@ -4,6 +4,9 @@ import { useDatabaseStore } from '@/store/database.store';
 import { useAppointmentStore } from '@/store/appointment.store';
 import { PatientList } from '@/components/patientList';
 import { PatientBioDataType } from '@/types/patient.type';
+import { Tab, TabList, Tabs } from '@chakra-ui/react';
+import { getAppointmentsCount } from '@/api/patient.api';
+import { getToday, getTomorrow } from '@/utils/time';
 
 export const AppointedPatientsPage: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
@@ -11,15 +14,30 @@ export const AppointedPatientsPage: React.FC = () => {
     useAppointmentStore();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [isTomorrow, setIsTomorrow] = useState(false);
+  const [todayCount, setTodayCount] = useState(0);
+  const [tomorrowCount, setTomorrowCount] = useState(0);
 
   const loadListPage = (page: number) => {
     if (!selectedDatabase) return;
-    loadAppointments(selectedDatabase.path, page);
+    loadAppointments(selectedDatabase.path, page, isTomorrow);
   };
 
   useEffect(() => {
     loadListPage(1);
-  }, []);
+  }, [isTomorrow, selectedDatabase]);
+
+  useEffect(() => {
+    if (!selectedDatabase) return;
+    getAppointmentsCount(selectedDatabase.path, getToday(), getToday()).then(
+      setTodayCount
+    );
+    getAppointmentsCount(
+      selectedDatabase.path,
+      getTomorrow(),
+      getTomorrow()
+    ).then(setTomorrowCount);
+  }, [selectedDatabase]);
 
   return (
     <DatabaseChecker>
@@ -40,7 +58,16 @@ export const AppointedPatientsPage: React.FC = () => {
         page={page}
         onSearch={setSearchQuery}
         loadListPage={loadListPage}
-      />
+      >
+        <Tabs mt={3}>
+          <TabList>
+            <Tab onClick={() => setIsTomorrow(false)}>Today ({todayCount})</Tab>
+            <Tab onClick={() => setIsTomorrow(true)}>
+              Tomorrow ({tomorrowCount})
+            </Tab>
+          </TabList>
+        </Tabs>
+      </PatientList>
     </DatabaseChecker>
   );
 };
