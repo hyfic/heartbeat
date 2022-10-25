@@ -82,7 +82,7 @@ export const Diagnosis: React.FC = () => {
                 <IconButton
                   aria-label='Add diagnosis'
                   variant='ghost'
-                  colorScheme='teal'
+                  colorScheme='blue'
                   icon={<Plus />}
                   disabled={loading || diagnosisValue.trim().length == 0}
                   onClick={addDiagnosis}
