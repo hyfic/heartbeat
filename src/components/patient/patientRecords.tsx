@@ -13,6 +13,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { DeleteRecordButton } from './deleteRecordButton';
 
 export const PatientRecords: React.FC = () => {
   const { patient } = useIndividualPatientStore();
@@ -57,7 +58,11 @@ export const PatientRecords: React.FC = () => {
                       <Td>{idx + 1}</Td>
                       <Td>{moment(Number(record.createdAt)).format('llll')}</Td>
                       <Td></Td>
-                      <Td></Td>
+                      <Td>
+                        <DeleteRecordButton
+                          recordCreatedAt={record.createdAt}
+                        />
+                      </Td>
                       <Td></Td>
                     </Tr>
                   ))}
