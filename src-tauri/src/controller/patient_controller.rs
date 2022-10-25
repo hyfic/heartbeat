@@ -59,12 +59,11 @@ pub fn search_patients(
 #[tauri::command]
 pub fn get_appointments(
     database_path: String,
-    today: String,
-    tomorrow: String,
+    date: String,
     page: i32,
 ) -> Result<Vec<patient_model::PatientType>, String> {
     let db = init_data_db(database_path)?;
-    patient_model::get_appointments(&db, today, tomorrow, page)
+    patient_model::get_appointments(&db, date, page)
 }
 
 // return how many appointments are there
