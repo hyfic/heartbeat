@@ -85,12 +85,16 @@ export const getAppointments = (
   });
 };
 
-export const getAppointmentsCount = (databasePath: string) => {
+export const getAppointmentsCount = (
+  databasePath: string,
+  today: string,
+  tomorrow: string
+) => {
   return new Promise<number>((resolve, reject) => {
     invoke(GET_APPOINTMENTS_COUNT, {
       databasePath,
-      today: getToday(),
-      tomorrow: getTomorrow(),
+      today,
+      tomorrow,
     })
       .then((data: any) => resolve(data))
       .catch(reject);
