@@ -1,9 +1,9 @@
 import moment from 'moment';
 
 export const getToday = () => {
-  return moment().format('YYYY/M/D');
+  return new Date(moment().format('YYYY-MM-DD')).toString();
 };
 
 export const getTomorrow = () => {
-  return moment().add(1, 'day').format('YYYY/M/D');
+  return new Date(moment().add(1, 'day').format('YYYY-MM-DD')).toString();
 };
