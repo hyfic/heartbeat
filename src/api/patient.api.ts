@@ -69,12 +69,15 @@ export const searchPatients = (
   });
 };
 
-export const getAppointments = (databasePath: string, page: number) => {
+export const getAppointments = (
+  databasePath: string,
+  page: number,
+  tomorrow?: boolean
+) => {
   return new Promise<PatientRawType[]>((resolve, reject) => {
     invoke(GET_APPOINTMENTS, {
       databasePath,
-      today: new Date(getToday()).getTime().toString(),
-      tomorrow: new Date(getTomorrow()).getTime().toString(),
+      date: tomorrow ? getTomorrow() : getToday(),
       page,
     })
       .then((data: any) => resolve(data))
@@ -86,8 +89,8 @@ export const getAppointmentsCount = (databasePath: string) => {
   return new Promise<number>((resolve, reject) => {
     invoke(GET_APPOINTMENTS_COUNT, {
       databasePath,
-      today: new Date(getToday()).getTime().toString(),
-      tomorrow: new Date(getTomorrow()).getTime().toString(),
+      today: getToday(),
+      tomorrow: getTomorrow(),
     })
       .then((data: any) => resolve(data))
       .catch(reject);
