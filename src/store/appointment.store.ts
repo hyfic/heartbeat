@@ -9,7 +9,11 @@ interface AppointmentStore {
   error: string | null;
   loading: boolean;
   loadAppointmentsCount: (databasePath: string) => void;
-  loadAppointments: (databasePath: string, page: number) => void;
+  loadAppointments: (
+    databasePath: string,
+    page: number,
+    tomorrow?: boolean
+  ) => void;
 }
 
 export const useAppointmentStore = create<AppointmentStore>((set) => ({
@@ -28,9 +32,9 @@ export const useAppointmentStore = create<AppointmentStore>((set) => ({
         set({ error: err, loading: false });
       });
   },
-  loadAppointments(databasePath, page) {
+  loadAppointments(databasePath, page, tomorrow) {
     set({ loading: true });
-    getAppointments(databasePath, page)
+    getAppointments(databasePath, page, tomorrow)
       .then((data) => {
         set({
           error: null,
