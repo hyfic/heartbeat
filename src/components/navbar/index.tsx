@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Badge, Flex, IconButton } from '@chakra-ui/react';
 import { useDatabaseStore } from '@/store/database.store';
 import { DatabaseOptions } from './databaseOptions';
 import { Navigation } from './navigation';
 import { Paths } from '@/utils/paths';
 import { Link } from 'react-router-dom';
+import { useAppointmentStore } from '@/store/appointment.store';
+import { useIndividualPatientStore } from '@/store/patient.store';
 import {
   CalendarEvent,
   Settings,
@@ -14,6 +16,13 @@ import {
 
 export const Navbar: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
+  const { patient } = useIndividualPatientStore();
+  const { loadAppointmentsCount, totalAppointments } = useAppointmentStore();
+
+  useEffect(() => {
+    if (!selectedDatabase) return;
+    loadAppointmentsCount(selectedDatabase.path);
+  }, [selectedDatabase, patient]);
 
   return (
     <Flex direction='column' h='full' justifyContent='space-between'>
@@ -24,7 +33,7 @@ export const Navbar: React.FC = () => {
         </Navigation>
         <Navigation page={Paths.appointments}>
           <CalendarEvent size={21} className='mr-1' /> Appointments
-          <Badge ml={1}>2</Badge>
+          <Badge ml={1}>{totalAppointments}</Badge>
         </Navigation>
         <Navigation page={Paths.doctor}>
           <Stethoscope size={21} className='mr-1' /> Doctor
