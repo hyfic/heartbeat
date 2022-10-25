@@ -32,11 +32,9 @@ export const EditRecord: React.FC<Props> = ({ recordCreatedAt }) => {
   const btnRef = React.useRef<any>();
 
   const openRecordForm = () => {
-    console.log(record);
     if (!patient || (patient && patient.records.length === 0)) return;
 
     // load record data and set to record store
-    console.log(patient.records);
     let selectedRecord = patient.records.filter(
       (record) => record.createdAt === recordCreatedAt // gives a array with selected record
     );
@@ -55,7 +53,7 @@ export const EditRecord: React.FC<Props> = ({ recordCreatedAt }) => {
   const saveRecordHandler = () => {
     if (!selectedDatabase || !patient || !record) return;
 
-    let records = patient.records.filter((rec) => {
+    let records = patient.records.map((rec) => {
       if (rec.createdAt === recordCreatedAt) {
         return record;
       }
