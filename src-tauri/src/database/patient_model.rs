@@ -155,10 +155,7 @@ fn run_patient_select_query(db: &Connection, sql: String) -> Result<Vec<PatientT
 
     let mut sql_query = match db.prepare(&sql) {
         Ok(query) => query,
-        Err(err) => {
-            println!("{}", err);
-            return Err(String::from("Failed to load patient"));
-        }
+        Err(_) => return Err(String::from("Failed to load patient")),
     };
 
     let patient_iter = match sql_query.query_map([], |row| {
