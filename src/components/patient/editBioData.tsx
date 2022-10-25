@@ -57,6 +57,7 @@ export const EditBioData: React.FC = () => {
       .then(() => {
         showToast({
           title: 'Edited bio data',
+          description: 'Latest changes in database',
           status: 'success',
         });
 

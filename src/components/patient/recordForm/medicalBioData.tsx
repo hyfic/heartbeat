@@ -170,6 +170,7 @@ export const MedicalBioData: React.FC = () => {
                       icon={<Plus />}
                       ml={1}
                       disabled={loading || allergicMedicine.trim().length === 0}
+                      onClick={addAllergicMedicine}
                     />
                   </Td>
                 </Tr>

@@ -5,6 +5,7 @@ import { defaultRecordData } from '@/utils/record';
 import { useDatabaseStore } from '@/store/database.store';
 import { useIndividualPatientStore } from '@/store/patient.store';
 import { PatientType } from '@/types/patient.type';
+import { ChevronDown } from 'tabler-icons-react';
 import {
   Button,
   Drawer,
@@ -15,10 +16,15 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useDisclosure,
 } from '@chakra-ui/react';
 
-export const NewRecordButton: React.FC = () => {
+export const NewRecord: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
   const { record, setRecord, saveRecord, loading } = useRecordStore();
   const { patient, setPatient } = useIndividualPatientStore();
@@ -37,12 +43,14 @@ export const NewRecordButton: React.FC = () => {
 
     let patientData: PatientType = {
       ...patient,
-      appointment: record.appointment || patient.records[0].appointment || '',
+      appointment:
+        record.appointment ||
+        (patient.records.length > 0 && patient.records[0].appointment) ||
+        '',
       records: [
         { ...record, createdAt: Date.now().toString() },
         ...patient.records,
       ],
-      updatedAt: Date.now().toString(),
     };
 
     saveRecord(selectedDatabase.path, patientData, () => {
@@ -57,6 +65,49 @@ export const NewRecordButton: React.FC = () => {
         <Button ref={btnRef} onClick={onOpen}>
           Add record
         </Button>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<ChevronDown size={18} />}
+            ml={1}
+          />
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                setRecord(defaultRecordData);
+                onOpen();
+              }}
+            >
+              New blank record
+            </MenuItem>
+            {patient && patient.records.length > 0 && (
+              <>
+                <MenuItem
+                  onClick={() => {
+                    setRecord(patient.records[0]);
+                    onOpen();
+                  }}
+                >
+                  New record with previous data
+                </MenuItem>
+                {(patient.records[0].diagnosis?.length || 0) > 0 && (
+                  <MenuItem
+                    onClick={() => {
+                      setRecord({
+                        ...defaultRecordData,
+                        diagnosis: patient.records[0].diagnosis,
+                      });
+                      onOpen();
+                    }}
+                  >
+                    New record with last diagnosis
+                  </MenuItem>
+                )}
+              </>
+            )}
+          </MenuList>
+        </Menu>
       </Flex>
 
       <Drawer

@@ -20,13 +20,15 @@ interface RecordStore {
 export const useRecordStore = create<RecordStore>((set) => ({
   record: defaultRecordData,
   loading: false,
-  setRecord: (record) => set({ record }),
+  setRecord: (record) => {
+    set({ record });
+  },
   saveRecord(databasePath, patientData, onSuccess) {
     set({ loading: true });
     updatePatient(databasePath, patientData)
       .then(() => {
         showToast({
-          title: 'Added record successfully',
+          title: 'Saved record successfully',
           description: 'Latest changes in database',
           status: 'success',
         });

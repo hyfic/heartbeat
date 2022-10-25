@@ -101,7 +101,7 @@ export const updatePatient = (
   return invoke(UPDATE_PATIENT, {
     databasePath,
     id: patientData.id,
-    updatedAt: patientData.updatedAt,
+    updatedAt: Date.now().toString(),
     bioData: JSON.stringify(patientData.bioData),
     records: JSON.stringify(patientData.records),
     appointment: patientData.appointment,

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { TextInput } from '@/components/common/textInput';
-import { NewRecordButton } from './newRecordButton';
+import { NewRecord } from './newRecord';
 import { useIndividualPatientStore } from '@/store/patient.store';
+import { DeleteRecord } from './deleteRecord';
 import {
   Flex,
   Table,
@@ -13,6 +14,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { EditRecord } from './editRecord';
 
 export const PatientRecords: React.FC = () => {
   const { patient } = useIndividualPatientStore();
@@ -28,7 +30,7 @@ export const PatientRecords: React.FC = () => {
           setValue={setSearchQuery}
           className='w-full'
         />
-        <NewRecordButton />
+        <NewRecord />
       </Flex>
       <TableContainer mt={5}>
         <Table variant='striped'>
@@ -56,8 +58,12 @@ export const PatientRecords: React.FC = () => {
                     <Tr key={idx}>
                       <Td>{idx + 1}</Td>
                       <Td>{moment(Number(record.createdAt)).format('llll')}</Td>
-                      <Td></Td>
-                      <Td></Td>
+                      <Td>
+                        <EditRecord recordCreatedAt={record.createdAt} />
+                      </Td>
+                      <Td>
+                        <DeleteRecord recordCreatedAt={record.createdAt} />
+                      </Td>
                       <Td></Td>
                     </Tr>
                   ))}
