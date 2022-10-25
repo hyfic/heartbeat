@@ -8,7 +8,7 @@ import { useIndividualPatientStore } from '@/store/patient.store';
 import { Paths } from '@/utils/paths';
 import { EditBioData } from '@/components/patient/editBioData';
 import { DeletePatient } from '@/components/patient/deletePatient';
-import { PatientRecords } from '@/components/patient/patientRecord';
+import { PatientRecords } from '@/components/patient/patientRecords';
 import { Avatar, Flex, IconButton, Text } from '@chakra-ui/react';
 import {
   AddressBook,
