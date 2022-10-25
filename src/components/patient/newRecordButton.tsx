@@ -37,12 +37,14 @@ export const NewRecordButton: React.FC = () => {
 
     let patientData: PatientType = {
       ...patient,
-      appointment: record.appointment || patient.records[0].appointment || '',
+      appointment:
+        record.appointment ||
+        (patient.records.length > 0 && patient.records[0].appointment) ||
+        '',
       records: [
         { ...record, createdAt: Date.now().toString() },
         ...patient.records,
       ],
-      updatedAt: Date.now().toString(),
     };
 
     saveRecord(selectedDatabase.path, patientData, () => {
