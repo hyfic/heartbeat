@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { PatientRawType } from '@/types/patient.type';
 import { getAppointments, getAppointmentsCount } from '@/api/patient.api';
+import { getToday, getTomorrow } from '@/utils/time';
 
 interface AppointmentStore {
   appointments: PatientRawType[];
@@ -9,7 +10,11 @@ interface AppointmentStore {
   error: string | null;
   loading: boolean;
   loadAppointmentsCount: (databasePath: string) => void;
-  loadAppointments: (databasePath: string, page: number) => void;
+  loadAppointments: (
+    databasePath: string,
+    page: number,
+    tomorrow?: boolean
+  ) => void;
 }
 
 export const useAppointmentStore = create<AppointmentStore>((set) => ({
@@ -20,7 +25,7 @@ export const useAppointmentStore = create<AppointmentStore>((set) => ({
   loading: false,
   loadAppointmentsCount(databasePath) {
     set({ loading: true });
-    getAppointmentsCount(databasePath)
+    getAppointmentsCount(databasePath, getToday(), getTomorrow())
       .then((count) => {
         set({ totalAppointments: count, loading: false, error: null });
       })
@@ -28,9 +33,9 @@ export const useAppointmentStore = create<AppointmentStore>((set) => ({
         set({ error: err, loading: false });
       });
   },
-  loadAppointments(databasePath, page) {
+  loadAppointments(databasePath, page, tomorrow) {
     set({ loading: true });
-    getAppointments(databasePath, page)
+    getAppointments(databasePath, page, tomorrow)
       .then((data) => {
         set({
           error: null,

@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { ReactComponent } from '@/types/react.type';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@/utils/paths';
 import { ArrowLeft, ArrowRight } from 'tabler-icons-react';
@@ -33,7 +34,7 @@ interface Props {
   loadListPage: (page: number) => void;
 }
 
-export const PatientList: React.FC<Props> = ({
+export const PatientList: ReactComponent<Props> = ({
   title,
   patients,
   error,
@@ -41,6 +42,7 @@ export const PatientList: React.FC<Props> = ({
   page,
   onSearch,
   loadListPage,
+  children,
 }) => {
   const navigate = useNavigate();
 
@@ -56,6 +58,7 @@ export const PatientList: React.FC<Props> = ({
       <h1 className='text-2xl font-medium'>
         {title} {loading && <Spinner size='sm' />}
       </h1>
+      {children}
       <ListHeader onSearch={onSearch} />
       <TableContainer mt={5}>
         <Table variant='striped'>
