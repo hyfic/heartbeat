@@ -91,7 +91,7 @@ export const NewRecord: React.FC = () => {
                 >
                   New record with previous data
                 </MenuItem>
-                {patient.records[0].diagnosis && (
+                {(patient.records[0].diagnosis?.length || 0) > 0 && (
                   <MenuItem
                     onClick={() => {
                       setRecord({
