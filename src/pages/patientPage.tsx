@@ -10,6 +10,7 @@ import { EditBioData } from '@/components/patient/editBioData';
 import { DeletePatient } from '@/components/patient/deletePatient';
 import { PatientRecords } from '@/components/patient/patientRecords';
 import { Avatar, Flex, IconButton, Text } from '@chakra-ui/react';
+import { ExportPatient } from '@/components/patient/exportPatient';
 import {
   AddressBook,
   ArrowNarrowLeft,
@@ -73,6 +74,7 @@ export const PatientPage: React.FC = () => {
             <Flex alignItems='center'>
               <EditBioData />
               <DeletePatient />
+              <ExportPatient />
             </Flex>
           </Flex>
           <div className='mt-3 flex items-center'>
