@@ -1,6 +1,6 @@
 import React from 'react';
 import HyficLogoWhite from '@/assets/hyfic_logo_white.svg';
-import HyficLogoBlack from '@/assets/hyfic_logo_white.svg';
+import HyficLogoBlack from '@/assets/hyfic_logo_black.svg';
 import { FileSettings } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
 import { Paths } from '@/utils/paths';
