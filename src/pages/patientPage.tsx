@@ -19,16 +19,14 @@ import {
 
 export const PatientPage: React.FC = () => {
   const { selectedDatabase } = useDatabaseStore();
+  const { patient, loading, loadPatient, setPatient } =
+    useIndividualPatientStore();
 
   const navigate = useNavigate();
   const query = useQuery(); // get the previous page path
   const prevPath = query.get('path') || Paths.patientList;
 
   const { id } = useParams();
-
-  // const [patient, setPatient] = useState<PatientType | null>(null);
-  // const [loading, setIsLoading] = useState(false);
-  const { patient, loading, loadPatient } = useIndividualPatientStore();
 
   useEffect(() => {
     if (!id || !selectedDatabase) {
@@ -53,7 +51,7 @@ export const PatientPage: React.FC = () => {
               icon={<ArrowNarrowLeft />}
               mb={5}
               variant='ghost'
-              onClick={() => {}}
+              onClick={() => setPatient(null)}
             />
           </Link>
           <Flex alignItems='center' justifyContent='space-between'>
