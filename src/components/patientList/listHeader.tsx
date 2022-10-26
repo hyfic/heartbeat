@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Paths } from '@/utils/paths';
 import { ChevronDown, UserPlus } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
+import { OpenPatient } from './openPatient';
 import {
   Button,
   Flex,
@@ -43,6 +44,7 @@ export const ListHeader: React.FC<Props> = ({ onSearch }) => {
           <Link to={Paths.newPatient} replace>
             <MenuItem icon={<UserPlus size={18} />}>New patient</MenuItem>
           </Link>
+          <OpenPatient />
         </MenuList>
       </Menu>
     </Flex>
