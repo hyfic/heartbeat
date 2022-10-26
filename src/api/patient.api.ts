@@ -4,6 +4,7 @@ import { invoke } from '@tauri-apps/api';
 import {
   PatientBioDataType,
   PatientRawType,
+  PatientRecordType,
   PatientType,
 } from '@/types/patient.type';
 
@@ -19,7 +20,9 @@ const DELETE_PATIENT = 'delete_patient';
 
 export const createNewPatient = (
   databasePath: string,
-  bioData: PatientBioDataType
+  bioData: PatientBioDataType,
+  records?: PatientRecordType[],
+  appointment?: string
 ) => {
   return new Promise<number>((resolve, reject) => {
     let now = Date.now();
@@ -30,8 +33,8 @@ export const createNewPatient = (
       createdAt: now.toString(),
       updatedAt: now.toString(),
       bioData: JSON.stringify(bioData),
-      records: '[]',
-      appointment: '',
+      records: JSON.stringify(records || []),
+      appointment: appointment || '',
     })
       .then((data: any) => resolve(data))
       .catch(reject);
