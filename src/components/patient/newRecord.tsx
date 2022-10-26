@@ -6,6 +6,7 @@ import { useDatabaseStore } from '@/store/database.store';
 import { useIndividualPatientStore } from '@/store/patient.store';
 import { PatientType } from '@/types/patient.type';
 import { ChevronDown } from 'tabler-icons-react';
+import { PreviewRecord } from './previewRecord';
 import {
   Button,
   Drawer,
@@ -135,6 +136,7 @@ export const NewRecord: React.FC = () => {
             >
               Cancel
             </Button>
+            <PreviewRecord record={record} useButton />
             <Button
               ml={3}
               colorScheme='blue'

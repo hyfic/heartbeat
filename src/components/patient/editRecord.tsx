@@ -6,6 +6,7 @@ import { PatientType } from '@/types/patient.type';
 import { Edit } from 'tabler-icons-react';
 import { RecordForm } from './recordForm';
 import { defaultRecordData } from '@/utils/record';
+import { PreviewRecord } from './previewRecord';
 import {
   Button,
   Drawer,
@@ -112,6 +113,7 @@ export const EditRecord: React.FC<Props> = ({ recordCreatedAt }) => {
             >
               Cancel
             </Button>
+            <PreviewRecord record={record} useButton />
             <Button
               ml={3}
               colorScheme='blue'
