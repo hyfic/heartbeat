@@ -3,7 +3,7 @@ import { Center } from '@chakra-ui/react';
 import { WaterMark } from './waterMark';
 import { BioData } from './bioData';
 import { Examination } from './examination';
-import { Advice } from './Advice';
+import { Advice } from './advice';
 import { Footer } from './footer';
 
 interface Props {
