@@ -4,6 +4,8 @@ import { TextInput } from '@/components/common/textInput';
 import { NewRecord } from './newRecord';
 import { useIndividualPatientStore } from '@/store/patient.store';
 import { DeleteRecord } from './deleteRecord';
+import { EditRecord } from './editRecord';
+import { PreviewRecord } from './previewRecord';
 import {
   Flex,
   Table,
@@ -14,7 +16,6 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { EditRecord } from './editRecord';
 
 export const PatientRecords: React.FC = () => {
   const { patient } = useIndividualPatientStore();
@@ -64,7 +65,9 @@ export const PatientRecords: React.FC = () => {
                       <Td>
                         <DeleteRecord recordCreatedAt={record.createdAt} />
                       </Td>
-                      <Td></Td>
+                      <Td>
+                        <PreviewRecord record={record} />
+                      </Td>
                     </Tr>
                   ))}
             </Tbody>
