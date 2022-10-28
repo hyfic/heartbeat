@@ -97,48 +97,48 @@ export const BioData: React.FC<Props> = ({ tableVariant }) => {
           </OrderedList>
         </div>
       )}
-      {record.chiefComplaint ||
+      {(record.chiefComplaint ||
         record.pastMedicalHistory ||
         record.personalHistory ||
         record.familyHistory ||
-        (record.treatmentHistory && (
-          <LightMode>
-            <Table mt={3} variant={tableVariant}>
-              <Tbody>
-                {record.chiefComplaint && (
-                  <Tr>
-                    <Td fontWeight='medium'>CHIEF COMPLAINT</Td>
-                    <Td>{record.chiefComplaint}</Td>
-                  </Tr>
-                )}
-                {record.pastMedicalHistory && (
-                  <Tr>
-                    <Td fontWeight='medium'>PAST MEDICAL HISTORY</Td>
-                    <Td>{record.pastMedicalHistory}</Td>
-                  </Tr>
-                )}
-                {record.personalHistory && (
-                  <Tr>
-                    <Td fontWeight='medium'>PERSONAl HISTORY</Td>
-                    <Td>{record.personalHistory}</Td>
-                  </Tr>
-                )}
-                {record.familyHistory && (
-                  <Tr>
-                    <Td fontWeight='medium'>FAMILY HISTORY</Td>
-                    <Td>{record.familyHistory}</Td>
-                  </Tr>
-                )}
-                {record.treatmentHistory && (
-                  <Tr>
-                    <Td fontWeight='medium'>TREATMENT HISTORY</Td>
-                    <Td>{record.treatmentHistory}</Td>
-                  </Tr>
-                )}
-              </Tbody>
-            </Table>
-          </LightMode>
-        ))}
+        record.treatmentHistory) && (
+        <LightMode>
+          <Table mt={3} variant={tableVariant}>
+            <Tbody>
+              {record.chiefComplaint && (
+                <Tr>
+                  <Td fontWeight='medium'>CHIEF COMPLAINT</Td>
+                  <Td>{record.chiefComplaint}</Td>
+                </Tr>
+              )}
+              {record.pastMedicalHistory && (
+                <Tr>
+                  <Td fontWeight='medium'>PAST MEDICAL HISTORY</Td>
+                  <Td>{record.pastMedicalHistory}</Td>
+                </Tr>
+              )}
+              {record.personalHistory && (
+                <Tr>
+                  <Td fontWeight='medium'>PERSONAl HISTORY</Td>
+                  <Td>{record.personalHistory}</Td>
+                </Tr>
+              )}
+              {record.familyHistory && (
+                <Tr>
+                  <Td fontWeight='medium'>FAMILY HISTORY</Td>
+                  <Td>{record.familyHistory}</Td>
+                </Tr>
+              )}
+              {record.treatmentHistory && (
+                <Tr>
+                  <Td fontWeight='medium'>TREATMENT HISTORY</Td>
+                  <Td>{record.treatmentHistory}</Td>
+                </Tr>
+              )}
+            </Tbody>
+          </Table>
+        </LightMode>
+      )}
     </div>
   ) : null;
 };
