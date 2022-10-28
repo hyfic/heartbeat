@@ -10,6 +10,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import moment from 'moment';
 
 interface Props {
   tableVariant: string;
@@ -55,6 +56,14 @@ export const Advice: React.FC<Props> = ({ tableVariant }) => {
           <h2 className='text-xl font-medium'>INVESTIGATION TO DO</h2>
           <Text mt={2} fontSize='lg'>
             {record.investigationToDo}
+          </Text>
+        </div>
+      )}
+      {record.appointment && (
+        <div className='mt-3'>
+          <h2 className='text-xl font-medium'>REVIEW ON</h2>
+          <Text mt={2} fontSize='lg'>
+            {moment(Number(record.appointment)).format('dddd, MMM D YYYY')}
           </Text>
         </div>
       )}
