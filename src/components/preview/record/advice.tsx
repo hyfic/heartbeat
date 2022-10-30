@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { useRecordStore } from '@/store/record.store';
 import {
   LightMode,
@@ -10,7 +11,6 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import moment from 'moment';
 
 interface Props {
   tableVariant: string;
@@ -19,7 +19,10 @@ interface Props {
 export const Advice: React.FC<Props> = ({ tableVariant }) => {
   const { record } = useRecordStore();
 
-  return record.advice ? (
+  return record.advice ||
+    (record.medicines && record.medicines.length !== 0) ||
+    record.investigationToDo ||
+    record.appointment ? (
     <div className='mt-5'>
       <h2 className='text-xl font-semibold mb-3'>ADVICE</h2>
       {record.medicines && record.medicines.length !== 0 && (
