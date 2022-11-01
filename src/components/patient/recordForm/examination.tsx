@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecordStore } from '@/store/record.store';
 import { TextInput } from '@/components/common/textInput';
 import { NumberInput } from '@/components/common/numberInput';
@@ -8,6 +8,78 @@ import { Diagnosis } from './diagnosis';
 export const Examination: React.FC = () => {
   const { record, setRecord, loading } = useRecordStore();
 
+  const [generalExamination, setGeneralExamination] = useState(
+    record.generalExamination
+  );
+  const [pulseRate, setPulseRate] = useState(record.pulseRate);
+  const [systolic, setSystolic] = useState(record.systolic);
+  const [diastolic, setDiastolic] = useState(record.diastolic);
+  const [temperature, setTemperature] = useState(record.temperature);
+  const [respiratoryRate, setRespiratoryRate] = useState(
+    record.respiratoryRate
+  );
+  const [oxygenSaturation, setOxygenSaturation] = useState(
+    record.oxygenSaturation
+  );
+  const [rs, setRs] = useState(record.rs);
+  const [cvs, setCvs] = useState(record.cvs);
+  const [git, setGit] = useState(record.git);
+  const [cns, setCns] = useState(record.cns);
+  const [musculoskeletal, setMusculoskeletal] = useState(
+    record.musculoskeletal
+  );
+  const [ddsIfAny, setDdsIfAny] = useState(record.ddsIfAny);
+
+  useEffect(() => {
+    if (
+      generalExamination === record.generalExamination &&
+      pulseRate === record.pulseRate &&
+      systolic === record.systolic &&
+      diastolic === record.diastolic &&
+      temperature === record.temperature &&
+      respiratoryRate === record.respiratoryRate &&
+      oxygenSaturation === record.oxygenSaturation &&
+      rs === record.rs &&
+      cvs === record.cvs &&
+      git === record.git &&
+      cns === record.cns &&
+      musculoskeletal === record.musculoskeletal &&
+      ddsIfAny === record.ddsIfAny
+    )
+      return;
+
+    setRecord({
+      ...record,
+      generalExamination,
+      pulseRate,
+      systolic,
+      diastolic,
+      respiratoryRate,
+      oxygenSaturation,
+      temperature,
+      rs,
+      cvs,
+      git,
+      cns,
+      musculoskeletal,
+      ddsIfAny,
+    });
+  }, [
+    generalExamination,
+    pulseRate,
+    systolic,
+    diastolic,
+    respiratoryRate,
+    oxygenSaturation,
+    temperature,
+    rs,
+    cvs,
+    git,
+    cns,
+    musculoskeletal,
+    ddsIfAny,
+  ]);
+
   return (
     <div className='mt-5'>
       <Heading className='text-2xl' fontWeight='medium'>
@@ -15,10 +87,8 @@ export const Examination: React.FC = () => {
       </Heading>
       <TextInput
         title='General examination'
-        value={record.generalExamination || ''}
-        setValue={(generalExamination) =>
-          setRecord({ ...record, generalExamination })
-        }
+        value={generalExamination || ''}
+        setValue={setGeneralExamination}
         textArea
         disabled={loading}
         className='mt-5'
@@ -27,8 +97,8 @@ export const Examination: React.FC = () => {
       <SimpleGrid mt={2} columns={{ sm: 1, md: 2, lg: 3 }} gap={2}>
         <NumberInput
           title='Pulse rate (/min)'
-          value={record.pulseRate || ''}
-          setValue={(pulseRate) => setRecord({ ...record, pulseRate })}
+          value={pulseRate || ''}
+          setValue={setPulseRate}
           disabled={loading}
         />
         <div>
@@ -36,16 +106,16 @@ export const Examination: React.FC = () => {
           <Flex alignItems='center'>
             <TextInput
               title='Systolic'
-              value={record.systolic || ''}
-              setValue={(systolic) => setRecord({ ...record, systolic })}
+              value={systolic || ''}
+              setValue={setSystolic}
               disabled={loading}
               disableTitle
             />
             <p className='mx-2 text-2xl'>/</p>
             <TextInput
               title='Diastolic'
-              value={record.diastolic || ''}
-              setValue={(diastolic) => setRecord({ ...record, diastolic })}
+              value={diastolic || ''}
+              setValue={setDiastolic}
               disabled={loading}
               disableTitle
             />
@@ -53,24 +123,20 @@ export const Examination: React.FC = () => {
         </div>
         <NumberInput
           title='Respiratory rate (/min)'
-          value={record.respiratoryRate || ''}
-          setValue={(respiratoryRate) =>
-            setRecord({ ...record, respiratoryRate })
-          }
+          value={respiratoryRate || ''}
+          setValue={setRespiratoryRate}
           disabled={loading}
         />
         <NumberInput
           title='Temperature (°F)'
-          value={record.temperature || ''}
-          setValue={(temperature) => setRecord({ ...record, temperature })}
+          value={temperature || ''}
+          setValue={setTemperature}
           disabled={loading}
         />
         <NumberInput
           title='SpO2 (%)'
-          value={record.oxygenSaturation || ''}
-          setValue={(oxygenSaturation) =>
-            setRecord({ ...record, oxygenSaturation })
-          }
+          value={oxygenSaturation || ''}
+          setValue={setOxygenSaturation}
           disabled={loading}
         />
       </SimpleGrid>
@@ -78,45 +144,43 @@ export const Examination: React.FC = () => {
       <SimpleGrid mt={2} columns={{ sm: 1, md: 2, lg: 3 }} gap={2}>
         <TextInput
           title='R.S'
-          value={record.rs || ''}
-          setValue={(rs) => setRecord({ ...record, rs })}
+          value={rs || ''}
+          setValue={setRs}
           disabled={loading}
           textArea
         />
         <TextInput
           title='C.V.S'
-          value={record.cvs || ''}
-          setValue={(cvs) => setRecord({ ...record, cvs })}
+          value={cvs || ''}
+          setValue={setCvs}
           disabled={loading}
           textArea
         />
         <TextInput
           title='G.I.T'
-          value={record.git || ''}
-          setValue={(git) => setRecord({ ...record, git })}
+          value={git || ''}
+          setValue={setGit}
           disabled={loading}
           textArea
         />
         <TextInput
           title='C.N.S'
-          value={record.cns || ''}
-          setValue={(cns) => setRecord({ ...record, cns })}
+          value={cns || ''}
+          setValue={setCns}
           disabled={loading}
           textArea
         />
         <TextInput
           title='Musculoskeletal'
-          value={record.musculoskeletal || ''}
-          setValue={(musculoskeletal) =>
-            setRecord({ ...record, musculoskeletal })
-          }
+          value={musculoskeletal || ''}
+          setValue={setMusculoskeletal}
           disabled={loading}
           textArea
         />
         <TextInput
           title='DDs if any'
-          value={record.ddsIfAny || ''}
-          setValue={(ddsIfAny) => setRecord({ ...record, ddsIfAny })}
+          value={ddsIfAny || ''}
+          setValue={setDdsIfAny}
           disabled={loading}
           textArea
         />
