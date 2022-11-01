@@ -47,11 +47,13 @@ export const BioData: React.FC<Props> = ({ tableVariant }) => {
               )}
               {record.height && (
                 <Td>
-                  {record.height}
-                  {record.heightUnit}
+                  {record.height}{' '}
+                  {record.heightUnit === 'Centimeter'
+                    ? 'CM'
+                    : record.heightUnit[0]}
                 </Td>
               )}
-              {record.weight && <Td>{record.weight}Kg</Td>}
+              {record.weight && <Td>{record.weight} Kg</Td>}
               {record.height && record.weight && <Td>{record.bmi}</Td>}
             </Tr>
           </Tbody>

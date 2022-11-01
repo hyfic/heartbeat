@@ -26,6 +26,7 @@ export const MedicalBioData: React.FC = () => {
   const [allergicMedicine, setAllergicMedicine] = useState('');
   const [height, setHeight] = useState(record.height);
   const [weight, setWeight] = useState(record.weight);
+  const [bmi, setBmi] = useState('');
   const [chiefComplaint, setChiefComplaint] = useState(record.chiefComplaint);
   const [pastMedicalHistory, setPastMedicalHistory] = useState(
     record.pastMedicalHistory
@@ -48,6 +49,7 @@ export const MedicalBioData: React.FC = () => {
     }
 
     const bmi = weightNumber / (heightNumber * heightNumber);
+    if (isNaN(bmi)) return '0.00';
     return bmi.toFixed(2);
   };
 
@@ -63,9 +65,14 @@ export const MedicalBioData: React.FC = () => {
   };
 
   useEffect(() => {
+    setBmi(calculateBMI(Number(height), Number(weight)));
+  }, [height, weight]);
+
+  useEffect(() => {
     if (
       record.height === height &&
       record.weight === weight &&
+      record.bmi === bmi &&
       record.chiefComplaint === chiefComplaint &&
       record.pastMedicalHistory === pastMedicalHistory &&
       record.personalHistory === personalHistory &&
@@ -77,6 +84,7 @@ export const MedicalBioData: React.FC = () => {
       ...record,
       height,
       weight,
+      bmi,
       chiefComplaint,
       pastMedicalHistory,
       personalHistory,
@@ -90,6 +98,7 @@ export const MedicalBioData: React.FC = () => {
     personalHistory,
     familyHistory,
     treatmentHistory,
+    bmi,
   ]);
 
   return (
@@ -131,12 +140,7 @@ export const MedicalBioData: React.FC = () => {
           setValue={setWeight}
           disabled={loading}
         />
-        <TextInput
-          title='BMI'
-          value={calculateBMI(Number(record.height), Number(record.weight))}
-          setValue={() => {}}
-          disabled
-        />
+        <TextInput title='BMI' value={bmi} setValue={() => {}} disabled />
       </SimpleGrid>
       <div className='mt-3'>
         <Checkbox
