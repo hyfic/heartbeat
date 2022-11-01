@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecordStore } from '@/store/record.store';
 import { TextInput } from '@/components/common/textInput';
 import { NumberInput } from '@/components/common/numberInput';
@@ -22,7 +22,21 @@ import {
 
 export const MedicalBioData: React.FC = () => {
   const { record, setRecord, loading } = useRecordStore();
+
   const [allergicMedicine, setAllergicMedicine] = useState('');
+  const [height, setHeight] = useState(record.height);
+  const [weight, setWeight] = useState(record.weight);
+  const [chiefComplaint, setChiefComplaint] = useState(record.chiefComplaint);
+  const [pastMedicalHistory, setPastMedicalHistory] = useState(
+    record.pastMedicalHistory
+  );
+  const [personalHistory, setPersonalHistory] = useState(
+    record.personalHistory
+  );
+  const [familyHistory, setFamilyHistory] = useState(record.familyHistory);
+  const [treatmentHistory, setTreatmentHistory] = useState(
+    record.treatmentHistory
+  );
 
   const calculateBMI = (heightNumber: number, weightNumber: number) => {
     if (record.heightUnit == 'Centimeter') {
@@ -48,6 +62,36 @@ export const MedicalBioData: React.FC = () => {
     setAllergicMedicine('');
   };
 
+  useEffect(() => {
+    if (
+      record.height === height &&
+      record.weight === weight &&
+      record.chiefComplaint === chiefComplaint &&
+      record.pastMedicalHistory === pastMedicalHistory &&
+      record.personalHistory === personalHistory &&
+      record.familyHistory === familyHistory
+    )
+      return;
+
+    setRecord({
+      ...record,
+      height,
+      weight,
+      chiefComplaint,
+      pastMedicalHistory,
+      personalHistory,
+      familyHistory,
+    });
+  }, [
+    height,
+    weight,
+    chiefComplaint,
+    pastMedicalHistory,
+    personalHistory,
+    familyHistory,
+    treatmentHistory,
+  ]);
+
   return (
     <div>
       <Heading className='text-2xl' fontWeight='medium'>
@@ -62,8 +106,8 @@ export const MedicalBioData: React.FC = () => {
           <Flex alignItems='center' justifyContent='space-between'>
             <NumberInput
               disabledTitle
-              value={record.height || ''}
-              setValue={(height) => setRecord({ ...record, height })}
+              value={height || ''}
+              setValue={setHeight}
               disabled={loading}
             />
             <Select
@@ -83,8 +127,8 @@ export const MedicalBioData: React.FC = () => {
         </div>
         <NumberInput
           title='Weight (Kg)'
-          value={record.weight || ''}
-          setValue={(weight) => setRecord({ ...record, weight })}
+          value={weight || ''}
+          setValue={setWeight}
           disabled={loading}
         />
         <TextInput
@@ -182,44 +226,36 @@ export const MedicalBioData: React.FC = () => {
       <SimpleGrid mt={3} columns={{ sm: 1, lg: 2 }} gap={2}>
         <TextInput
           title='Chief complaints'
-          value={record.chiefComplaint || ''}
-          setValue={(chiefComplaint) =>
-            setRecord({ ...record, chiefComplaint })
-          }
+          value={chiefComplaint || ''}
+          setValue={setChiefComplaint}
           disabled={loading}
           textArea
         />
         <TextInput
           title='Past medical history'
-          value={record.pastMedicalHistory || ''}
-          setValue={(pastMedicalHistory) =>
-            setRecord({ ...record, pastMedicalHistory })
-          }
+          value={pastMedicalHistory || ''}
+          setValue={setPastMedicalHistory}
           disabled={loading}
           textArea
         />
         <TextInput
           title='Personal history'
-          value={record.personalHistory || ''}
-          setValue={(personalHistory) =>
-            setRecord({ ...record, personalHistory })
-          }
+          value={personalHistory || ''}
+          setValue={setPersonalHistory}
           disabled={loading}
           textArea
         />
         <TextInput
           title='Family history'
-          value={record.familyHistory || ''}
-          setValue={(familyHistory) => setRecord({ ...record, familyHistory })}
+          value={familyHistory || ''}
+          setValue={setFamilyHistory}
           disabled={loading}
           textArea
         />
         <TextInput
           title='Treatment history'
-          value={record.treatmentHistory || ''}
-          setValue={(treatmentHistory) =>
-            setRecord({ ...record, treatmentHistory })
-          }
+          value={treatmentHistory || ''}
+          setValue={setTreatmentHistory}
           disabled={loading}
           textArea
         />
