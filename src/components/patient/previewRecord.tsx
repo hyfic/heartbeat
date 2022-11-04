@@ -10,6 +10,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -34,13 +35,15 @@ export const PreviewRecord: React.FC<Props> = ({ useButton, record }) => {
           Preview
         </Button>
       ) : (
-        <IconButton
-          aria-label='preview'
-          variant='ghost'
-          colorScheme='teal'
-          icon={<Eye size={18} />}
-          onClick={handleOpenRecordPreview}
-        />
+        <Tooltip label='Preview record'>
+          <IconButton
+            aria-label='preview'
+            variant='ghost'
+            colorScheme='teal'
+            icon={<Eye size={18} />}
+            onClick={handleOpenRecordPreview}
+          />
+        </Tooltip>
       )}
       <Modal size='full' isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

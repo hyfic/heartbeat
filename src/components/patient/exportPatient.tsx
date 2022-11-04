@@ -12,6 +12,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 import { showToast } from '@/utils/showToast';
@@ -49,13 +50,14 @@ export const ExportPatient: React.FC = ({}) => {
 
   return (
     <>
-      <IconButton
-        aria-label='Export data'
-        icon={<FileExport size={20} strokeWidth={2} />}
-        variant='ghost'
-        onClick={onOpen}
-      />
-
+      <Tooltip label='Export patient data' placement='left'>
+        <IconButton
+          aria-label='Export data'
+          icon={<FileExport size={20} strokeWidth={2} />}
+          variant='ghost'
+          onClick={onOpen}
+        />
+      </Tooltip>
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

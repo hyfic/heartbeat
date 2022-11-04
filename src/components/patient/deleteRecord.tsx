@@ -14,6 +14,7 @@ import {
   AlertDialogOverlay,
   Button,
   IconButton,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -78,13 +79,15 @@ export const DeleteRecord: React.FC<Props> = ({ recordCreatedAt }) => {
 
   return (
     <>
-      <IconButton
-        aria-label='delete'
-        variant='ghost'
-        colorScheme='red'
-        icon={<Trash size={18} strokeWidth={2} />}
-        onClick={onOpen}
-      />
+      <Tooltip label='Delete record'>
+        <IconButton
+          aria-label='delete'
+          variant='ghost'
+          colorScheme='red'
+          icon={<Trash size={18} strokeWidth={2} />}
+          onClick={onOpen}
+        />
+      </Tooltip>
 
       <AlertDialog
         isOpen={isOpen}

@@ -18,6 +18,7 @@ import {
   ModalOverlay,
   Select,
   SimpleGrid,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -78,13 +79,15 @@ export const EditBioData: React.FC = () => {
 
   return (
     <>
-      <IconButton
-        aria-label='Edit patient'
-        icon={<Edit size={20} strokeWidth={2} />}
-        colorScheme='blue'
-        variant='ghost'
-        onClick={onOpen}
-      />
+      <Tooltip label='Edit patient bio data' placement='left'>
+        <IconButton
+          aria-label='Edit patient'
+          icon={<Edit size={20} strokeWidth={2} />}
+          colorScheme='blue'
+          variant='ghost'
+          onClick={onOpen}
+        />
+      </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
