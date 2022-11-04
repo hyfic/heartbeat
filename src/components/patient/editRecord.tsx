@@ -17,6 +17,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   IconButton,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -80,14 +81,15 @@ export const EditRecord: React.FC<Props> = ({ recordCreatedAt }) => {
 
   return (
     <>
-      <IconButton
-        aria-label='edit'
-        variant='ghost'
-        colorScheme='blue'
-        icon={<Edit size={18} strokeWidth={2} />}
-        onClick={openRecordForm}
-      />
-
+      <Tooltip label='Edit record'>
+        <IconButton
+          aria-label='edit'
+          variant='ghost'
+          colorScheme='blue'
+          icon={<Edit size={18} strokeWidth={2} />}
+          onClick={openRecordForm}
+        />
+      </Tooltip>
       <Drawer
         isOpen={isOpen}
         placement='right'

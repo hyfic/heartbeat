@@ -15,6 +15,7 @@ import {
   AlertDialogOverlay,
   Button,
   IconButton,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -59,13 +60,15 @@ export const DeletePatient: React.FC = () => {
 
   return (
     <>
-      <IconButton
-        aria-label='Delete patient'
-        icon={<Trash size={20} strokeWidth={2} />}
-        colorScheme='red'
-        variant='ghost'
-        onClick={onOpen}
-      />
+      <Tooltip label='Delete patient' placement='left'>
+        <IconButton
+          aria-label='Delete patient'
+          icon={<Trash size={20} strokeWidth={2} />}
+          colorScheme='red'
+          variant='ghost'
+          onClick={onOpen}
+        />
+      </Tooltip>
 
       <AlertDialog
         isOpen={isOpen}
