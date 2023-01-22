@@ -25,4 +25,4 @@ Run application
 $ npm run tauri dev
 ```
 
-https://octoi.github.io/heartbeat
+https://hyfic.github.io/heartbeat
