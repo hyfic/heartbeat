@@ -24,5 +24,9 @@ Run application
 ```bash
 $ npm run tauri dev
 ```
+Build application
+```bash
+$ npm run tauri build
+```
 
 https://hyfic.github.io/heartbeat
