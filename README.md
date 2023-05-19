@@ -18,15 +18,15 @@ A patient management system designed for doctors. In this app doctors can add pa
 
 Install packages
 ```bash
-$ npm install
+$ pnpm install
 ```
 Run application
 ```bash
-$ npm run tauri dev
+$ pnpm tauri dev
 ```
 Build application
 ```bash
-$ npm run tauri build
+$ pnpm tauri build
 ```
 
 https://hyfic.github.io/heartbeat
