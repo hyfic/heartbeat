@@ -1,5 +1,5 @@
 # Heartbeat ❤️
-An open-source desktop application for doctors to manage patient data.
+An open-source desktop application for doctors to manage & organize patient data.
 
 ## About
 A patient management system designed for doctors. In this app doctors can add patient data using simple forms, which later they can save as PDF or print as document.
